@@ -2,11 +2,11 @@ import * as React from 'react';
 import { Component } from 'react';
 import { Link } from 'react-router-dom';
 const routes = require('../constants/routes.json');
-const styles = require('./Home.css');
+const styles = require('../styles/unused/Home.css');
 
 type Props = {};
 
-export default class Home extends Component<Props> {
+export default class OgHome extends Component<Props> {
   props: Props;
 
   render() {

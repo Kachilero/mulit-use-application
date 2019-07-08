@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Component } from 'react';
 import { Link } from 'react-router-dom';
 const routes = require('../constants/routes.json');
-const styles = require('./Counter.css');
+const styles = require('../styles/unused/Counter.css');
 
 type Props = {
   increment: () => void;

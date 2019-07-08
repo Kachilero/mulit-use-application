@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { Component } from 'react';
-import Home from '../components/Home';
+import OgHome from '../components/OgHome';
 
 export default class HomePage extends Component {
   render() {
-    return <Home />;
+    return <OgHome />;
   }
 }
