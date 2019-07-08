@@ -1,0 +1,26 @@
+// Styles for the main container
+
+#main-wrapper {
+  display: flex;
+  width: 100vw;
+  align-items: stretch;
+  padding-top: 57px;
+
+  #main-window {
+    background-color: #282c34;
+    color: #fff;
+    padding-left: 80px;
+    transition: all 0.5s;
+    width: 100%;
+    height: 100vh;
+
+    &.pd__large {
+      padding-left: 250px;
+    }
+
+    #main-row {
+      margin-left: 15px;
+      margin-right: 15px;
+    }
+  }
+}

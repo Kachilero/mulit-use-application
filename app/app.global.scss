@@ -8,9 +8,11 @@
 // Custom Colors - not bootstrap overrides
 @import 'styles/globals/colors';
 
+// Bootstrap
+@import 'styles/globals/bootstrap/bootstrap';
+
 // Defauls
 
 // Components
-
-// Bootstrap
-@import 'styles/globals/bootstrap/bootstrap';
+@import 'styles/components/home-page';
+@import 'styles/components/sidebar';

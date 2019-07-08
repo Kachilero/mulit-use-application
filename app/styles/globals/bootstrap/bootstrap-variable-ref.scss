@@ -15,7 +15,7 @@ When we need to modify variable, do the following:
 // consistent naming. Ex: $nav-link-disabled-color and $modal-content-box-shadow-xs.
 
 // Color system
-
+// Moved color declaration to colors.scss
 // Set a specific jump point for requesting color jumps
 $theme-color-interval: 8% !default;
 
