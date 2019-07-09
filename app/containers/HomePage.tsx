@@ -1,6 +1,6 @@
 import { bindActionCreators, Dispatch } from 'redux';
 import { connect } from 'react-redux';
-import MainWindow from '../components/mainWindow';
+import MainWindow from '../components/MainWindow';
 import SidebarActions from '../actions/sideDrawer';
 
 export interface MainWindowState {
