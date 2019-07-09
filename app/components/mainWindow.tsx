@@ -30,9 +30,9 @@ export default class MainWindow extends Component<Props> {
     // const { headline } = this.state;
 
     return (
-      <div id="wrapper">
+      <div id="main-wrapper">
         {/* Sidedrawer will go here */}
-        <main role="main" id="main-window" className="sidebar-open-class">
+        <main role="main" id="main-window" className="flex-shrink-0 pd__large">
           {/* Header Goes Here*/}
           <Row id="main-row">
             <div id="pg-content">
