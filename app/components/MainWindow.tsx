@@ -8,6 +8,9 @@ import { Col, Row } from 'react-bootstrap';
 
 // Components
 import OgHome from './OgHome';
+import Header from './global/Header';
+
+// Actions
 // import { addActiveClass, flipSideState } from '../actions/sideDrawer';
 
 // Styles
@@ -33,7 +36,7 @@ export default class MainWindow extends Component<Props> {
       <div id="main-wrapper">
         {/* Sidedrawer will go here */}
         <main role="main" id="main-window" className="flex-shrink-0 pd__large">
-          {/* Header Goes Here*/}
+          <Header />
           <Row id="main-row">
             <div id="pg-content">
               <Row>
