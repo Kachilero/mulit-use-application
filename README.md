@@ -1,8 +1,20 @@
 # Mulit-use Application V2
 
-A second - hopefully better - version of the App.
+A second - hopefully better - version of the App, using `TypeScript`.
 
-This project uses [Electron React Builerplate](https://github.com/electron-react-boilerplate/electron-react-boilerplate) as a starter.
+This project uses [Electron React Builerplate](https://github.com/electron-react-boilerplate/electron-react-boilerplate) as a starter, usind the `typescript` variant as I don't like `flow`.
+
+This project also gets inspiration from a [Creative Tim](https://www.creative-tim.com) [template](https://www.creative-tim.com/product/light-bootstrap-dashboard-react).
+
+I may also use some things from the [React-Admin](https://github.com/marmelab/react-admin) project in the future.
+
+## Roadmap
+
+1. ~Create main window~
+2. Create sidebar
+3. Create a way to switch projects, which will change what's in the sidebar and the main window.
+4. Wire sidebar links to switch out the `view` in the main container
+5. ....
 
 ## Notes about this build
 
