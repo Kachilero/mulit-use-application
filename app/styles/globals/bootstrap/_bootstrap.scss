@@ -11,6 +11,7 @@ We need to import variable overrides BEFORE we include any bootstrap styles, see
 @import '~bootstrap/scss/functions';
 @import '~bootstrap/scss/variables';
 @import '~bootstrap/scss/mixins';
+@import "~bootstrap/scss/utilities";
 
 // Optional
 @import '~bootstrap/scss/reboot';
@@ -18,3 +19,8 @@ We need to import variable overrides BEFORE we include any bootstrap styles, see
 @import '~bootstrap/scss/images';
 @import '~bootstrap/scss/code';
 @import '~bootstrap/scss/grid';
+
+
+// Navs
+@import "~bootstrap/scss/nav";
+@import "~bootstrap/scss/navbar";
