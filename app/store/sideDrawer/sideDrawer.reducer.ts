@@ -1,25 +1,17 @@
 /**
  * Reducers for the side drawer
  */
-import {
-  IsSideDrawerOpenState,
-  SideDrawerActionTypes,
-  OPEN_SIDE_DRAWER
-} from './sideDrawerTypes';
-
-const initialState: IsSideDrawerOpenState = {
-  isItOpen: true
-};
+import { SideDrawerActionTypes, OPEN_SIDE_DRAWER } from './sideDrawerTypes';
 
 export function sideDrawerReducer(
-  state = initialState,
+  state: boolean = true,
   action: SideDrawerActionTypes
 ): boolean {
-  console.log(`Side Drawer Reducer: ${state.isItOpen}`);
-  // Since we only have one state at the moment we'll use an IF statement
-  if (action.type === OPEN_SIDE_DRAWER) {
-    return state.isItOpen;
-  } else {
-    return state;
+  console.log(`Side Drawer Reducer: ${state}`);
+  switch (action.type) {
+    case OPEN_SIDE_DRAWER:
+      return !state;
+    default:
+      return state;
   }
 }

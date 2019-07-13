@@ -3,17 +3,13 @@
  */
 export const OPEN_SIDE_DRAWER = 'OPEN_SIDE_DRAWER';
 
-export interface IsSideDrawerOpen {
-  sideDrawerOpen: boolean;
-}
-
 export interface IsSideDrawerOpenState {
   isItOpen: boolean;
 }
 
 interface openSideDrawerAction {
   type: typeof OPEN_SIDE_DRAWER;
-  payload: IsSideDrawerOpen;
+  isItOpen: IsSideDrawerOpenState;
 }
 
 export type SideDrawerActionTypes = openSideDrawerAction;

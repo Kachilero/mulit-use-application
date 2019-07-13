@@ -2,16 +2,16 @@
  * Actions for the side drawer
  */
 import {
-  IsSideDrawerOpen,
+  IsSideDrawerOpenState,
   OPEN_SIDE_DRAWER,
   SideDrawerActionTypes
 } from './sideDrawerTypes';
 
 export function isSideDrawerOpenAction(
-  isIt: IsSideDrawerOpen
+  isIt: IsSideDrawerOpenState
 ): SideDrawerActionTypes {
   return {
     type: OPEN_SIDE_DRAWER,
-    payload: isIt
+    isItOpen: isIt
   };
 }
