@@ -1,24 +1,10 @@
-import { bindActionCreators, Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import MainWindow from '../components/MainWindow';
 
-import { isSideDrawerOpenAction } from '../store/sideDrawer/sideDrawer.actions';
+export interface mainWindowState {}
 
-export interface SideDrawerState {
-  sideDrawer: boolean;
+function mapStateToProps(state: mainWindowState) {
+  return state;
 }
 
-function mapStateToProps(state: SideDrawerState) {
-  return {
-    sideDrawer: state.sideDrawer
-  };
-}
-
-function mapDispatchToProps(dispatch: Dispatch) {
-  return bindActionCreators(isSideDrawerOpenAction, dispatch);
-}
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(MainWindow);
+export default connect(mapStateToProps)(MainWindow);
