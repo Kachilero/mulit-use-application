@@ -17,28 +17,21 @@ import SideDrawer from './global/Sidedrawer';
 // Styles
 
 // Prop and State
-type Props = {
-  sideDrawerOpen: boolean;
-  flipSidebarState: () => void;
-  addActiveClass: () => void;
-};
-
-/*type State = {
-   headline: string
- }*/
+type Props = {};
 
 export default class MainWindow extends Component<Props> {
   props: Props;
 
   render() {
-    const { sideDrawerOpen } = this.props;
-    let mainClass = sideDrawerOpen
-      ? 'flex-shrink-0'
-      : 'flex-shrink-0 pd__large';
+    // const { sideDrawer } = this.props;
+    // let mainClass = sideDrawer
+    //   ? 'flex-shrink-0'
+    //   : 'flex-shrink-0 pd__large';
+    const mainClass = 'flex-shrink-0 pd__large';
 
     return (
       <div id="main-wrapper">
-        <SideDrawer />
+        <SideDrawer {...this.props} />
         <main role="main" id="main-window" className={mainClass}>
           <Header />
           <div id="main-row">

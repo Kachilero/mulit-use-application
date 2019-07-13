@@ -7,11 +7,12 @@ export function sideDrawerReducer(
   state: boolean = true,
   action: SideDrawerActionTypes
 ): boolean {
-  console.log(`Side Drawer Reducer: ${state}`);
   switch (action.type) {
     case OPEN_SIDE_DRAWER:
+      console.log(`OPEN_SIDE_DRAWER: ${state} && ${!state}`);
       return !state;
     default:
+      console.log(`DEFAULT: ${state}`);
       return state;
   }
 }

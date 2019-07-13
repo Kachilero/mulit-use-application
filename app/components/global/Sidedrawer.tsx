@@ -8,32 +8,19 @@ import { Accordion, Card, Nav } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHome, faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 
-// import routes from '../../constants/routes';
-
 type Props = {};
 
-export default class Sidedrawer extends Component<
-  Props,
-  { sideDrawerOpen: boolean }
-> {
+export default class Sidedrawer extends Component<Props> {
   props: Props;
-
-  constructor(props) {
-    super(props);
-    this.toggelSidebar = this.toggelSidebar.bind(this);
-    this.state = {
-      sideDrawerOpen: true
-    };
-  }
 
   /* updateWidth(): void {
     innerWidth = window.innerWidth;
     this.setState({ width: innerWidth });
   } */
 
-  toggelSidebar(): void {
-    console.log('Toggle Sidebar: ', this.state.sideDrawerOpen);
-  }
+  toggelSidebar = (): void => {
+    console.log('Toggle Sidebar: ', this.props);
+  };
 
   render() {
     return (
