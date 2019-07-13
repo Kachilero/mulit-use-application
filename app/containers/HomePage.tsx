@@ -1,24 +1,21 @@
 import { bindActionCreators, Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import MainWindow from '../components/MainWindow';
-import SidebarActions from '../actions/sideDrawer.actions';
 
-export interface MainWindowState {
-  flipSidebarState: () => void;
-  addActiveClass: () => void;
-  headline: string;
+import { isSideDrawerOpenAction } from '../store/sideDrawer/sideDrawer.actions';
+
+export interface SideDrawerState {
+  sideDrawer: boolean;
 }
 
-function mapStateToProps(state: MainWindowState) {
+function mapStateToProps(state: SideDrawerState) {
   return {
-    flipSidebarState: state.flipSidebarState,
-    addActiveClass: state.addActiveClass,
-    headline: state.headline
+    sideDrawer: state.sideDrawer
   };
 }
 
 function mapDispatchToProps(dispatch: Dispatch) {
-  return bindActionCreators(SidebarActions, dispatch);
+  return bindActionCreators(isSideDrawerOpenAction, dispatch);
 }
 
 export default connect(

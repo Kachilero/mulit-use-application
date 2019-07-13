@@ -6,7 +6,7 @@ import { createLogger } from 'redux-logger';
 import createRootReducer from '../reducers';
 // Actions
 import * as counterActions from '../actions/counter.actions';
-import * as sideDrawerActions from '../actions/sideDrawer.actions';
+import * as sideDrawerActions from './sideDrawer/sideDrawer.actions';
 
 const history = createHashHistory();
 
