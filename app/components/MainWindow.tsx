@@ -9,7 +9,7 @@ import { Col, Row } from 'react-bootstrap';
 // Components
 import OgHome from './OgHome';
 import Header from './global/Header';
-import Sidedrawer from './global/Sidedrawer';
+import SideDrawer from './global/Sidedrawer';
 
 // Actions
 // import { addActiveClass, flipSideState } from '../actions/sideDrawer';
@@ -18,6 +18,7 @@ import Sidedrawer from './global/Sidedrawer';
 
 // Prop and State
 type Props = {
+  sideDrawerOpen: boolean;
   flipSidebarState: () => void;
   addActiveClass: () => void;
 };
@@ -30,13 +31,15 @@ export default class MainWindow extends Component<Props> {
   props: Props;
 
   render() {
-    // const { flipSidebarState, addActiveClass } = this.props;
-    // const { headline } = this.state;
+    const { sideDrawerOpen } = this.props;
+    let mainClass = sideDrawerOpen
+      ? 'flex-shrink-0'
+      : 'flex-shrink-0 pd__large';
 
     return (
       <div id="main-wrapper">
-        <Sidedrawer />
-        <main role="main" id="main-window" className="flex-shrink-0 pd__large">
+        <SideDrawer />
+        <main role="main" id="main-window" className={mainClass}>
           <Header />
           <div id="main-row">
             {/* We'll replace the inner content here with the view switcher */}

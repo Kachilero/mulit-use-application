@@ -5,8 +5,8 @@ import { routerMiddleware, routerActions } from 'connected-react-router';
 import { createLogger } from 'redux-logger';
 import createRootReducer from '../reducers';
 // Actions
-import * as counterActions from '../actions/counter';
-import * as sideDrawerActions from '../actions/sideDrawer';
+import * as counterActions from '../actions/counter.actions';
+import * as sideDrawerActions from '../actions/sideDrawer.actions';
 
 const history = createHashHistory();
 

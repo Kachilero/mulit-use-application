@@ -1,7 +1,7 @@
 /**
  * Reducers for the side drawer
  *  */
-import { SideDrawerTypeKeys, SideDrawerTypes } from '../actions/sideDrawer';
+import { SideDrawerTypeKeys, SideDrawerTypes } from '../actions/sideDrawer.actions';
 
 export default function sideDrawerToggle(
   state: boolean = true,

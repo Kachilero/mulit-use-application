@@ -12,37 +12,32 @@ import { faHome, faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 
 type Props = {};
 
-type State = {
-  width: number;
-};
-
-export default class Sidedrawer extends Component<Props, State> {
+export default class Sidedrawer extends Component<
+  Props,
+  { sideDrawerOpen: boolean }
+> {
   props: Props;
-  state: State;
 
   constructor(props) {
     super(props);
-    this.updateWidth = this.updateWidth.bind(this);
+    this.toggelSidebar = this.toggelSidebar.bind(this);
+    this.state = {
+      sideDrawerOpen: true
+    };
   }
 
-  updateWidth(): void {
+  /* updateWidth(): void {
     innerWidth = window.innerWidth;
     this.setState({ width: innerWidth });
-  }
+  } */
 
   toggelSidebar(): void {
-    console.log('Toggle Sidebar');
-  }
-
-  componentWillMount(): void {
-    this.updateWidth();
+    console.log('Toggle Sidebar: ', this.state.sideDrawerOpen);
   }
 
   render() {
-    const { width } = this.state;
-    console.log(`Width in render: ${width}`);
     return (
-      <Nav id="sidebar" className="open">
+      <Nav id="sidebar" className="active">
         <div className="sidebar-header">
           <div className="d-inline-block sidebar-header__headline">
             <h4>Headline</h4>
