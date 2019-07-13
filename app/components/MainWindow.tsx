@@ -8,7 +8,6 @@ import { Col, Row } from 'react-bootstrap';
 
 // Components
 import OgHome from './OgHome';
-import Header from './global/Header';
 import SideDrawer from './global/Sidedrawer';
 
 // Actions
@@ -30,10 +29,9 @@ export default class MainWindow extends Component<Props> {
     const mainClass = 'flex-shrink-0 pd__large';
 
     return (
-      <div id="main-wrapper">
+      <div id="main-child-wrapper">
         <SideDrawer {...this.props} />
         <main role="main" id="main-window" className={mainClass}>
-          <Header />
           <div id="main-row">
             {/* We'll replace the inner content here with the view switcher */}
             <div id="pg-content">
