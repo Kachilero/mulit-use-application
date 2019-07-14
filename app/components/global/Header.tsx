@@ -27,6 +27,7 @@ export default class Header extends Component<Props> {
         <NavbarToggle aria-controls="main-navbar-nav" />
         <NavbarCollapse id="main-navbar-nav">
           <NavLink href={`#${routes.HOME}`}>Home</NavLink>
+          <NavLink href={`#${routes.ADMIN}/home`}>Admin</NavLink>
           <NavLink href={`#${routes.ABOUT}`}>About</NavLink>
           <NavLink href={`#${routes.COUNTER}`}>Counter</NavLink>
         </NavbarCollapse>

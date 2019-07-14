@@ -8,7 +8,6 @@ import { Col, Row } from 'react-bootstrap';
 
 // Components
 import OgHome from './OgHome';
-import SideDrawer from './global/Sidedrawer';
 
 // Actions
 // import { addActiveClass, flipSideState } from '../actions/sideDrawer';
@@ -30,7 +29,6 @@ export default class MainWindow extends Component<Props> {
 
     return (
       <div id="main-child-wrapper">
-        <SideDrawer {...this.props} />
         <main role="main" id="main-window" className={mainClass}>
           <div id="main-row">
             {/* We'll replace the inner content here with the view switcher */}
