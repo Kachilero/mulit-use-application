@@ -11,6 +11,7 @@ interface State {}
 
 interface Props {
   routes: any;
+  as?: string;
 }
 
 class SideDrawerNavLinks extends Component<Props, State> {
@@ -20,6 +21,8 @@ class SideDrawerNavLinks extends Component<Props, State> {
   }
 
   render() {
+    console.log('Children');
+    console.log(this.props.as);
     return (
       <>
         {this.props.routes.map((props, key) => {

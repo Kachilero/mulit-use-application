@@ -5,7 +5,6 @@ import * as React from 'react';
 import { Component } from 'react';
 import { Accordion, Card, Nav } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import { NavLink } from 'react-router-dom';
 import SideDrawerNavLinks from './SideDrawerNavLinks';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -26,22 +25,6 @@ class Sidedrawer extends Component<Props, State> {
     this.state = {
       isSideBarOpen: true
     };
-  }
-
-  buildNavLinks(routeMaps) {
-    routeMaps.map((prop, key) => {
-      return (
-        <div className="item" key={key}>
-          <Nav.Link
-            as={NavLink}
-            to={prop.layout + prop.path}
-            className="sidebar__nav-links"
-          >
-            {prop.name}
-          </Nav.Link>
-        </div>
-      );
-    });
   }
 
   render() {
@@ -77,7 +60,7 @@ class Sidedrawer extends Component<Props, State> {
               </Accordion.Collapse>
             </Card>
           </Accordion>
-          <SideDrawerNavLinks routes={this.props.routes} />
+          <SideDrawerNavLinks routes={this.props.routes} as="div" />
         </div>
       </Nav>
     );
