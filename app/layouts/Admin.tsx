@@ -11,7 +11,7 @@ import { connect } from 'react-redux';
 
 import { adminRoutes } from '../Routes';
 import { Route, Switch } from 'react-router-dom';
-import SecondSideBar from '../components/global/SecondSidBar';
+import Sidedrawer from '../components/global/Sidedrawer';
 
 interface adminState {}
 
@@ -42,7 +42,7 @@ class Admin extends Component<adminProps, adminState> {
   render() {
     return (
       <div id="main-child-wrapper">
-        <SecondSideBar {...this.props} routes={adminRoutes} />
+        <Sidedrawer {...this.props} routes={adminRoutes} />
         <main role="main" id="main-window" className="flex-shrink-0 pd__large">
           <div id="main-row">
             <div id="pg-conent">

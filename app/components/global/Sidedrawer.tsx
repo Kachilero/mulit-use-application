@@ -4,19 +4,32 @@
 import * as React from 'react';
 import { Component } from 'react';
 import { Accordion, Card, Nav } from 'react-bootstrap';
+import { connect } from 'react-redux';
+import { NavLink } from 'react-router-dom';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHome } from '@fortawesome/free-solid-svg-icons';
-const routes = require('../../constants/routes.json');
+const routesJSON = require('../../constants/routes.json');
 
-type Props = {};
+interface State {
+  isSideBarOpen: boolean;
+}
+interface Props {
+  routes: any;
+}
 
-export default class Sidedrawer extends Component<Props> {
-  props: Props;
+class Sidedrawer extends Component<Props, State> {
+  state: State;
+  constructor(props: Props) {
+    super(props);
+    this.state = {
+      isSideBarOpen: true
+    };
+  }
 
   render() {
     return (
-      <Nav id="sidebar" className="active">
+      <Nav id="sidebar" className="sidebar active">
         <div className="sidebar-header">
           <div className="d-inline-block sidebar-header__headline">
             <h4>Headline</h4>
@@ -34,21 +47,40 @@ export default class Sidedrawer extends Component<Props> {
                 <Card.Body>
                   <ul className="list-unstyled">
                     <li>
-                      <a href={`#${routes.HOME}`}>Home</a>
+                      <a href={`#${routesJSON.HOME}`}>Home</a>
                     </li>
                     <li>
-                      <a href={`#${routes.COUNTER}`}>Counter</a>
+                      <a href={`#${routesJSON.COUNTER}`}>Counter</a>
                     </li>
                     <li>
-                      <a href={`#${routes.ABOUT}`}>About</a>
+                      <a href={`#${routesJSON.ABOUT}`}>About</a>
                     </li>
                   </ul>
                 </Card.Body>
               </Accordion.Collapse>
             </Card>
           </Accordion>
+          {this.props.routes.map((prop, key) => {
+            return (
+              <div className="item" key={key}>
+                <Nav.Link
+                  as={NavLink}
+                  to={prop.layout + prop.path}
+                  className="sidebar__nav-link"
+                >
+                  {prop.name}
+                </Nav.Link>
+              </div>
+            );
+          })}
         </div>
       </Nav>
     );
   }
 }
+
+const mapStateToProps = (state: State) => ({
+  isSideBarOpen: state.isSideBarOpen
+});
+
+export default connect(mapStateToProps)(Sidedrawer);
