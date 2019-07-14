@@ -9,7 +9,6 @@ import SideDrawerNavLinks from './SideDrawerNavLinks';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHome } from '@fortawesome/free-solid-svg-icons';
-const routesJSON = require('../../constants/routes.json');
 
 interface State {
   isSideBarOpen: boolean;
@@ -45,16 +44,8 @@ class Sidedrawer extends Component<Props, State> {
               </Accordion.Toggle>
               <Accordion.Collapse eventKey="0">
                 <Card.Body>
-                  <ul className="list-unstyled">
-                    <li>
-                      <a href={`#${routesJSON.HOME}`}>Home</a>
-                    </li>
-                    <li>
-                      <a href={`#${routesJSON.COUNTER}`}>Counter</a>
-                    </li>
-                    <li>
-                      <a href={`#${routesJSON.ABOUT}`}>About</a>
-                    </li>
+                  <ul>
+                    <SideDrawerNavLinks routes={this.props.routes} as="li" />
                   </ul>
                 </Card.Body>
               </Accordion.Collapse>
