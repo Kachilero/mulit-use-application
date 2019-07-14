@@ -40,7 +40,7 @@ export default class Sidedrawer extends Component<Props> {
                       <a href={`#${routes.COUNTER}`}>Counter</a>
                     </li>
                     <li>
-                      <a href="#">Home 3</a>
+                      <a href={`#${routes.ABOUT}`}>About</a>
                     </li>
                   </ul>
                 </Card.Body>
