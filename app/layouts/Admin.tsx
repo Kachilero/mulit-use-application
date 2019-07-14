@@ -40,11 +40,6 @@ class Admin extends Component<adminProps, adminState> {
   };
 
   render() {
-    console.log('Admin State:');
-    console.log(this.state);
-    console.log('Admin Props');
-    console.log(this.props);
-
     return (
       <div id="main-child-wrapper">
         <SecondSideBar {...this.props} routes={adminRoutes} />
