@@ -20,7 +20,7 @@ class ReactMarkdown extends Component<Props, State> {
   }
 
   render() {
-    const fileURL = 'firstMarkdown.md';
+    const fileURL = 'electonReact.md';
     return (
       <div id="main-row">
         <div id="pg-content">

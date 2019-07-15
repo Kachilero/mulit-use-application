@@ -9,6 +9,7 @@ import { LayoutRoutes } from '../../Routes';
 import About from '../../views/home/About';
 import Home from '../../views/home/Home';
 import ReactMarkdown from '../../views/home/ReactMarkdown';
+import ElectronReactMarkdown from '../../views/home/ElectronReactMarkdown';
 
 export const homeRoutes: LayoutRoutes[] = [
   {
@@ -29,6 +30,13 @@ export const homeRoutes: LayoutRoutes[] = [
     path: '/react-markdown',
     name: 'React Markdown',
     component: ReactMarkdown,
+    layout: '/home',
+    icon: ''
+  },
+  {
+    path: '/electron-react',
+    name: 'Electron React',
+    component: ElectronReactMarkdown,
     layout: '/home',
     icon: ''
   }
