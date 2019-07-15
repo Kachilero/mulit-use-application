@@ -6,7 +6,6 @@ import Admin from './layouts/Admin.layout';
 import AboutPage from './containers/AboutPage.container';
 import CounterPage from './containers/CounterPage';
 import HomeLayout from './layouts/Home.layout';
-import OGHome from './views/home/Home';
 import { ReactComponentLike } from 'prop-types';
 import { RouteComponentProps } from 'react-router';
 
@@ -23,28 +22,6 @@ export interface LayoutRoutes {
   layout: string;
   icon?: string;
 }
-
-// TODO: move this to own file
-export const adminRoutes: LayoutRoutes[] = [
-  {
-    path: '/about',
-    name: 'About',
-    component: AboutPage,
-    layout: '/admin'
-  },
-  {
-    path: '/home',
-    name: 'Home',
-    component: OGHome,
-    layout: '/admin'
-  },
-  {
-    path: '/counter',
-    name: 'Counter',
-    component: CounterPage,
-    layout: '/admin'
-  }
-];
 
 // TODO: change this....some how
 export default () => (
