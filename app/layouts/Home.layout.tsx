@@ -35,7 +35,7 @@ class HomeLayout extends Component<homeProps, homeState> {
   render() {
     return (
       <div id="main-child-wrapper">
-        <Sidedrawer {...this.props} routes={homeRoutes} />
+        <Sidedrawer {...this.props} routes={homeRoutes} headline="Home" />
         <main role="main" id="main-window" className="flex-shrink-0 pd__large">
           <Switch>{this.getRoutes(homeRoutes)}</Switch>
         </main>

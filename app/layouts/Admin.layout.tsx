@@ -39,11 +39,11 @@ class AdminLayout extends Component<adminProps, adminState> {
       );
     });
   };
-// TODO: change the render to call the switch right after main
+  // TODO: change the render to call the switch right after main
   render() {
     return (
       <div id="main-child-wrapper">
-        <Sidedrawer {...this.props} routes={adminRoutes} />
+        <Sidedrawer {...this.props} routes={adminRoutes} headline="Admin" />
         <main role="main" id="main-window" className="flex-shrink-0 pd__large">
           <div id="main-row">
             <div id="pg-content">

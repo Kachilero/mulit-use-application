@@ -15,6 +15,7 @@ interface State {
 }
 interface Props {
   routes: any;
+  headline: string;
 }
 
 class Sidedrawer extends Component<Props, State> {
@@ -31,7 +32,7 @@ class Sidedrawer extends Component<Props, State> {
       <Nav id="sidebar" className="sidebar active">
         <div className="sidebar-header">
           <div className="d-inline-block sidebar-header__headline">
-            <h4>Headline</h4>
+            <h4 className="text-center">{this.props.headline}</h4>
           </div>
         </div>
         {/* Sidebar links go here */}
