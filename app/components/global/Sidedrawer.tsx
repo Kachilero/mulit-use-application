@@ -3,12 +3,12 @@
  */
 import * as React from 'react';
 import { Component } from 'react';
-import { Accordion, Card, Nav } from 'react-bootstrap';
+import { Nav } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import SideDrawerNavLinks from './SideDrawerNavLinks';
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHome } from '@fortawesome/free-solid-svg-icons';
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+// import { faHome } from '@fortawesome/free-solid-svg-icons';
 
 interface State {
   isSideBarOpen: boolean;
@@ -36,7 +36,7 @@ class Sidedrawer extends Component<Props, State> {
         </div>
         {/* Sidebar links go here */}
         <div className="components">
-          <Accordion>
+          {/*<Accordion>
             <Card>
               <Accordion.Toggle as={Card.Header} eventKey="0">
                 <FontAwesomeIcon icon={faHome} />
@@ -53,7 +53,7 @@ class Sidedrawer extends Component<Props, State> {
                 </Card.Body>
               </Accordion.Collapse>
             </Card>
-          </Accordion>
+          </Accordion>*/}
           <SideDrawerNavLinks
             {...this.props}
             routes={this.props.routes}
