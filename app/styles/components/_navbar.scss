@@ -4,3 +4,7 @@
 .navbar.fixed-top {
   position: fixed !important;
 }
+
+.nav-link.active {
+  background-color: lighten($react-dark, 10);
+}

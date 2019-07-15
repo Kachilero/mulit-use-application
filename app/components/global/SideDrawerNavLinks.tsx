@@ -8,7 +8,6 @@ import { Nav } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
 
 interface State {}
-
 interface Props {
   routes: any;
   as?: string;
@@ -20,14 +19,20 @@ class SideDrawerNavLinks extends Component<Props, State> {
     super(props);
   }
 
+  static activeRoute(passedRoute) {
+    // Had to go the simple JS route
+    return window.location.href.indexOf(passedRoute) > -1 ? 'active' : '';
+  }
+
   render() {
-    console.log('Children');
-    console.log(this.props.as);
     return (
       <>
         {this.props.routes.map((props, key) => {
+          let isActive = SideDrawerNavLinks.activeRoute(
+            props.layout + props.path
+          );
           return (
-            <div className="item" key={key}>
+            <div className={`item ${isActive}`} key={key}>
               <Nav.Link
                 as={NavLink}
                 to={props.layout + props.path}

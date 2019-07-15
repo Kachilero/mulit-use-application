@@ -16,6 +16,10 @@ type Props = {};
 export default class Header extends Component<Props> {
   props: Props;
 
+  static activeRoute(passedRoute) {
+    return window.location.href.indexOf(passedRoute) > -1 ? 'active' : '';
+  }
+
   render() {
     return (
       <Navbar
@@ -26,10 +30,30 @@ export default class Header extends Component<Props> {
         <Navbar.Brand>Multi Use App</Navbar.Brand>
         <NavbarToggle aria-controls="main-navbar-nav" />
         <NavbarCollapse id="main-navbar-nav">
-          <NavLink href={`#${routes.HOME}`}>Home</NavLink>
-          <NavLink href={`#${routes.ADMIN}/home`}>Admin</NavLink>
-          <NavLink href={`#${routes.ABOUT}`}>About</NavLink>
-          <NavLink href={`#${routes.COUNTER}`}>Counter</NavLink>
+          <NavLink
+            href={`#${routes.HOME}`}
+            className={Header.activeRoute(routes.HOME)}
+          >
+            Home
+          </NavLink>
+          <NavLink
+            href={`#${routes.ADMIN}/home`}
+            className={Header.activeRoute(routes.ADMIN)}
+          >
+            Admin
+          </NavLink>
+          <NavLink
+            href={`#${routes.ABOUT}`}
+            className={Header.activeRoute(routes.ABOUT)}
+          >
+            About
+          </NavLink>
+          <NavLink
+            href={`#${routes.COUNTER}`}
+            className={Header.activeRoute(routes.COUNTER)}
+          >
+            Counter
+          </NavLink>
         </NavbarCollapse>
       </Navbar>
     );

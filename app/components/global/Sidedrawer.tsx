@@ -45,13 +45,20 @@ class Sidedrawer extends Component<Props, State> {
               <Accordion.Collapse eventKey="0">
                 <Card.Body>
                   <ul>
-                    <SideDrawerNavLinks routes={this.props.routes} as="li" />
+                    <SideDrawerNavLinks
+                      {...this.props}
+                      routes={this.props.routes}
+                    />
                   </ul>
                 </Card.Body>
               </Accordion.Collapse>
             </Card>
           </Accordion>
-          <SideDrawerNavLinks routes={this.props.routes} as="div" />
+          <SideDrawerNavLinks
+            {...this.props}
+            routes={this.props.routes}
+            as="div"
+          />
         </div>
       </Nav>
     );

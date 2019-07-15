@@ -57,6 +57,10 @@
         display: none;
       }
     }
+
+    &.active {
+      background-color: lighten($react-dark, 10);
+    }
   }
 
   .accordion {
