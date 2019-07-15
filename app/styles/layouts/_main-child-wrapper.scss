@@ -2,7 +2,7 @@
 
 #main-child-wrapper {
   display: flex;
-  width: 100vw;
+  width: 100%;
   align-items: stretch;
   padding-top: 57px;
 
@@ -16,6 +16,10 @@
 
     &.pd__large {
       padding-left: 250px;
+    }
+
+    #pg-content {
+      max-width: calc(100% - 30px);
     }
   }
 }
