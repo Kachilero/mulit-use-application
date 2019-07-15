@@ -13,7 +13,7 @@ import Counter from '../../components/Counter';
 export const homeRoutes: LayoutRoutes[] = [
   {
     path: '/home',
-    name: 'Home',
+    name: 'Welcome',
     component: Home,
     layout: '/home',
     icon: ''
