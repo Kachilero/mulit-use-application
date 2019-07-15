@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Component } from 'react';
 import { Col, Row, Image, Container } from 'react-bootstrap';
+const { shell } = require('electron');
 
 // Images
 const npm = require('../../constants/img/npm.png');
@@ -26,6 +27,13 @@ class Home extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
   }
+
+  // Mouse events need to return a function, not call the function directly.
+  externalURL = url => {
+    return () => {
+      shell.openExternal(url);
+    };
+  };
 
   render() {
     return (
@@ -57,31 +65,83 @@ class Home extends Component<Props, State> {
           <Container>
             <Row className="py-3">
               <Col sm={6} md={3} style={imageStyles}>
-                <Image src={npm} fluid />
+                <Image
+                  src={npm}
+                  alt={'NPM'}
+                  onClick={this.externalURL('https://www.npmjs.com/')}
+                  style={{ cursor: 'pointer' }}
+                  fluid
+                />
               </Col>
               <Col sm={6} md={3} style={imageStyles}>
-                <Image src={reactImg} fluid />
+                <Image
+                  src={reactImg}
+                  alt={'React'}
+                  onClick={this.externalURL('https://reactjs.org/')}
+                  style={{ cursor: 'pointer' }}
+                  fluid
+                />
               </Col>
               <Col sm={6} md={3} style={imageStyles}>
-                <Image src={reactRouter} fluid />
+                <Image
+                  src={reactRouter}
+                  alt={'React Router'}
+                  onClick={this.externalURL(
+                    'https://reacttraining.com/react-router/'
+                  )}
+                  style={{ cursor: 'pointer' }}
+                  fluid
+                />
               </Col>
               <Col sm={6} md={3} style={imageStyles}>
-                <Image src={redux} fluid />
+                <Image
+                  src={redux}
+                  alt={'Redux'}
+                  onClick={this.externalURL('https://redux.js.org/')}
+                  style={{ cursor: 'pointer' }}
+                  fluid
+                />
               </Col>
             </Row>
 
             <Row className="py-3">
               <Col sm={6} md={3} style={imageStyles}>
-                <Image src={webpack} fluid />
+                <Image
+                  src={webpack}
+                  alt={'webpack'}
+                  onClick={this.externalURL('https://webpack.js.org/')}
+                  style={{ cursor: 'pointer' }}
+                  fluid
+                />
               </Col>
               <Col sm={6} md={3} style={imageStyles}>
-                <Image src={reactBootstrap} fluid style={{ maxWidth: '60%' }} />
+                <Image
+                  src={reactBootstrap}
+                  alt={'React Bootstrap'}
+                  onClick={this.externalURL(
+                    'https://react-bootstrap.github.io/'
+                  )}
+                  style={{ cursor: 'pointer', maxWidth: '60%' }}
+                  fluid
+                />
               </Col>
               <Col sm={6} md={3} style={imageStyles}>
-                <Image src={ts} fluid style={{ width: '130px' }} />
+                <Image
+                  src={ts}
+                  alt={'TypeScript'}
+                  onClick={this.externalURL('https://www.typescriptlang.org/')}
+                  style={{ cursor: 'pointer', width: '130px' }}
+                  fluid
+                />
               </Col>
               <Col sm={6} md={3} style={imageStyles}>
-                <Image src={electron} fluid />
+                <Image
+                  src={electron}
+                  alt={'Electron'}
+                  onClick={this.externalURL('https://electronjs.org/')}
+                  style={{ cursor: 'pointer' }}
+                  fluid
+                />
               </Col>
             </Row>
           </Container>
