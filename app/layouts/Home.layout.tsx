@@ -32,6 +32,20 @@ class HomeLayout extends Component<homeProps, homeState> {
     });
   };
 
+  componentDidMount(): void {
+    // Make sure we're at the top of the page when we navigate between views
+    window.scrollTo(0, 0);
+  }
+
+  componentDidUpdate(
+    prevProps: Readonly<homeProps>,
+    prevState: Readonly<homeState>,
+    snapshot?: any
+  ): void {
+    // Make sure we're at the top of the page when we navigate between views
+    window.scrollTo(0, 0);
+  }
+
   render() {
     return (
       <div id="main-child-wrapper">
