@@ -6,7 +6,7 @@ import Admin from './layouts/Admin.layout';
 import AboutPage from './containers/AboutPage.container';
 import CounterPage from './containers/CounterPage';
 import HomeLayout from './layouts/Home.layout';
-import OGHome from './components/OgHome';
+import OGHome from './views/home/Home';
 import { ReactComponentLike } from 'prop-types';
 import { RouteComponentProps } from 'react-router';
 

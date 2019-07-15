@@ -7,7 +7,7 @@ import { Component } from 'react';
 import { Col, Row } from 'react-bootstrap';
 
 // Components
-import OgHome from './OgHome';
+import Home from '../views/home/Home';
 
 // Actions
 // import { addActiveClass, flipSideState } from '../actions/sideDrawer';
@@ -35,7 +35,7 @@ export default class MainWindow extends Component<Props> {
             <div id="pg-content">
               <Row>
                 <Col xl="10" md="9" xs="12" className="main-module">
-                  <OgHome />
+                  <Home />
                 </Col>
               </Row>
             </div>

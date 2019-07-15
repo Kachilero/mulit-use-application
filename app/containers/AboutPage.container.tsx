@@ -3,7 +3,7 @@
  *
  */
 import { connect } from 'react-redux';
-import About from '../components/About';
+import About from '../views/home/About';
 
 export interface aboutState {}
 

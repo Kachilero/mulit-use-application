@@ -6,15 +6,15 @@
 import { LayoutRoutes } from '../../Routes';
 
 // Components
-import About from '../../components/About';
-import OgHome from '../../components/OgHome';
+import About from '../../views/home/About';
+import Home from '../../views/home/Home';
 import Counter from '../../components/Counter';
 
 export const homeRoutes: LayoutRoutes[] = [
   {
     path: '/home',
     name: 'Home',
-    component: OgHome,
+    component: Home,
     layout: '/home',
     icon: ''
   },

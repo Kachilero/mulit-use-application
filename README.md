@@ -14,7 +14,7 @@ I may also use some things from the [React-Admin](https://github.com/marmelab/re
 2. DONE => Create sidebar
 3. Create a default view for `main-window` which loads links to documentation and the inspiration pages above as well as this README.
 4. Create a way to switch projects, which will change what's in the sidebar and the main window.
-5. Wire sidebar links to switch out the `view` in the main container
+5. Need to adjust the way the side bar builds the menus so that I can switch to an accordion or something else when I want
 6. Have a way for the side drawer to collapse down, and the main window to take up the space.
 
 ## Notes about this build

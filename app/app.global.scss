@@ -13,7 +13,10 @@
 
 // Defauls
 
+// Layouts
+@import 'styles/layouts/main-wrapper';
+@import 'styles/layouts/main-child-wrapper';
+
 // Components
-@import 'styles/components/home-page';
 @import 'styles/components/navbar';
 @import 'styles/components/sidebar';
