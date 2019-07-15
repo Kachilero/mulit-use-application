@@ -8,7 +8,7 @@ import { LayoutRoutes } from '../../Routes';
 // Components
 import About from '../../views/home/About';
 import Home from '../../views/home/Home';
-import Counter from '../../components/Counter';
+import ReactMarkdown from '../../views/home/ReactMarkdown';
 
 export const homeRoutes: LayoutRoutes[] = [
   {
@@ -26,9 +26,9 @@ export const homeRoutes: LayoutRoutes[] = [
     icon: ''
   },
   {
-    path: '/counter',
-    name: 'Counter',
-    component: Counter,
+    path: '/react-markdown',
+    name: 'React Markdown',
+    component: ReactMarkdown,
     layout: '/home',
     icon: ''
   }

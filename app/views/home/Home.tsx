@@ -21,7 +21,7 @@ const imageStyles = {
   alignItems: 'center'
 };
 
-export default class Home extends Component<Props, State> {
+class Home extends Component<Props, State> {
   state: State;
   constructor(props: Props) {
     super(props);
@@ -90,3 +90,6 @@ export default class Home extends Component<Props, State> {
     );
   }
 }
+
+// Chande this to use connect if needed
+export default Home;

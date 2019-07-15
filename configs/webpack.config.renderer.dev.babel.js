@@ -182,6 +182,11 @@ export default merge.smart(baseConfig, {
       {
         test: /\.(?:ico|gif|png|jpg|jpeg|webp)$/,
         use: 'url-loader'
+      },
+      // Markdown files
+      {
+        test: /\.md$/,
+        use: 'file-loader'
       }
     ]
   },
