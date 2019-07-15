@@ -20,14 +20,14 @@ class ReactMarkdown extends Component<Props, State> {
   }
 
   render() {
-    const fileURL = 'firstMarkdown.md';
+    const fileURL = 'reactMarkdown.md';
     return (
       <div id="main-row">
         <div id="pg-content">
           <Container>
             <Row>
               <Col md={12} id="markdown-render">
-                <MarkdownRenderer mdFilePath={fileURL} />
+                <MarkdownRenderer mdFilePath={fileURL} escapeHtml={false} />
               </Col>
             </Row>
           </Container>

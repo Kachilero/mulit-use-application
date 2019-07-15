@@ -4,6 +4,7 @@
  * @var state.markdown string This will be the markdown file to parse
  * @var state.stylesheet string This is the relative URL of the stylesheet to use
  * @var props.mdFilePath string The name of the markdown file
+ * @var props.escapeHtml boolean Whether to render HTML - see docs
  *
  * @return React.Component
  *
@@ -20,6 +21,7 @@ type State = {
 };
 type Props = {
   mdFilePath: string;
+  escapeHtml: boolean;
 };
 
 class MarkdownRenderer extends Component<Props, State> {
@@ -57,6 +59,7 @@ class MarkdownRenderer extends Component<Props, State> {
       <ReactMarkdown
         source={markdown}
         renderers={{ code: MarkdownCodeBlock }}
+        escapeHtml={this.props.escapeHtml}
       />
     );
   }

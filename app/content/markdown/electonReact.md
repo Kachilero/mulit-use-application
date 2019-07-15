@@ -1,3 +1,7 @@
+# Electron React Boilerplate
+
+A foundation for scalable cross-platform apps
+
 ## Install
 
 - **If you have installation or compilation issues with this project, please see [our debugging guide](https://github.com/electron-react-boilerplate/electron-react-boilerplate/issues/400)**

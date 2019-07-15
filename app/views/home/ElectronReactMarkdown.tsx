@@ -27,7 +27,7 @@ class ReactMarkdown extends Component<Props, State> {
           <Container>
             <Row>
               <Col md={12} id="markdown-render">
-                <MarkdownRenderer mdFilePath={fileURL} />
+                <MarkdownRenderer mdFilePath={fileURL} escapeHtml={true} />
               </Col>
             </Row>
           </Container>
