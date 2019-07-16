@@ -7,13 +7,14 @@ import * as React from 'react';
 import { Component } from 'react';
 import hljs from 'highlight.js';
 
-type State = {
+interface State {
   codeEl: any;
-};
-type Props = {
+}
+
+interface Props {
   value: string;
   language?: string;
-};
+}
 
 class MarkdowCodeBlock extends Component<Props, State> {
   state: State;

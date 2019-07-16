@@ -15,14 +15,14 @@ import { Component } from 'react';
 import ReactMarkdown from 'react-markdown';
 import MarkdownCodeBlock from './MarkdowCodeBlock';
 
-type State = {
+interface State {
   markdown: string;
   styleSheet: string;
-};
-type Props = {
+}
+interface Props {
   mdFilePath: string;
   escapeHtml: boolean;
-};
+}
 
 class MarkdownRenderer extends Component<Props, State> {
   state: State;

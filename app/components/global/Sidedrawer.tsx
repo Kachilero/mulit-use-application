@@ -4,39 +4,52 @@
 import * as React from 'react';
 import { Component } from 'react';
 import { Nav } from 'react-bootstrap';
-import { connect } from 'react-redux';
 import SideDrawerNavLinks from './SideDrawerNavLinks';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronLeft, faHome } from '@fortawesome/free-solid-svg-icons';
 
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 // import { faHome } from '@fortawesome/free-solid-svg-icons';
 
-interface State {
-  isSideBarOpen: boolean;
-}
+interface State {}
 interface Props {
   routes: any;
   headline: string;
+  isOpen: boolean;
+  onClick: () => void;
 }
 
 class Sidedrawer extends Component<Props, State> {
   state: State;
   constructor(props: Props) {
     super(props);
-    this.state = {
-      isSideBarOpen: true
-    };
   }
 
   render() {
+    const sideBarClass: string = this.props.isOpen
+      ? 'sidebar active'
+      : 'sidebar';
+
     return (
-      <Nav id="sidebar" className="sidebar active">
+      <Nav id="sidebar" className={sideBarClass}>
         <div className="sidebar-header">
+          <FontAwesomeIcon
+            icon={faHome}
+            className="d-inline-block sidebar-header__icon"
+          />
           <div className="d-inline-block sidebar-header__headline">
             <h4 className="text-center">{this.props.headline}</h4>
           </div>
+          <a
+            href="#"
+            className="sidebar-header__link"
+            onClick={this.props.onClick}
+          >
+            <FontAwesomeIcon icon={faChevronLeft} />
+          </a>
         </div>
         {/* Sidebar links go here */}
-        <div className="components">
+        <div id="components">
           {/*<Accordion>
             <Card>
               <Accordion.Toggle as={Card.Header} eventKey="0">
@@ -66,8 +79,4 @@ class Sidedrawer extends Component<Props, State> {
   }
 }
 
-const mapStateToProps = (state: State) => ({
-  isSideBarOpen: state.isSideBarOpen
-});
-
-export default connect(mapStateToProps)(Sidedrawer);
+export default Sidedrawer;
