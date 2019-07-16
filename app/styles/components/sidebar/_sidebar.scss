@@ -7,22 +7,30 @@
   min-width: 80px;
   max-width: 80px;
   min-height: 100vh;
+  overflow-x:hidden;
   position: fixed;
   transition: all 0.5s;
   flex-direction: column;
   z-index: 999;
 
   .sidebar-header {
-    padding: 16px 0 16px 16px;
+    display: flex;
+    justify-content: center;
+    padding: 16px 0;
     position: relative;
 
-    .sidebar-header__headline {
-      opacity: 0;
-      transition: opacity 0.3s;
-      width: 30px;
+    &__icon {
+      font-size: 1.5rem;
+      margin-left: 40px;
+      margin-right: 0;
     }
 
-    .sidebar-header__link {
+    &__headline {
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    &__link {
       background-color: lighten($react-dark, 10);
       border: 1px solid lighten($react-dark, 20);
       position: absolute;
@@ -50,7 +58,7 @@
 
     a {
       color: #fff;
-      font-size: 1.3rem;
+      font-size: 1rem;
 
       span {
         padding-left: 10px;
@@ -81,50 +89,5 @@
     ul li a {
       color: #fff;
     }
-  }
-
-  &.active {
-    min-width: 250px;
-    max-width: 250px;
-
-    .sidebar-header {
-      .sidebar-header__headline {
-        opacity: 1;
-        width: 80%;
-      }
-
-      .sidebar-header__link svg {
-        -webkit-transform: rotate(0);
-        transform: rotate(0);
-      }
-    }
-
-    .item {
-      text-align: left;
-
-      a {
-        font-size: 1rem;
-
-        span {
-          display: inline;
-        }
-      }
-    }
-
-    .accordion {
-      .card-header {
-        text-align: left;
-        font-size: 1rem;
-
-        span {
-          display: inline;
-          padding-left: 10px;
-        }
-      }
-    }
-  }
-
-  .components {
-    width: 100%;
   }
 }

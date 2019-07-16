@@ -20,4 +20,8 @@
 // Components
 @import 'styles/components/markdown-overrides';
 @import 'styles/components/navbar';
-@import 'styles/components/sidebar';
+
+// Sidebar
+@import 'styles/components/sidebar/sidebar';
+@import 'styles/components/sidebar/sidebar-active';
+@import 'styles/components/sidebar/sidebar-components';
