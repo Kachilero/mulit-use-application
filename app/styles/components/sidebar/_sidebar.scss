@@ -1,93 +1,14 @@
 // Main Sidebar
+// This container is the one that expands and contracts
 
 #sidebar {
   background-color: $react-dark;
-  border: 1px solid lighten($react-dark, 10);
   color: #fff;
-  min-width: 80px;
-  max-width: 80px;
-  min-height: 100vh;
-  overflow-x:hidden;
-  position: fixed;
+  min-width: 250px;
+  max-width: 250px;
+  min-height: 100%;
+  overflow-x: hidden;
   transition: all 0.5s;
-  flex-direction: column;
-  z-index: 999;
-
-  .sidebar-header {
-    display: flex;
-    justify-content: center;
-    padding: 16px 0;
-    position: relative;
-
-    &__icon {
-      font-size: 1.5rem;
-      margin-left: 40px;
-      margin-right: 0;
-    }
-
-    &__headline {
-      opacity: 0;
-      transition: opacity 0.3s;
-    }
-
-    &__link {
-      background-color: lighten($react-dark, 10);
-      border: 1px solid lighten($react-dark, 20);
-      position: absolute;
-      top: 0;
-      right: 0;
-      padding: 16px 8px;
-
-      svg {
-        transition: transform 0.5s;
-        color: #fff;
-        -webkit-transform: rotate(180deg);
-        transform: rotate(180deg);
-      }
-    }
-
-    .inline {
-      display: inline;
-    }
-  }
-
-  .item {
-    padding: 0.75rem 1.25rem;
-    text-align: center;
-    width: 100%;
-
-    a {
-      color: #fff;
-      font-size: 1rem;
-
-      span {
-        padding-left: 10px;
-        display: none;
-      }
-    }
-
-    &.active {
-      background-color: lighten($react-dark, 10);
-    }
-  }
-
-  .accordion {
-    .card,
-    .card-header {
-      background-color: $react-dark;
-    }
-
-    .card-header {
-      text-align: center;
-      font-size: 1.3rem;
-
-      span {
-        display: none;
-      }
-    }
-
-    ul li a {
-      color: #fff;
-    }
-  }
+  //flex-direction: column;
+  //z-index: 999;
 }

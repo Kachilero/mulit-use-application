@@ -1,0 +1,11 @@
+// Side bar menu
+// This is the div that will float and contain all the actual elements
+#sidebar__menu {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  position: relative;
+  max-height: 100%;
+  width: 250px;
+  opacity: 1;
+}

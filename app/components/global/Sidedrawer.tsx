@@ -31,26 +31,29 @@ class Sidedrawer extends Component<Props, State> {
       : 'sidebar';
 
     return (
-      <Nav id="sidebar" className={sideBarClass}>
-        <div className="sidebar-header">
-          <FontAwesomeIcon
-            icon={faHome}
-            className="d-inline-block sidebar-header__icon"
-          />
-          <div className="d-inline-block sidebar-header__headline">
-            <h4 className="text-center">{this.props.headline}</h4>
+      <div id="sidebar">
+        <Nav id="sidebar__menu" className={sideBarClass}>
+          <div className="sidebar-header">
+            <FontAwesomeIcon
+              icon={faHome}
+              className="d-inline-block sidebar-header__icon"
+            />
+            <div className="d-inline-block sidebar-header__headline">
+              <h4 className="text-center">{this.props.headline}</h4>
+            </div>
+            <a
+              href="#"
+              className="sidebar-header__link"
+              onClick={this.props.onClick}
+            >
+              <div className="fa-container__sidebar-header__chevron-left">
+                <FontAwesomeIcon icon={faChevronLeft} />
+              </div>
+            </a>
           </div>
-          <a
-            href="#"
-            className="sidebar-header__link"
-            onClick={this.props.onClick}
-          >
-            <FontAwesomeIcon icon={faChevronLeft} />
-          </a>
-        </div>
-        {/* Sidebar links go here */}
-        <div id="components">
-          {/*<Accordion>
+          {/* Sidebar links go here */}
+          <div id="components">
+            {/*<Accordion>
             <Card>
               <Accordion.Toggle as={Card.Header} eventKey="0">
                 <FontAwesomeIcon icon={faHome} />
@@ -68,13 +71,14 @@ class Sidedrawer extends Component<Props, State> {
               </Accordion.Collapse>
             </Card>
           </Accordion>*/}
-          <SideDrawerNavLinks
-            {...this.props}
-            routes={this.props.routes}
-            as="div"
-          />
-        </div>
-      </Nav>
+            <SideDrawerNavLinks
+              {...this.props}
+              routes={this.props.routes}
+              as="div"
+            />
+          </div>
+        </Nav>
+      </div>
     );
   }
 }

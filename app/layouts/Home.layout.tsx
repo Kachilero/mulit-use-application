@@ -63,8 +63,8 @@ class HomeLayout extends Component<homeProps, homeState> {
   render() {
     let e: any;
     const mainClass: string = this.state.isSideDrawerOpen
-      ? 'flex-shrink-0 pd__large'
-      : 'flex-shrink-0';
+      ? 'main_main'
+      : 'main_main';
     return (
       <div id="main-child-wrapper">
         <Sidedrawer

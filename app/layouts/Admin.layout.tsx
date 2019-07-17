@@ -62,7 +62,7 @@ class AdminLayout extends Component<adminProps, adminState> {
           isOpen={this.state.isSideDrawerOpen}
           onClick={this.toggleSidebar}
         />
-        <main role="main" id="main-window" className="flex-shrink-0 pd__large">
+        <main role="main" id="main-window" className="main_main">
           <Switch>{this.getRoutes(adminRoutes)}</Switch>
         </main>
       </div>
