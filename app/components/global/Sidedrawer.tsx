@@ -19,7 +19,7 @@ interface Props {
   onClick: () => void;
 }
 
-class Sidedrawer extends Component<Props, State> {
+class SideDrawer extends Component<Props, State> {
   state: State;
   constructor(props: Props) {
     super(props);
@@ -83,4 +83,4 @@ class Sidedrawer extends Component<Props, State> {
   }
 }
 
-export default Sidedrawer;
+export default SideDrawer;
