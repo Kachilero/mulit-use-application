@@ -3,7 +3,7 @@
  * */
 import * as React from 'react';
 import { Component } from 'react';
-import { Navbar, Nav, NavDropdown } from 'react-bootstrap';
+import { Navbar, NavDropdown } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsisV } from '@fortawesome/free-solid-svg-icons';
@@ -29,7 +29,6 @@ class Header extends Component<Props, State> {
   }
 
   onCollapse = () => {
-    console.log(`Logging from Header`);
     this.setState({ collapse: !this.state.collapse });
   };
 
@@ -56,14 +55,13 @@ class Header extends Component<Props, State> {
           <NavDropdown id="header-nav-dropdown" title="Main Links">
             {mainRoutes.map((props, key) => {
               return (
-                <NavDropdown.Item key={key}>
-                  <Nav.Link
-                    as={NavLink}
-                    to={props.layout + props.path}
-                    className={Header.activeRoute(props.layout + props.path)}
-                  >
-                    {props.name}
-                  </Nav.Link>
+                <NavDropdown.Item
+                  key={key}
+                  as={NavLink}
+                  to={props.layout + props.path}
+                  className={Header.activeRoute(props.layout + props.path)}
+                >
+                  {props.name}
                 </NavDropdown.Item>
               );
             })}
