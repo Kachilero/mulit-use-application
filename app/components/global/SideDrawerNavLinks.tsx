@@ -1,6 +1,8 @@
 /**
  * Creates Nav Links for the Side Drawer
  *
+ * TODO: Add ability to pass a FontAwesomeIcon
+ *
  */
 import * as React from 'react';
 import { Component } from 'react';

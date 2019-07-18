@@ -53,24 +53,6 @@ class SideDrawer extends Component<Props, State> {
           </div>
           {/* Sidebar links go here */}
           <div id="components">
-            {/*<Accordion>
-            <Card>
-              <Accordion.Toggle as={Card.Header} eventKey="0">
-                <FontAwesomeIcon icon={faHome} />
-                <span>Home Group</span>
-              </Accordion.Toggle>
-              <Accordion.Collapse eventKey="0">
-                <Card.Body>
-                  <ul>
-                    <SideDrawerNavLinks
-                      {...this.props}
-                      routes={this.props.routes}
-                    />
-                  </ul>
-                </Card.Body>
-              </Accordion.Collapse>
-            </Card>
-          </Accordion>*/}
             <SideDrawerNavLinks
               {...this.props}
               routes={this.props.routes}
