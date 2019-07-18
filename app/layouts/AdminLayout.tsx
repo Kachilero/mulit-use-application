@@ -8,7 +8,7 @@ import { Component } from 'react';
 
 import { connect } from 'react-redux';
 
-import { adminRoutes } from '../utils/routes/adminRoutes';
+import { adminRoutes } from '../constants/routes/adminRoutes';
 import { Route, Switch } from 'react-router-dom';
 import Sidedrawer from '../components/global/Sidedrawer';
 

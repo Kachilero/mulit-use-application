@@ -3,7 +3,7 @@
  */
 import { LayoutRoutes } from '../../Routes';
 import CounterPage from '../../containers/CounterPage';
-import AboutPage from '../../containers/AboutPage.container';
+import AboutPage from '../../containers/AboutPageContainer';
 
 export const adminRoutes: LayoutRoutes[] = [
   {

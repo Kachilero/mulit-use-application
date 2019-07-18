@@ -7,7 +7,7 @@ import { Component } from 'react';
 
 import { connect } from 'react-redux';
 
-import { homeRoutes } from '../utils/routes/homeRoutes';
+import { homeRoutes } from '../constants/routes/homeRoutes';
 import { Route, Switch } from 'react-router-dom';
 import Sidedrawer from '../components/global/Sidedrawer';
 

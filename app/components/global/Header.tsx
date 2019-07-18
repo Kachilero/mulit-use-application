@@ -3,15 +3,14 @@
  * */
 import * as React from 'react';
 import { Component } from 'react';
-import { Navbar } from 'react-bootstrap';
-import NavbarToggle from 'react-bootstrap/NavbarToggle';
-import NavbarCollapse from 'react-bootstrap/NavbarCollapse';
-import NavLink from 'react-bootstrap/NavLink';
+import { Navbar, Nav, NavDropdown } from 'react-bootstrap';
+import { NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsisV } from '@fortawesome/free-solid-svg-icons';
 import { connect } from 'react-redux';
+import mainRoutes from '../../constants/routes/mainRoutes';
 
-const routes = require('../../constants/routes.json');
+// const routes = require('../../constants/routes.json');
 const userDefaults = require('../../constants/userDefaults.json');
 
 interface State {
@@ -52,33 +51,24 @@ class Header extends Component<Props, State> {
           <FontAwesomeIcon icon={faEllipsisV} />
         </div>
         <Navbar.Brand>Multi Use App</Navbar.Brand>
-        <NavbarToggle aria-controls="main-navbar-nav" />
-        <NavbarCollapse id="main-navbar-nav">
-          <NavLink
-            href={`#${routes.HOME}`}
-            className={Header.activeRoute(routes.HOME)}
-          >
-            Home
-          </NavLink>
-          <NavLink
-            href={`#${routes.ADMIN}/home`}
-            className={Header.activeRoute(routes.ADMIN)}
-          >
-            Admin
-          </NavLink>
-          <NavLink
-            href={`#${routes.ABOUT}`}
-            className={Header.activeRoute(routes.ABOUT)}
-          >
-            About
-          </NavLink>
-          <NavLink
-            href={`#${routes.COUNTER}`}
-            className={Header.activeRoute(routes.COUNTER)}
-          >
-            Counter
-          </NavLink>
-        </NavbarCollapse>
+        <Navbar.Toggle aria-controls="main-navbar-nav" />
+        <Navbar.Collapse id="main-navbar-nav">
+          <NavDropdown id="header-nav-dropdown" title="Main Links">
+            {mainRoutes.map((props, key) => {
+              return (
+                <NavDropdown.Item key={key}>
+                  <Nav.Link
+                    as={NavLink}
+                    to={props.layout + props.path}
+                    className={Header.activeRoute(props.layout + props.path)}
+                  >
+                    {props.name}
+                  </Nav.Link>
+                </NavDropdown.Item>
+              );
+            })}
+          </NavDropdown>
+        </Navbar.Collapse>
       </Navbar>
     );
   }
