@@ -60,6 +60,8 @@ class HomeLayout extends Component<homeProps, homeState> {
     window.scrollTo(0, 0);
   }
 
+  // TODO Re-work this so it works like Notion website
+
   render() {
     let e: any;
     const mainClass: string = this.state.isSideDrawerOpen
