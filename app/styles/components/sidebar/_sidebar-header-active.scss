@@ -1,9 +1,0 @@
-// Sidebar header when sidebar_menu is active
-
-#sidebar__menu.active .sidebar-header {
-  background-color: lighten($react-dark, 20);
-
-  &__headline {
-    color: $black;
-  }
-}

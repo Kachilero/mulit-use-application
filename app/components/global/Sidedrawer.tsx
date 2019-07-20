@@ -31,13 +31,11 @@ class SideDrawer extends Component<Props, State> {
   }
 
   render() {
-    const sideBarClass: string = this.props.isOpen
-      ? 'sidebar active'
-      : 'sidebar';
+    const activeClass: string = this.props.isOpen ? 'active' : '';
 
     return (
-      <div id="sidebar">
-        <Nav id="sidebar__menu" className={sideBarClass}>
+      <div id="sidebar" className={activeClass}>
+        <Nav id="sidebar__menu" className={`sidebar ${activeClass}`}>
           <div className="sidebar-header">
             <FontAwesomeIcon
               icon={faHome}
