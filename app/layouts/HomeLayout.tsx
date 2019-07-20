@@ -5,23 +5,24 @@
 import * as React from 'react';
 import { Component } from 'react';
 
-import { connect } from 'react-redux';
-
 import { homeRoutes } from '../constants/routes/homeRoutes';
 import { Route, Switch } from 'react-router-dom';
-import Sidedrawer from '../components/global/Sidedrawer';
+import SideDrawer from '../components/global/Sidedrawer';
 
 interface homeState {
   isSideDrawerOpen: boolean;
 }
-interface homeProps {}
+interface homeProps {
+  sideDrawerToggle: boolean;
+  onSideDrawerClick: () => void;
+}
 
 class HomeLayout extends Component<homeProps, homeState> {
   state: homeState;
   constructor(props: homeProps) {
     super(props);
     this.state = {
-      isSideDrawerOpen: true
+      isSideDrawerOpen: this.props.sideDrawerToggle
     };
   }
 
@@ -39,10 +40,10 @@ class HomeLayout extends Component<homeProps, homeState> {
   };
 
   // This handles the state of the sidebar
-  handleClick = (e: any) => {
-    return (elem: any = e): void => {
-      elem.preventDefault();
+  handleClick = () => {
+    return (): void => {
       this.setState({ isSideDrawerOpen: !this.state.isSideDrawerOpen });
+      this.props.onSideDrawerClick();
     };
   };
 
@@ -63,18 +64,17 @@ class HomeLayout extends Component<homeProps, homeState> {
   // TODO Re-work this so it works like Notion website
 
   render() {
-    let e: any;
     const mainClass: string = this.state.isSideDrawerOpen
-      ? 'main_main'
+      ? 'main_main sd-open'
       : 'main_main';
     return (
       <div id="main-child-wrapper">
-        <Sidedrawer
+        <SideDrawer
           {...this.props}
           routes={homeRoutes}
           headline="Home"
           isOpen={this.state.isSideDrawerOpen}
-          onClick={this.handleClick(e)}
+          onClick={this.handleClick()}
         />
         <main role="main" id="main-window" className={mainClass}>
           <Switch>{this.getRoutes(homeRoutes)}</Switch>
@@ -84,4 +84,4 @@ class HomeLayout extends Component<homeProps, homeState> {
   }
 }
 
-export default connect()(HomeLayout);
+export default HomeLayout;

@@ -6,6 +6,8 @@
  * */
 import { connect } from 'react-redux';
 import HomeLayout from '../layouts/HomeLayout';
+import { toggleSideDrawer } from '../store/sideDrawer/sideDrawer.actions';
+import { Dispatch } from 'redux';
 
 export interface homeState {}
 
@@ -13,4 +15,15 @@ function mapStateToProps(state: homeState) {
   return state;
 }
 
-export default connect(mapStateToProps)(HomeLayout);
+const mapDispatchToProps = (dispatch: Dispatch) => {
+  return {
+    onSideDrawerClick: () => {
+      dispatch(toggleSideDrawer());
+    }
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(HomeLayout);

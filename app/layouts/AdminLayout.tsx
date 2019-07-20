@@ -6,29 +6,24 @@
 import * as React from 'react';
 import { Component } from 'react';
 
-import { connect } from 'react-redux';
-
 import { adminRoutes } from '../constants/routes/adminRoutes';
 import { Route, Switch } from 'react-router-dom';
-import Sidedrawer from '../components/global/Sidedrawer';
+import SideDrawer from '../components/global/Sidedrawer';
 
 interface adminState {
   isSideDrawerOpen: boolean;
 }
-interface adminProps {}
-
-// Faking it here
-type AppState = {
-  stateOne;
-  stateTwo;
-};
+interface adminProps {
+  sideDrawerToggle: boolean;
+  onSideDrawerClick: () => void;
+}
 
 class AdminLayout extends Component<adminProps, adminState> {
   state: adminState;
   constructor(props: adminProps) {
     super(props);
     this.state = {
-      isSideDrawerOpen: true
+      isSideDrawerOpen: this.props.sideDrawerToggle
     };
   }
 
@@ -44,25 +39,41 @@ class AdminLayout extends Component<adminProps, adminState> {
     });
   };
 
-  toggleSidebar = () => {
+  handleClick = () => {
     return (): void => {
-      console.log(`Click: ${this.state.isSideDrawerOpen}`);
       this.setState({ isSideDrawerOpen: !this.state.isSideDrawerOpen });
+      this.props.onSideDrawerClick();
     };
   };
 
-  // TODO: change the render to call the switch right after main
+  componentDidMount(): void {
+    // Make sure we're at the top of the page when we navigate between views
+    window.scrollTo(0, 0);
+  }
+
+  componentDidUpdate(
+    prevProps: Readonly<adminProps>,
+    prevState: Readonly<adminState>,
+    snapshot?: any
+  ): void {
+    // Make sure we're at the top of the page when we navigate between views
+    window.scrollTo(0, 0);
+  }
+
   render() {
+    const mainClass: string = this.state.isSideDrawerOpen
+      ? 'main_main sd-open'
+      : 'main_main';
     return (
       <div id="main-child-wrapper">
-        <Sidedrawer
+        <SideDrawer
           {...this.props}
           routes={adminRoutes}
           headline="Admin"
           isOpen={this.state.isSideDrawerOpen}
-          onClick={this.toggleSidebar}
+          onClick={this.handleClick()}
         />
-        <main role="main" id="main-window" className="main_main">
+        <main role="main" id="main-window" className={mainClass}>
           <Switch>{this.getRoutes(adminRoutes)}</Switch>
         </main>
       </div>
@@ -70,9 +81,4 @@ class AdminLayout extends Component<adminProps, adminState> {
   }
 }
 
-const mapStateToProps = (state: AppState) => ({
-  stateOne: state.stateOne,
-  stateTwo: state.stateTwo
-});
-
-export default connect(mapStateToProps)(AdminLayout);
+export default AdminLayout;

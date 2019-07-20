@@ -42,7 +42,14 @@ This is a breakdown of the file structure
     - NAMED_FOLDERS { each of these holds the actions, reducers and type definitions needed by its named component }
   - styles { SCSS style folders and files }
     - globals { styling that is applied globally }
+
       - bootstrap { import needed bootstrap styles here }
+
+### Notes
+
+- One thing that is only briefly mentioned in the Redux [docs](https://redux.js.org/basics/usage-with-react) is that
+  - **Presentational Components** ONLY change data by invoking callbacks
+  - **Container Components** USE REDUX
 
 ### File load order
 

@@ -11,7 +11,9 @@ import { faChevronLeft, faHome } from '@fortawesome/free-solid-svg-icons';
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 // import { faHome } from '@fortawesome/free-solid-svg-icons';
 
-interface State {}
+interface State {
+  isOpen: boolean;
+}
 interface Props {
   routes: any;
   headline: string;
@@ -23,6 +25,9 @@ class SideDrawer extends Component<Props, State> {
   state: State;
   constructor(props: Props) {
     super(props);
+    this.state = {
+      isOpen: this.props.isOpen
+    };
   }
 
   render() {
@@ -44,7 +49,11 @@ class SideDrawer extends Component<Props, State> {
             <a
               href="#"
               className="sidebar-header__link"
-              onClick={this.props.onClick}
+              onClick={e => {
+                e.preventDefault();
+                this.setState({ isOpen: !this.state.isOpen });
+                this.props.onClick();
+              }}
             >
               <div className="fa-container__sidebar-header__chevron-left">
                 <FontAwesomeIcon icon={faChevronLeft} />
