@@ -4,8 +4,7 @@ import { toggleSideDrawer } from '../store/sideDrawer/sideDrawer.actions';
 import { Dispatch } from 'redux';
 
 export interface AppState {
-  // true: open / false: closed
-  isOpen: boolean;
+  sideDrawerToggle: boolean;
 }
 
 function mapStateToProps(state: AppState) {

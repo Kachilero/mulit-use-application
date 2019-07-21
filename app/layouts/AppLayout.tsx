@@ -7,16 +7,22 @@ import Header from '../components/global/Header';
 
 export interface AppLayoutProps {
   children;
-  isOpen: boolean;
+  sideDrawerReducer?: {
+    [key: string]: boolean;
+  };
   toggleSideDrawer: () => void;
 }
 
 class AppLayout extends React.Component<AppLayoutProps> {
   render() {
-    const { children, isOpen, toggleSideDrawer } = this.props;
+    const { children, sideDrawerReducer, toggleSideDrawer } = this.props;
     return (
       <div id="main-wrapper">
-        <Header isOpen={isOpen} toggleSideDrawer={toggleSideDrawer} />
+        <Header
+          isOpen={sideDrawerReducer.isOpen}
+          hoverState={sideDrawerReducer.hoverState}
+          toggleSideDrawer={toggleSideDrawer}
+        />
         <React.Fragment>{children}</React.Fragment>
       </div>
     );

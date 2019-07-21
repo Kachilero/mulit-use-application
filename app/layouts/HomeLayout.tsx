@@ -11,7 +11,11 @@ import SideDrawer from '../components/global/Sidedrawer';
 
 interface homeState {}
 interface homeProps {
-  isOpen: boolean;
+  // isOpen: boolean
+  // hoverState: boolean
+  sideDrawerReducer: {
+    [key: string]: boolean;
+  };
   onSideDrawerClick: () => void;
 }
 
@@ -57,7 +61,7 @@ class HomeLayout extends Component<homeProps> {
   // TODO Re-work this so it works like Notion website
 
   render() {
-    const mainClass: string = this.props.isOpen
+    const mainClass: string = this.props.sideDrawerReducer.isOpen
       ? 'main_main sd-open'
       : 'main_main';
     return (
@@ -66,7 +70,7 @@ class HomeLayout extends Component<homeProps> {
           {...this.props}
           routes={homeRoutes}
           headline="Home"
-          isOpen={this.props.isOpen}
+          isOpen={this.props.sideDrawerReducer.isOpen}
           onClick={() => this.handleClick()}
         />
         <main role="main" id="main-window" className={mainClass}>

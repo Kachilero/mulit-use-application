@@ -13,16 +13,17 @@ export interface LayoutRoutes {
   icon?: string;
 }
 
-// TODO: change this....some how
-export default () => (
-  <App>
-    <Switch>
-      {mainRoutes.map((props, key) => {
-        return (
-          <Route key={key} path={props.path} component={props.component} />
-        );
-      })}
-      <Redirect from="/" to="/home/home" />
-    </Switch>
-  </App>
-);
+export default () => {
+  return (
+    <App>
+      <Switch>
+        {mainRoutes.map((props, key) => {
+          return (
+            <Route key={key} path={props.path} component={props.component} />
+          );
+        })}
+        <Redirect from="/" to="/home/home" />
+      </Switch>
+    </App>
+  );
+};

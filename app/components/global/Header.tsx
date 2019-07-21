@@ -24,6 +24,7 @@ interface State {}
 
 interface Props {
   isOpen: boolean;
+  hoverState: boolean;
   toggleSideDrawer: () => void;
 }
 
