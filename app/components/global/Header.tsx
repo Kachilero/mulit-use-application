@@ -36,22 +36,26 @@ class Header extends Component<Props, State> {
     super(props);
     this.onCollapse = this.onCollapse.bind(this);
     this.state = {
-      isSideDrawerOpen: !this.props.isOpen,
+      isSideDrawerOpen: this.props.isOpen,
       activeClass: this.props.isOpen ? '' : 'active'
     };
   }
 
   // Handles the click event
   onCollapse = () => {
-    this.setState({ isSideDrawerOpen: !this.state.isSideDrawerOpen });
-    this.setState({ activeClass: this.state.isSideDrawerOpen ? '' : 'active' });
+    this.setState({
+      isSideDrawerOpen: this.props.isOpen,
+      activeClass: this.props.isOpen ? '' : 'active'
+    });
     this.props.toggleSideDrawer();
   };
 
   // Here we ensure that state and props are in line with each other
   onPropChange = () => {
-    this.setState({ isSideDrawerOpen: this.props.isOpen });
-    this.setState({ activeClass: this.props.isOpen ? '' : 'active' });
+    this.setState(prevState => ({
+      isSideDrawerOpen: !prevState.isSideDrawerOpen,
+      activeClass: !prevState.isSideDrawerOpen ? '' : 'active'
+    }));
   };
 
   // Sets active class on link based on route

@@ -13,6 +13,7 @@ import { faChevronLeft, faHome } from '@fortawesome/free-solid-svg-icons';
 
 interface State {
   isOpen: boolean;
+  activeClass: string;
 }
 interface Props {
   routes: any;
@@ -25,17 +26,40 @@ class SideDrawer extends Component<Props, State> {
   state: State;
   constructor(props: Props) {
     super(props);
+    this.onCollapse = this.onCollapse.bind(this);
     this.state = {
-      isOpen: this.props.isOpen
+      isOpen: this.props.isOpen,
+      activeClass: this.props.isOpen ? 'active' : ''
     };
   }
 
-  render() {
-    const activeClass: string = this.props.isOpen ? 'active' : '';
+  // handles click event
+  onCollapse = () => {
+    this.props.onClick();
+  };
 
+  // Changes active class in case props are changed by another componenet
+  onPropChange = () => {
+    this.setState(prevState => ({
+      isOpen: !prevState.isOpen,
+      activeClass: !prevState.isOpen ? 'active' : ''
+    }));
+  };
+
+  componentDidUpdate(
+    prevProps: Readonly<Props>,
+    prevState: Readonly<State>,
+    snapshot?: any
+  ): void {
+    if (prevProps.isOpen !== this.props.isOpen) {
+      this.onPropChange();
+    }
+  }
+
+  render() {
     return (
-      <div id="sidebar" className={activeClass}>
-        <Nav id="sidebar__menu" className={`sidebar ${activeClass}`}>
+      <div id="sidebar" className={this.state.activeClass}>
+        <Nav id="sidebar__menu" className={`sidebar ${this.state.activeClass}`}>
           <div className="sidebar-header">
             <FontAwesomeIcon
               icon={faHome}
@@ -49,8 +73,7 @@ class SideDrawer extends Component<Props, State> {
               className="sidebar-header__link"
               onClick={e => {
                 e.preventDefault();
-                this.setState({ isOpen: !this.state.isOpen });
-                this.props.onClick();
+                this.onCollapse();
               }}
             >
               <div className="fa-container__sidebar-header__chevron-left">

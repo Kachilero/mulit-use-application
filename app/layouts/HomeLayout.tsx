@@ -52,6 +52,12 @@ class HomeLayout extends Component<homeProps, homeState> {
     window.scrollTo(0, 0);
   }
 
+  onPropChange = () => {
+    this.setState(prevState => ({
+      isSideDrawerOpen: this.props.sideDrawerToggle
+    }));
+  };
+
   componentDidUpdate(
     prevProps: Readonly<homeProps>,
     prevState: Readonly<homeState>,
@@ -59,6 +65,9 @@ class HomeLayout extends Component<homeProps, homeState> {
   ): void {
     // Make sure we're at the top of the page when we navigate between views
     window.scrollTo(0, 0);
+    if (prevProps.sideDrawerToggle !== this.props.sideDrawerToggle) {
+      this.onPropChange();
+    }
   }
 
   // TODO Re-work this so it works like Notion website
@@ -74,7 +83,7 @@ class HomeLayout extends Component<homeProps, homeState> {
           routes={homeRoutes}
           headline="Home"
           isOpen={this.state.isSideDrawerOpen}
-          onClick={this.handleClick()}
+          onClick={this.handleClick().bind(this)}
         />
         <main role="main" id="main-window" className={mainClass}>
           <Switch>{this.getRoutes(homeRoutes)}</Switch>
