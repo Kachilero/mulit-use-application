@@ -14,7 +14,7 @@ interface adminState {
   isSideDrawerOpen: boolean;
 }
 interface adminProps {
-  sideDrawerToggle: boolean;
+  isSDOpen: boolean;
   onSideDrawerClick: () => void;
 }
 
@@ -23,7 +23,7 @@ class AdminLayout extends Component<adminProps, adminState> {
   constructor(props: adminProps) {
     super(props);
     this.state = {
-      isSideDrawerOpen: this.props.sideDrawerToggle
+      isSideDrawerOpen: this.props.isSDOpen
     };
   }
 

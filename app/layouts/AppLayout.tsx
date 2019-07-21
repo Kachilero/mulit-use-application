@@ -7,16 +7,16 @@ import Header from '../components/global/Header';
 
 export interface AppLayoutProps {
   children;
-  sideDrawerToggle: boolean;
+  isOpen: boolean;
   toggleSideDrawer: () => void;
 }
 
 class AppLayout extends React.Component<AppLayoutProps> {
   render() {
-    const { children, sideDrawerToggle, toggleSideDrawer } = this.props;
+    const { children, isOpen, toggleSideDrawer } = this.props;
     return (
       <div id="main-wrapper">
-        <Header isOpen={sideDrawerToggle} toggleSideDrawer={toggleSideDrawer} />
+        <Header isOpen={isOpen} toggleSideDrawer={toggleSideDrawer} />
         <React.Fragment>{children}</React.Fragment>
       </div>
     );
