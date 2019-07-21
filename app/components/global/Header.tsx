@@ -20,10 +20,7 @@ import { faEllipsisV } from '@fortawesome/free-solid-svg-icons';
 import mainRoutes from '../../constants/routes/mainRoutes';
 const userDefaults = require('../../constants/userDefaults.json');
 
-interface State {
-  isSideDrawerOpen: boolean;
-  activeClass: string;
-}
+interface State {}
 
 interface Props {
   isOpen: boolean;
@@ -35,27 +32,11 @@ class Header extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.onCollapse = this.onCollapse.bind(this);
-    this.state = {
-      isSideDrawerOpen: this.props.isOpen,
-      activeClass: this.props.isOpen ? '' : 'active'
-    };
   }
 
   // Handles the click event
   onCollapse = () => {
-    this.setState({
-      isSideDrawerOpen: this.props.isOpen,
-      activeClass: this.props.isOpen ? '' : 'active'
-    });
     this.props.toggleSideDrawer();
-  };
-
-  // Here we ensure that state and props are in line with each other
-  onPropChange = () => {
-    this.setState(prevState => ({
-      isSideDrawerOpen: !prevState.isSideDrawerOpen,
-      activeClass: !prevState.isSideDrawerOpen ? '' : 'active'
-    }));
   };
 
   // Sets active class on link based on route
@@ -63,17 +44,8 @@ class Header extends Component<Props, State> {
     return window.location.href.indexOf(passedRoute) > -1 ? 'active' : '';
   }
 
-  componentDidUpdate(
-    prevProps: Readonly<Props>,
-    prevState: Readonly<State>,
-    snapshot?: any
-  ): void {
-    if (prevProps.isOpen !== this.props.isOpen) {
-      this.onPropChange();
-    }
-  }
-
   render() {
+    const activeClass = this.props.isOpen ? '' : 'active';
     return (
       <Navbar
         bg={userDefaults.default.Navbar.bg}
@@ -82,7 +54,7 @@ class Header extends Component<Props, State> {
       >
         <div
           onClick={this.onCollapse}
-          className={`fa-container__header-ellipsis ${this.state.activeClass}`}
+          className={`fa-container__header-ellipsis ${activeClass}`}
         >
           <FontAwesomeIcon icon={faEllipsisV} />
         </div>
