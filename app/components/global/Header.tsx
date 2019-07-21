@@ -11,7 +11,6 @@
  *  the toggling of the side drawer.
  * */
 import * as React from 'react';
-import memoize from 'memoize-one';
 import { Component } from 'react';
 import { Navbar, NavDropdown } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
@@ -23,6 +22,7 @@ const userDefaults = require('../../constants/userDefaults.json');
 
 interface State {
   isSideDrawerOpen: boolean;
+  activeClass: string;
 }
 
 interface Props {
@@ -34,44 +34,52 @@ class Header extends Component<Props, State> {
   state: State;
   constructor(props: Props) {
     super(props);
+    this.onCollapse = this.onCollapse.bind(this);
     this.state = {
-      isSideDrawerOpen: !this.props.isOpen
+      isSideDrawerOpen: !this.props.isOpen,
+      activeClass: this.props.isOpen ? '' : 'active'
     };
   }
 
-  // Here we ensure that state and props are in line with each other
-  fCollapse = memoize((isOpen, SDOpen) => {
-    this.setState({ isSideDrawerOpen: !isOpen });
-    return SDOpen
-      ? 'fa-container__header-ellipsis active'
-      : 'fa-container__header-ellipsis';
-  });
-
   // Handles the click event
   onCollapse = () => {
-    return (): void => {
-      this.setState({ isSideDrawerOpen: !this.state.isSideDrawerOpen });
-      this.props.toggleSideDrawer();
-    };
+    this.setState({ isSideDrawerOpen: !this.state.isSideDrawerOpen });
+    this.setState({ activeClass: this.state.isSideDrawerOpen ? '' : 'active' });
+    this.props.toggleSideDrawer();
   };
 
+  // Here we ensure that state and props are in line with each other
+  onPropChange = () => {
+    this.setState({ isSideDrawerOpen: this.props.isOpen });
+    this.setState({ activeClass: this.props.isOpen ? '' : 'active' });
+  };
+
+  // Sets active class on link based on route
   static activeRoute(passedRoute) {
     return window.location.href.indexOf(passedRoute) > -1 ? 'active' : '';
   }
 
-  render() {
-    const memoClass = this.fCollapse(
-      this.props.isOpen,
-      this.state.isSideDrawerOpen
-    );
+  componentDidUpdate(
+    prevProps: Readonly<Props>,
+    prevState: Readonly<State>,
+    snapshot?: any
+  ): void {
+    if (prevProps.isOpen !== this.props.isOpen) {
+      this.onPropChange();
+    }
+  }
 
+  render() {
     return (
       <Navbar
         bg={userDefaults.default.Navbar.bg}
         variant={userDefaults.default.Navbar.variant}
         fixed={userDefaults.default.Navbar.fixed}
       >
-        <div onClick={this.onCollapse()} className={memoClass}>
+        <div
+          onClick={this.onCollapse}
+          className={`fa-container__header-ellipsis ${this.state.activeClass}`}
+        >
           <FontAwesomeIcon icon={faEllipsisV} />
         </div>
         <Navbar.Brand>Multi Use App</Navbar.Brand>
