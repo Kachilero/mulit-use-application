@@ -11,10 +11,7 @@ import { faChevronLeft, faHome } from '@fortawesome/free-solid-svg-icons';
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 // import { faHome } from '@fortawesome/free-solid-svg-icons';
 
-interface State {
-  isOpen: boolean;
-  activeClass: string;
-}
+interface State {}
 interface Props {
   routes: any;
   headline: string;
@@ -22,15 +19,11 @@ interface Props {
   onClick: () => void;
 }
 
-class SideDrawer extends Component<Props, State> {
+class SideDrawer extends Component<Props> {
   state: State;
   constructor(props: Props) {
     super(props);
     this.onCollapse = this.onCollapse.bind(this);
-    this.state = {
-      isOpen: this.props.isOpen,
-      activeClass: this.props.isOpen ? 'active' : ''
-    };
   }
 
   // handles click event
@@ -38,28 +31,11 @@ class SideDrawer extends Component<Props, State> {
     this.props.onClick();
   };
 
-  // Changes active class in case props are changed by another componenet
-  onPropChange = () => {
-    this.setState(prevState => ({
-      isOpen: !prevState.isOpen,
-      activeClass: !prevState.isOpen ? 'active' : ''
-    }));
-  };
-
-  componentDidUpdate(
-    prevProps: Readonly<Props>,
-    prevState: Readonly<State>,
-    snapshot?: any
-  ): void {
-    if (prevProps.isOpen !== this.props.isOpen) {
-      this.onPropChange();
-    }
-  }
-
   render() {
+    const activeClass = this.props.isOpen ? 'active' : '';
     return (
-      <div id="sidebar" className={this.state.activeClass}>
-        <Nav id="sidebar__menu" className={`sidebar ${this.state.activeClass}`}>
+      <div id="sidebar" className={activeClass}>
+        <Nav id="sidebar__menu" className={`sidebar ${activeClass}`}>
           <div className="sidebar-header">
             <FontAwesomeIcon
               icon={faHome}
