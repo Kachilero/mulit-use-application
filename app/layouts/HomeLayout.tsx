@@ -70,7 +70,7 @@ class HomeLayout extends Component<homeProps> {
           {...this.props}
           routes={homeRoutes}
           headline="Home"
-          isOpen={this.props.sideDrawerReducer.isOpen}
+          // isOpen={this.props.sideDrawerReducer.isOpen}
           onClick={() => this.handleClick()}
         />
         <main role="main" id="main-window" className={mainClass}>

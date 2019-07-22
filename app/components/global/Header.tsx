@@ -26,6 +26,7 @@ interface Props {
   isOpen: boolean;
   hoverState: boolean;
   toggleSideDrawer: () => void;
+  sideDrawerHover: () => void;
 }
 
 class Header extends Component<Props, State> {
@@ -33,6 +34,7 @@ class Header extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.onCollapse = this.onCollapse.bind(this);
+    this.handleMouse = this.handleMouse.bind(this);
   }
 
   // Handles the click event
@@ -40,10 +42,18 @@ class Header extends Component<Props, State> {
     this.props.toggleSideDrawer();
   };
 
+  handleMouse = () => {
+    setTimeout(() => {
+      this.props.sideDrawerHover();
+    }, 200);
+  };
+
   // Sets active class on link based on route
   static activeRoute(passedRoute) {
     return window.location.href.indexOf(passedRoute) > -1 ? 'active' : '';
   }
+
+  //TODO need to wrap the icon container in an absolutely position div
 
   render() {
     const activeClass = this.props.isOpen ? '' : 'active';
@@ -54,10 +64,16 @@ class Header extends Component<Props, State> {
         fixed={userDefaults.default.Navbar.fixed}
       >
         <div
-          onClick={this.onCollapse}
-          className={`fa-container__header-ellipsis ${activeClass}`}
+          id="fa-container__hover"
+          onMouseEnter={this.handleMouse}
+          onMouseLeave={this.handleMouse}
         >
-          <FontAwesomeIcon icon={faEllipsisV} />
+          <div
+            onClick={this.onCollapse}
+            className={`fa-container__header-ellipsis ${activeClass}`}
+          >
+            <FontAwesomeIcon icon={faEllipsisV} />
+          </div>
         </div>
         <Navbar.Brand>Multi Use App</Navbar.Brand>
         <Navbar.Toggle aria-controls="main-navbar-nav" />

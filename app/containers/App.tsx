@@ -1,6 +1,9 @@
 import { connect } from 'react-redux';
 import AppLayout from '../layouts/AppLayout';
-import { toggleSideDrawer } from '../store/sideDrawer/sideDrawer.actions';
+import {
+  sideDrawerHover,
+  toggleSideDrawer
+} from '../store/sideDrawer/sideDrawer.actions';
 import { Dispatch } from 'redux';
 
 export interface AppState {
@@ -15,6 +18,9 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
   return {
     toggleSideDrawer: () => {
       dispatch(toggleSideDrawer());
+    },
+    sideDrawerHover: () => {
+      dispatch(sideDrawerHover());
     }
   };
 };
