@@ -55,8 +55,6 @@ class Header extends Component<Props, State> {
     return window.location.href.indexOf(passedRoute) > -1 ? 'active' : '';
   }
 
-  //TODO need to wrap the icon container in an absolutely position div
-
   render() {
     const activeClass = this.props.isOpen ? '' : 'active';
     return (
