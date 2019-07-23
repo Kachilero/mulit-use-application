@@ -19,6 +19,8 @@ import { faEllipsisV } from '@fortawesome/free-solid-svg-icons';
 // Import static values
 import mainRoutes from '../../constants/routes/mainRoutes';
 const userDefaults = require('../../constants/userDefaults.json');
+// Import Header Widgets
+import Timer from './header-widgets/timer';
 
 interface State {}
 
@@ -92,6 +94,7 @@ class Header extends Component<Props, State> {
               );
             })}
           </NavDropdown>
+          <Timer />
         </Navbar.Collapse>
       </Navbar>
     );
