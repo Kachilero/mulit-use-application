@@ -51,7 +51,7 @@ export function incrementAsync(delay: number = 1000) {
 }
 
 export function incrementByFive() {
-  console.log('Increment Action');
+  console.log('Increment By 5 Action');
   return {
     type: CounterTypeKeys.INCREMENT_BY_FIVE
   };

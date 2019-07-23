@@ -5,7 +5,7 @@ import { routerMiddleware, routerActions } from 'connected-react-router';
 import { createLogger } from 'redux-logger';
 import createRootReducer from '../reducers';
 // Actions
-import * as counterActions from '../actions/counter.actions';
+import * as counterActions from './counter/counter.actions';
 import { toggleSideDrawer } from './sideDrawer/sideDrawer.actions';
 
 const history = createHashHistory();
