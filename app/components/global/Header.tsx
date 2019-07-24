@@ -20,7 +20,7 @@ import { faEllipsisV } from '@fortawesome/free-solid-svg-icons';
 import mainRoutes from '../../constants/routes/mainRoutes';
 const userDefaults = require('../../constants/userDefaults.json');
 // Import Header Widgets
-import Timer from './header-widgets/timer';
+import Timer from './header-widgets/timer/Timer';
 
 interface State {}
 
