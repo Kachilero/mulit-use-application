@@ -4,6 +4,7 @@
  * Doesn't interact with any other components
  */
 import * as React from 'react';
+import Pipe from '../../utility/pipe';
 
 interface timerState {}
 interface timerProps {}
@@ -15,9 +16,13 @@ class Timer extends React.Component<timerProps, timerState> {
   }
 
   render() {
+    const REACT_VERSION = React.version;
     return (
       <div>
-        <h4>Timer</h4>
+        <Pipe>
+          <h4 style={{ display: 'inline' }}>Timer</h4>
+          <p style={{ display: 'inline' }}> Version: {REACT_VERSION}</p>
+        </Pipe>
       </div>
     );
   }
