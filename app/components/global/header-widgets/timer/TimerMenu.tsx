@@ -22,10 +22,19 @@ class TimerMenu extends React.Component<timerMenuProps, timerMenuState> {
   }
 
   handleChange(e) {
+    let val = e.target.value.trim();
+    val = val.replace(/[\W\s\._\-]+/g, '');
+    const split = 2;
+    const chunk = [];
+    for (let i = 0, len = val.length; i < len; i += split) {
+      chunk.push(val.substr(i, split));
+    }
+    const formattedString = chunk.join(':');
+    console.log(`Chunky: ${formattedString}`);
+
     this.setState({
-      value: e.target.value.trim()
+      value: val
     });
-    console.log(`TimerMenu: ${e.target.value} is a ${typeof e.target.value}`);
     this.props.changeHandler(e.target.value);
   }
 
