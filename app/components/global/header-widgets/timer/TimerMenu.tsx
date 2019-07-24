@@ -7,7 +7,9 @@ import { FormControl } from 'react-bootstrap';
 interface timerMenuState {
   value: string;
 }
-interface timerMenuProps {}
+interface timerMenuProps {
+  changeHandler: (val: any) => void;
+}
 
 class TimerMenu extends React.Component<timerMenuProps, timerMenuState> {
   state: timerMenuState;
@@ -23,6 +25,8 @@ class TimerMenu extends React.Component<timerMenuProps, timerMenuState> {
     this.setState({
       value: e.target.value.trim()
     });
+    console.log(`TimerMenu: ${e.target.value} is a ${typeof e.target.value}`);
+    this.props.changeHandler(e.target.value);
   }
 
   render():
@@ -42,10 +46,12 @@ class TimerMenu extends React.Component<timerMenuProps, timerMenuState> {
       <div aria-labelledby="timerToggle" {...this.props}>
         <FormControl
           autoFocus
+          type="number"
           className="mx-3 my-2 w-auto"
           placeholder="00:00:00"
           onChange={this.handleChange}
           value={value}
+          {...this.props.changeHandler}
         />
         <ul className="list-unstyled">{children}</ul>
       </div>

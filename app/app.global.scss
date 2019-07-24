@@ -22,7 +22,8 @@
 @import 'styles/components/navbar';
 
 // Header
-@import 'styles/components/header';
+@import 'styles/components/header/header';
+@import 'styles/components/header/widgets/timer';
 
 // Sidebar
 @import 'styles/components/sidebar/sidebar';
