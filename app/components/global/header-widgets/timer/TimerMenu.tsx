@@ -2,7 +2,9 @@
  * Builds the custom dropdown for the timer
  * */
 import * as React from 'react';
-import { FormControl } from 'react-bootstrap';
+import { Form } from 'react-bootstrap';
+import MaskedInput from 'react-text-mask';
+import createTimerMask from '../../../../utils/createTimerMask';
 
 interface timerMenuState {
   value: string;
@@ -13,6 +15,7 @@ interface timerMenuProps {
 
 class TimerMenu extends React.Component<timerMenuProps, timerMenuState> {
   state: timerMenuState;
+  private lastValue: string;
   constructor(props: timerMenuProps, context) {
     super(props, context);
     this.handleChange = this.handleChange.bind(this);
@@ -20,22 +23,14 @@ class TimerMenu extends React.Component<timerMenuProps, timerMenuState> {
       value: ''
     };
   }
+  // init the mask
+  numberMask = createTimerMask();
 
   handleChange(e) {
-    let val = e.target.value.trim();
-    val = val.replace(/[\W\s\._\-]+/g, '');
-    const split = 2;
-    const chunk = [];
-    for (let i = 0, len = val.length; i < len; i += split) {
-      chunk.push(val.substr(i, split));
+    if (this.lastValue !== e.target.value) {
+      this.lastValue = e.target.value;
+      this.props.changeHandler(e.target.value);
     }
-    const formattedString = chunk.join(':');
-    console.log(`Chunky: ${formattedString}`);
-
-    this.setState({
-      value: val
-    });
-    this.props.changeHandler(e.target.value);
   }
 
   render():
@@ -49,20 +44,22 @@ class TimerMenu extends React.Component<timerMenuProps, timerMenuState> {
     | null
     | undefined {
     const { children } = this.props;
-    const { value } = this.state;
 
     return (
       <div aria-labelledby="timerToggle" {...this.props}>
-        <FormControl
-          autoFocus
-          type="number"
-          className="mx-3 my-2 w-auto"
-          placeholder="00:00:00"
-          onChange={this.handleChange}
-          value={value}
-          {...this.props.changeHandler}
-        />
-        <ul className="list-unstyled">{children}</ul>
+        <Form.Group controlId="timeInput">
+          <MaskedInput
+            autoFocus
+            mask={this.numberMask}
+            className="mx-3 my-2 w-auto"
+            placeholder="HH:MM:SS"
+            onChange={this.handleChange}
+            style={{ textAlign: 'center' }}
+          />
+          <ul className="list-unstyled">
+            <React.Fragment>{children}</React.Fragment>
+          </ul>
+        </Form.Group>
       </div>
     );
   }
