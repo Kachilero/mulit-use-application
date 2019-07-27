@@ -7,7 +7,6 @@
  * @link http://evanshortiss.com/development/nodejs/typescript/2016/11/16/timers-in-typescript.html
  */
 import * as React from 'react';
-import 'moment-timer';
 import { Button, ButtonToolbar, Dropdown } from 'react-bootstrap';
 import Pipe from '../../../utility/pipe';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -26,7 +25,8 @@ interface timerProps {}
 
 class Timer extends React.Component<timerProps, timerState> {
   state: timerState;
-  private secondsRemaining: number;
+  private mSecondsRemaining: number;
+  private timerTarget: number;
   private intervalHandler: NodeJS.Timer;
   constructor(props: timerProps) {
     super(props);
@@ -37,7 +37,8 @@ class Timer extends React.Component<timerProps, timerState> {
       timer: 0
     };
     this.changeHandler = this.changeHandler.bind(this);
-    this.secondsRemaining;
+    this.mSecondsRemaining = 0;
+    this.timerTarget = 0;
     this.intervalHandler;
   }
 
@@ -47,22 +48,58 @@ class Timer extends React.Component<timerProps, timerState> {
     this.setState({ timer: val });
   }
 
+  tick(direction) {
+    // going up or down
+    if (direction === 'down') {
+      this.countDown();
+    } else {
+      this.countUp();
+    }
+    const stringTime = this.handleTimeConversion(this.mSecondsRemaining);
+    this.setState({
+      sec: stringTime.sec,
+      min: stringTime.min,
+      hour: stringTime.hour
+    });
+  }
+
   startTimer(direction) {
     // get the timer
     const timer = this.state.timer;
+    const stringTime = this.handleTimeConversion(timer);
+    // Now we set the timer in the header
+    this.setState({
+      sec: stringTime.sec,
+      min: stringTime.min,
+      hour: stringTime.hour
+    });
+    if (direction === 'up') {
+      this.timerTarget = this.mSecondsRemaining;
+      this.mSecondsRemaining = 0;
+    }
+    // Finally we call the tick function
+    this.intervalHandler = global.setInterval(() => this.tick(direction), 1000);
+  }
+
+  handleTimeConversion(passedTime) {
+    const timer = passedTime;
+    // timer parts
+    let timerSec: number, timerMin: number, timerHour: number;
+    // timer strings
+    let tSecString: string, tMinString: string, tHourString: string;
     // split it up so we can make sure it follows time constraints.
     // Since they're originally Numbers, I need to convert them to strings to cut them up
-    let timerSec = Number(
-      timer.toString().substring(timer.toString().length - 2)
-    );
-    let minString = timer.toString().substring(timer.toString().length - 4);
-    let timerMin = Number(
+    timerSec = Number(timer.toString().substring(timer.toString().length - 2));
+    let minString: string = timer
+      .toString()
+      .substring(timer.toString().length - 4);
+    timerMin = Number(
       minString.replace(
         timer.toString().substring(timer.toString().length - 2),
         ''
       )
     );
-    let timerHour = Number(
+    timerHour = Number(
       timer
         .toString()
         .replace(timer.toString().substring(timer.toString().length - 4), '')
@@ -78,17 +115,33 @@ class Timer extends React.Component<timerProps, timerState> {
       timerHour++;
     }
     // Now we make timer equal the new amount in seconds
-    timerHour = timerHour * 60 * 60;
-    timerMin = timerMin * 60;
-    let tempTime = timerHour + timerMin + timerSec;
+    const tempHour = timerHour * 60 * 60;
+    const tempMin = timerMin * 60;
+    this.mSecondsRemaining = tempHour + tempMin + timerSec;
+    // First we'll make sure our parts look nice and are strings
+    tSecString =
+      timerSec < 10 ? '0' + timerSec.toString() : timerSec.toString();
+    tMinString =
+      timerMin < 10 ? '0' + timerMin.toString() : timerMin.toString();
+    tHourString =
+      timerHour < 10 ? '0' + timerHour.toString() : timerHour.toString();
+    return {
+      sec: tSecString,
+      min: tMinString,
+      hour: tHourString
+    };
+  }
 
-    console.log(`Timer String: ${timerHour} => ${timerMin} => ${timerSec}`);
-    console.log(`Temp Time: ${tempTime}`);
+  countDown() {
+    this.mSecondsRemaining = this.mSecondsRemaining - 1;
+    if (this.mSecondsRemaining === 0) clearInterval(this.intervalHandler);
+  }
 
-    // @ts-ignore
-    // let timerValue = moment.duration(momentVal, 'seconds').timer(() => { console.log(`Timer callback`); });
-    // console.log(`Timer Duration: ${timerValue.getDuration()} Val: ${val}`);
-    console.log(`State Timer going ${direction}`);
+  countUp() {
+    this.mSecondsRemaining = this.mSecondsRemaining + 1;
+    if (this.mSecondsRemaining === this.timerTarget) {
+      clearInterval(this.intervalHandler);
+    }
   }
 
   render() {
