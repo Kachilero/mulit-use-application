@@ -7,47 +7,64 @@
  * @link http://evanshortiss.com/development/nodejs/typescript/2016/11/16/timers-in-typescript.html
  */
 import * as React from 'react';
-import { Button, ButtonToolbar, Dropdown } from 'react-bootstrap';
+import { Button, ButtonToolbar, Card, Dropdown } from 'react-bootstrap';
+import MaskedInput from 'react-text-mask';
+import createTimerMask from '../../../../utils/createTimerMask';
 import Pipe from '../../../utility/pipe';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStopwatch } from '@fortawesome/free-solid-svg-icons';
-
-import TimerToggle from './TimerToggle';
-import TimerMenu from './TimerMenu';
 
 interface timerState {
   sec: string;
   min: string;
   hour: string;
   timer: number;
+  value: string;
+  showMenu: boolean;
+  timerIsRunning: boolean;
 }
 interface timerProps {}
 
 class Timer extends React.Component<timerProps, timerState> {
   state: timerState;
+  private numberMask: (rawValue: string) => string[];
   private mSecondsRemaining: number;
   private timerTarget: number;
   private intervalHandler: NodeJS.Timer;
+
   constructor(props: timerProps) {
     super(props);
     this.state = {
       sec: '00',
       min: '00',
       hour: '00',
-      timer: 0
+      timer: 0,
+      value: '',
+      showMenu: false,
+      timerIsRunning: false
     };
     this.changeHandler = this.changeHandler.bind(this);
+    this.resetTimer = this.resetTimer.bind(this);
+    this.handleToggle = this.handleToggle.bind(this);
     this.mSecondsRemaining = 0;
     this.timerTarget = 0;
     this.intervalHandler;
+    this.numberMask = createTimerMask();
   }
 
+  // Override the default menu behaviour so it doesn't close when the input is clicked
+  handleToggle(isOpen, event, metadata) {
+    if (isOpen || metadata.source !== 'select') {
+      this.setState({ showMenu: isOpen });
+    }
+    event.persist;
+  }
+  // Sets timer value
   changeHandler(val) {
-    val = val.replace(/\D+/g, '');
-    console.log(`Changed Val: ${val}`);
+    val = val.target.value.replace(/\D+/g, '');
     this.setState({ timer: val });
   }
-
+  // Handles the timer
   tick(direction) {
     // going up or down
     if (direction === 'down') {
@@ -62,10 +79,13 @@ class Timer extends React.Component<timerProps, timerState> {
       hour: stringTime.hour
     });
   }
-
+  // Starts timer
   startTimer(direction) {
     // get the timer
     const timer = this.state.timer;
+    // If no timer set, return
+    if (timer === 0) return;
+    // Convert timer to string
     const stringTime = this.handleTimeConversion(timer);
     // Now we set the timer in the header
     this.setState({
@@ -73,14 +93,20 @@ class Timer extends React.Component<timerProps, timerState> {
       min: stringTime.min,
       hour: stringTime.hour
     });
+    // Reverse direction for a count up
     if (direction === 'up') {
       this.timerTarget = this.mSecondsRemaining;
       this.mSecondsRemaining = 0;
     }
+    // Close the dropdown, and disable the buttons
+    this.setState({
+      showMenu: false,
+      timerIsRunning: true
+    });
     // Finally we call the tick function
     this.intervalHandler = global.setInterval(() => this.tick(direction), 1000);
   }
-
+  // converts numbers to strings
   handleTimeConversion(passedTime) {
     const timer = passedTime;
     // timer parts
@@ -131,53 +157,92 @@ class Timer extends React.Component<timerProps, timerState> {
       hour: tHourString
     };
   }
-
+  // handles counting and stop condition
   countDown() {
     this.mSecondsRemaining = this.mSecondsRemaining - 1;
-    if (this.mSecondsRemaining === 0) clearInterval(this.intervalHandler);
+    if (this.mSecondsRemaining === 0) {
+      clearInterval(this.intervalHandler);
+      this.setState({ timerIsRunning: false });
+    }
   }
-
+  // handles counting and stop condition
   countUp() {
     this.mSecondsRemaining = this.mSecondsRemaining + 1;
     if (this.mSecondsRemaining === this.timerTarget) {
       clearInterval(this.intervalHandler);
+      this.setState({ timerIsRunning: false });
     }
+  }
+  // Reset all the things
+  resetTimer() {
+    console.log(`Reset Timer`);
+    clearInterval(this.intervalHandler);
+    this.setState({
+      sec: '00',
+      min: '00',
+      hour: '00',
+      timer: 0,
+      value: '',
+      timerIsRunning: false
+    });
   }
 
   render() {
-    const timerTitle =
-      this.state.hour + ':' + this.state.min + ':' + this.state.sec;
+    const { sec, min, hour, showMenu, timerIsRunning } = this.state;
+    const timerTitle = hour + ':' + min + ':' + sec;
 
     return (
       <div style={{ display: 'flex' }} className="no-spin-buttons">
         <Pipe>
           <FontAwesomeIcon icon={faStopwatch} />
         </Pipe>
-        <Dropdown>
+        <Dropdown show={showMenu} onToggle={this.handleToggle}>
           <Dropdown.Toggle
-            as={TimerToggle}
             id="timer-button"
             className="d-inline-block"
+            variant="outline-info"
           >
             {timerTitle}
           </Dropdown.Toggle>
 
-          <Dropdown.Menu as={TimerMenu} changeHandler={this.changeHandler}>
+          <Dropdown.Menu className="p-0">
             <Dropdown.Item>
-              <ButtonToolbar>
-                <Button
-                  variant="outline-primary"
-                  onClick={() => this.startTimer('up')}
-                >
-                  Up
-                </Button>
-                <Button
-                  variant="outline-info"
-                  onClick={() => this.startTimer('down')}
-                >
-                  Down
-                </Button>
-              </ButtonToolbar>
+              <Card>
+                <Card.Body>
+                  <MaskedInput
+                    autoFocus
+                    mask={this.numberMask}
+                    className="my-2 w-auto"
+                    placeholder="HH:MM:SS"
+                    onChange={this.changeHandler}
+                    style={{ textAlign: 'center' }}
+                  />
+                  <ButtonToolbar>
+                    <Button
+                      variant="outline-primary"
+                      onClick={() => this.startTimer('up')}
+                      disabled={timerIsRunning}
+                    >
+                      Up
+                    </Button>
+                    <Button
+                      variant="outline-info"
+                      onClick={() => this.startTimer('down')}
+                      disabled={timerIsRunning}
+                    >
+                      Down
+                    </Button>
+                  </ButtonToolbar>
+                  <Button
+                    variant="danger"
+                    size="lg"
+                    onClick={this.resetTimer}
+                    block
+                  >
+                    Reset
+                  </Button>
+                </Card.Body>
+              </Card>
             </Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
