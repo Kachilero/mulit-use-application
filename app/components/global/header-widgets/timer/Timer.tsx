@@ -1,10 +1,51 @@
 /**
- * A simple timer that resides in the header
+ * A 'simple' timer that resides in the header
+ *
+ * @exports Class Timer
  *
  * Doesn't interact with any other components
  *
- * We need to use the 'global.setInterval' to get the correct type see
+ * **TYPES**
+ * @type sec string
+ * @type min string
+ * @type hour string
+ * @type timer number
+ * @type value string
+ * @type showMenu boolean
+ * @type timerIsRunning boolean
+ * @type numberMask (raweValeu: string) -> string[] private
+ * @type mSecondsRemaining number private
+ * @type timerTarget number private
+ * @type intervalHandler NodeJS.Timer private
+ * For above we need to use the 'global.setInterval' to get the correct setInterval type see
  * @link http://evanshortiss.com/development/nodejs/typescript/2016/11/16/timers-in-typescript.html
+ *
+ * @function handleToggle(isOpen: boolean, event: {}, metadata: {})
+ *  overrides the default dropdown behaviour when clicking
+ *  on the input element
+ * @function changeHandler(val: string)
+ *  removes any non-digit characters and sets the timer state
+ * @function tick(direction: string)
+ *  calls either countDown or countUp
+ *  depending on the direction value, then converts the mSecondsRemaining to
+ *  a string and sets the values for each part of the timer state
+ * @function startTimer(direction: string
+ *  First checks if there is a valid timer, then converts it to a string and
+ *  sets the state. If 'direction' is up, it sets timerTarget and zero's out
+ *  the mSecondsRemaining variable. Then we set the state of showMenu and
+ *  timerIsRunning so we can handle those changes in other areas and finally
+ *  calls the intervalHandler function with tick()
+ * @function tick(passedTimer: number)
+ *  Converts numeric timer value to string and returns it's parts
+ * @function countDown
+ *  Subtracts 1 from mSecondsRemaining and
+ *  handles the stop condition for the setInterval of intervalHandler
+ * @function countUp
+ *  Adds 2 to mSecondsRemaining and
+ *  handles the stop condition for the setInterval of intervalHandler
+ * @function resetTimer
+ *  Handles resetting ( or zeroing out ) all of the state variables and
+ *  makes sure the setInterval is terminated.
  */
 import * as React from 'react';
 import { Button, ButtonToolbar, Card, Dropdown } from 'react-bootstrap';
