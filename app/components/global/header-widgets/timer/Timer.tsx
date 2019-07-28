@@ -233,7 +233,7 @@ class Timer extends React.Component<timerProps, timerState> {
     const timerTitle = hour + ':' + min + ':' + sec;
 
     return (
-      <div style={{ display: 'flex' }} className="no-spin-buttons">
+      <div id="timer-group" className="no-spin-buttons">
         <Pipe>
           <FontAwesomeIcon icon={faStopwatch} />
         </Pipe>
@@ -256,7 +256,6 @@ class Timer extends React.Component<timerProps, timerState> {
                     className="my-2 w-auto"
                     placeholder="HH:MM:SS"
                     onChange={this.changeHandler}
-                    style={{ textAlign: 'center' }}
                   />
                   <ButtonToolbar>
                     <Button
