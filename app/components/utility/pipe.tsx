@@ -34,11 +34,12 @@ export const Pipe: FunctionComponent<PipeProps> = ({
     [marginPosition]: marginMeasurement,
     [paddingPosition]: marginMeasurement
   };
-  if (position === 'right') {
-    return <div style={style}>{children}</div>;
-  }
 
-  return <div style={style}>{children}</div>;
+  return (
+    <div id="pipe-component" style={style}>
+      {children}
+    </div>
+  );
 };
 
 export default React.memo(Pipe);
