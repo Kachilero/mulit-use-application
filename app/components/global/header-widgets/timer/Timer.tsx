@@ -48,6 +48,8 @@
  *  makes sure the setInterval is terminated.
  */
 import * as React from 'react';
+// import Electron from 'electron';
+// import shell = Electron.shell;
 import { Button, ButtonToolbar, Dropdown } from 'react-bootstrap';
 import MaskedInput from 'react-text-mask';
 import createTimerMask from '../../../../utils/createTimerMask';
@@ -97,6 +99,7 @@ class Timer extends React.Component<timerProps, timerState> {
     this.resetTimer = this.resetTimer.bind(this);
     this.handleToggle = this.handleToggle.bind(this);
     this.pauseTimer = this.pauseTimer.bind(this);
+    this.beep = this.beep.bind(this);
     this.mSecondsRemaining = 0;
     this.timerTarget = 0;
     this.intervalHandler;
@@ -224,6 +227,7 @@ class Timer extends React.Component<timerProps, timerState> {
     if (this.mSecondsRemaining === 0) {
       clearInterval(this.intervalHandler);
       this.setState({ timerIsRunning: false });
+      this.beep('end');
     }
   }
   // handles counting and stop condition
@@ -233,6 +237,7 @@ class Timer extends React.Component<timerProps, timerState> {
       clearInterval(this.intervalHandler);
       this.timerTarget = 0;
       this.setState({ timerIsRunning: false });
+      this.beep('end');
     }
   }
   // pause the timer
@@ -247,6 +252,20 @@ class Timer extends React.Component<timerProps, timerState> {
       this.setState({ timerIsPaused: false });
       this.startTimer(this.state.timerDirection);
     }
+    this.beep('pause');
+  }
+  // BEEP BEEP b*tch
+  beep(when) {
+    // shell.beep();
+    const endSrc = '../app/constants/sounds/double_bell.mp3';
+    const pauseSrc = '../app/constants/sounds/pop.mp3';
+    let audio;
+    if (when === 'end') {
+      audio = new Audio(endSrc);
+    } else if (when === 'pause') {
+      audio = new Audio(pauseSrc);
+    }
+    audio.play();
   }
   // Reset all the things
   resetTimer() {
@@ -321,9 +340,7 @@ class Timer extends React.Component<timerProps, timerState> {
               </ButtonToolbar>
             </Dropdown.Item>
             <Dropdown.Divider />
-            <Dropdown.Item>
-              <a href="#">Create/Edit Custom Timers</a>
-            </Dropdown.Item>
+            <Dropdown.Item href="#">Create/Edit Custom Timers</Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
         {timerIsRunning && (
