@@ -53,7 +53,7 @@ import MaskedInput from 'react-text-mask';
 import createTimerMask from '../../../../utils/createTimerMask';
 import Pipe from '../../../utility/pipe';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faStopwatch } from '@fortawesome/free-solid-svg-icons';
+import { faStopwatch, faUndo } from '@fortawesome/free-solid-svg-icons';
 
 interface timerState {
   sec: string;
@@ -107,7 +107,6 @@ class Timer extends React.Component<timerProps, timerState> {
     if (val.length > 6) {
       val = val.substring(0, 6);
     }
-    console.log(`Val.length: ${val}`);
     this.setState({ timer: val });
   }
   // Handles the timer
@@ -187,9 +186,10 @@ class Timer extends React.Component<timerProps, timerState> {
       timerHour++;
     }
     // Now we make timer equal the new amount in seconds
-    const tempHour = timerHour * 60 * 60;
-    const tempMin = timerMin * 60;
-    this.mSecondsRemaining = tempHour + tempMin + timerSec;
+    const tempHour = timerHour * 60 * 60 * 1000;
+    const tempMin = timerMin * 60 * 1000;
+    const tempSec = timerSec * 1000;
+    this.mSecondsRemaining = Math.floor((tempHour + tempMin + tempSec) / 1000);
     // First we'll make sure our parts look nice and are strings
     tSecString =
       timerSec < 10 ? '0' + timerSec.toString() : timerSec.toString();
@@ -295,6 +295,13 @@ class Timer extends React.Component<timerProps, timerState> {
             </Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
+        {timerIsRunning && (
+          <div id="timer-controls">
+            <Button variant="outline-light" onClick={this.resetTimer}>
+              <FontAwesomeIcon icon={faUndo} />
+            </Button>
+          </div>
+        )}
       </div>
     );
   }
