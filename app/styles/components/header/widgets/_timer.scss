@@ -1,13 +1,35 @@
 // Timer
 #timer-group {
   display: flex;
-}
 
-.btn-toolbar {
-  display: flex;
-  justify-content: space-evenly;
+  // All of the items in the dropdown are in here
+  .dropdown {
+    margin-left: 0.5rem;
 
-  .btn {
-    min-width: 46%;
+    > button {
+      &::after {
+        display: none;
+      }
+    }
+
+    .dropdown-menu {
+      min-width: 16rem;
+      max-width: 16rem;
+    }
+
+    .masked-input {
+      text-align: center;
+      font-size: 2rem;
+      width: 100%;
+    }
+
+    .btn-toolbar {
+      display: flex;
+      justify-content: space-evenly;
+
+      .btn {
+        min-width: 46%;
+      }
+    }
   }
 }

@@ -48,7 +48,7 @@
  *  makes sure the setInterval is terminated.
  */
 import * as React from 'react';
-import { Button, ButtonToolbar, Card, Dropdown } from 'react-bootstrap';
+import { Button, ButtonToolbar, Dropdown } from 'react-bootstrap';
 import MaskedInput from 'react-text-mask';
 import createTimerMask from '../../../../utils/createTimerMask';
 import Pipe from '../../../utility/pipe';
@@ -72,6 +72,7 @@ class Timer extends React.Component<timerProps, timerState> {
   private mSecondsRemaining: number;
   private timerTarget: number;
   private intervalHandler: NodeJS.Timer;
+  private numberInput;
 
   constructor(props: timerProps) {
     super(props);
@@ -103,6 +104,10 @@ class Timer extends React.Component<timerProps, timerState> {
   // Sets timer value
   changeHandler(val) {
     val = val.target.value.replace(/\D+/g, '');
+    if (val.length > 6) {
+      val = val.substring(0, 6);
+    }
+    console.log(`Val.length: ${val}`);
     this.setState({ timer: val });
   }
   // Handles the timer
@@ -216,8 +221,10 @@ class Timer extends React.Component<timerProps, timerState> {
   }
   // Reset all the things
   resetTimer() {
-    console.log(`Reset Timer`);
     clearInterval(this.intervalHandler);
+    // Since the input passes through masked input, we need to call
+    // numberInput.inputElement.value to reset the value
+    this.numberInput.inputElement.value = '';
     this.setState({
       sec: '00',
       min: '00',
@@ -246,43 +253,45 @@ class Timer extends React.Component<timerProps, timerState> {
             {timerTitle}
           </Dropdown.Toggle>
 
-          <Dropdown.Menu className="p-0">
+          <Dropdown.Menu>
+            <Dropdown.Header>Timer</Dropdown.Header>
             <Dropdown.Item>
-              <Card>
-                <Card.Body>
-                  <MaskedInput
-                    autoFocus
-                    mask={this.numberMask}
-                    className="my-2 w-auto"
-                    placeholder="HH:MM:SS"
-                    onChange={this.changeHandler}
-                  />
-                  <ButtonToolbar>
-                    <Button
-                      variant="outline-primary"
-                      onClick={() => this.startTimer('up')}
-                      disabled={timerIsRunning}
-                    >
-                      Up
-                    </Button>
-                    <Button
-                      variant="outline-info"
-                      onClick={() => this.startTimer('down')}
-                      disabled={timerIsRunning}
-                    >
-                      Down
-                    </Button>
-                  </ButtonToolbar>
-                  <Button
-                    variant="danger"
-                    size="lg"
-                    onClick={this.resetTimer}
-                    block
-                  >
-                    Reset
-                  </Button>
-                </Card.Body>
-              </Card>
+              <MaskedInput
+                autoFocus
+                mask={this.numberMask}
+                className="masked-input"
+                placeholder="HH:MM:SS"
+                onChange={this.changeHandler}
+                ref={el => (this.numberInput = el)}
+              />
+            </Dropdown.Item>
+            <Dropdown.Item>
+              <ButtonToolbar>
+                <Button
+                  variant="outline-primary"
+                  onClick={() => this.startTimer('up')}
+                  disabled={timerIsRunning}
+                >
+                  Up
+                </Button>
+                <Button
+                  variant="outline-info"
+                  onClick={() => this.startTimer('down')}
+                  disabled={timerIsRunning}
+                >
+                  Down
+                </Button>
+              </ButtonToolbar>
+            </Dropdown.Item>
+            <Dropdown.Item>
+              <Button
+                variant="danger"
+                size="lg"
+                onClick={this.resetTimer}
+                block
+              >
+                Reset
+              </Button>
             </Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
