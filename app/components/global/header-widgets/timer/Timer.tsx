@@ -103,6 +103,10 @@ class Timer extends React.Component<timerProps, timerState> {
     this.numberMask = createTimerMask();
   }
 
+  // Make sure we start from a clear state
+  componentWillMount(): void {
+    clearInterval(this.intervalHandler);
+  }
   // Override the default menu behaviour so it doesn't close when the input is clicked
   handleToggle(isOpen, event, metadata) {
     if (isOpen || metadata.source !== 'select') {
@@ -233,7 +237,6 @@ class Timer extends React.Component<timerProps, timerState> {
   }
   // pause the timer
   pauseTimer() {
-    console.log(`Pausing timer`);
     if (!this.state.timerIsPaused) {
       clearInterval(this.intervalHandler);
       this.setState({
@@ -244,8 +247,6 @@ class Timer extends React.Component<timerProps, timerState> {
       this.setState({ timerIsPaused: false });
       this.startTimer(this.state.timerDirection);
     }
-    console.log(`P TIMER => ${this.state.timer}`);
-    console.log(`DIRECTION => ${this.state.timerDirection}`);
   }
   // Reset all the things
   resetTimer() {
@@ -309,17 +310,19 @@ class Timer extends React.Component<timerProps, timerState> {
                 >
                   Down
                 </Button>
+                <Button
+                  variant="outline-danger"
+                  size="lg"
+                  onClick={this.resetTimer}
+                  block
+                >
+                  <FontAwesomeIcon icon={faUndo} />
+                </Button>
               </ButtonToolbar>
             </Dropdown.Item>
+            <Dropdown.Divider />
             <Dropdown.Item>
-              <Button
-                variant="danger"
-                size="lg"
-                onClick={this.resetTimer}
-                block
-              >
-                Reset
-              </Button>
+              <a href="#">Create/Edit Custom Timers</a>
             </Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
