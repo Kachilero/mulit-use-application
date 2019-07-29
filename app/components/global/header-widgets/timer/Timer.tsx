@@ -53,7 +53,11 @@ import MaskedInput from 'react-text-mask';
 import createTimerMask from '../../../../utils/createTimerMask';
 import Pipe from '../../../utility/pipe';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faStopwatch, faUndo } from '@fortawesome/free-solid-svg-icons';
+import {
+  faPause,
+  faStopwatch,
+  faUndo
+} from '@fortawesome/free-solid-svg-icons';
 
 interface timerState {
   sec: string;
@@ -62,6 +66,8 @@ interface timerState {
   timer: number;
   value: string;
   showMenu: boolean;
+  timerDirection: string;
+  timerIsPaused: boolean;
   timerIsRunning: boolean;
 }
 interface timerProps {}
@@ -83,11 +89,14 @@ class Timer extends React.Component<timerProps, timerState> {
       timer: 0,
       value: '',
       showMenu: false,
+      timerDirection: '',
+      timerIsPaused: false,
       timerIsRunning: false
     };
     this.changeHandler = this.changeHandler.bind(this);
     this.resetTimer = this.resetTimer.bind(this);
     this.handleToggle = this.handleToggle.bind(this);
+    this.pauseTimer = this.pauseTimer.bind(this);
     this.mSecondsRemaining = 0;
     this.timerTarget = 0;
     this.intervalHandler;
@@ -128,6 +137,8 @@ class Timer extends React.Component<timerProps, timerState> {
   startTimer(direction) {
     // get the timer
     const timer = this.state.timer;
+    // Set timer direction
+    this.setState({ timerDirection: direction });
     // If no timer set, return
     if (timer === 0) return;
     // Convert timer to string
@@ -139,7 +150,7 @@ class Timer extends React.Component<timerProps, timerState> {
       hour: stringTime.hour
     });
     // Reverse direction for a count up
-    if (direction === 'up') {
+    if (direction === 'up' && this.timerTarget === 0) {
       this.timerTarget = this.mSecondsRemaining;
       this.mSecondsRemaining = 0;
     }
@@ -216,8 +227,25 @@ class Timer extends React.Component<timerProps, timerState> {
     this.mSecondsRemaining = this.mSecondsRemaining + 1;
     if (this.mSecondsRemaining === this.timerTarget) {
       clearInterval(this.intervalHandler);
+      this.timerTarget = 0;
       this.setState({ timerIsRunning: false });
     }
+  }
+  // pause the timer
+  pauseTimer() {
+    console.log(`Pausing timer`);
+    if (!this.state.timerIsPaused) {
+      clearInterval(this.intervalHandler);
+      this.setState({
+        timerIsPaused: true,
+        timer: this.mSecondsRemaining
+      });
+    } else {
+      this.setState({ timerIsPaused: false });
+      this.startTimer(this.state.timerDirection);
+    }
+    console.log(`P TIMER => ${this.state.timer}`);
+    console.log(`DIRECTION => ${this.state.timerDirection}`);
   }
   // Reset all the things
   resetTimer() {
@@ -297,6 +325,9 @@ class Timer extends React.Component<timerProps, timerState> {
         </Dropdown>
         {timerIsRunning && (
           <div id="timer-controls">
+            <Button variant="outline-light" onClick={this.pauseTimer}>
+              <FontAwesomeIcon icon={faPause} />
+            </Button>
             <Button variant="outline-light" onClick={this.resetTimer}>
               <FontAwesomeIcon icon={faUndo} />
             </Button>
