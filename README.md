@@ -8,6 +8,8 @@ This project also gets inspiration from a [Creative Tim](https://www.creative-ti
 
 I may also use some things from the [React-Admin](https://github.com/marmelab/react-admin) project in the future.
 
+This article was useful when I was going to use an HOC for theming, might come in handy latter. [https://medium.com/@niwaa/simple-and-reusable-react-context-api-example-hoc-e1e50c0390ec](https://medium.com/@niwaa/simple-and-reusable-react-context-api-example-hoc-e1e50c0390ec)
+
 ## Roadmap
 
 1. **DONE** => Create main window

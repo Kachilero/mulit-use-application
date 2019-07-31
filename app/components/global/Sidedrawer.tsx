@@ -13,12 +13,17 @@ import { faChevronLeft, faHome } from '@fortawesome/free-solid-svg-icons';
 
 interface State {
   hover: boolean;
+  themeToggle: boolean;
 }
 interface Props {
   routes: any;
   headline: string;
   onClick: () => void;
+  onThemeClick: () => void;
   sideDrawerReducer: {
+    [key: string]: boolean;
+  };
+  themeReducer: {
     [key: string]: boolean;
   };
 }
@@ -28,15 +33,25 @@ class SideDrawer extends Component<Props> {
   constructor(props: Props) {
     super(props);
     this.onCollapse = this.onCollapse.bind(this);
+    this.onThemeClick = this.onThemeClick.bind(this);
     this.handleHover = this.handleHover.bind(this);
     this.state = {
-      hover: false
+      hover: false,
+      themeToggle: props.themeReducer.isDark
     };
   }
 
   // handles click event
   onCollapse = () => {
     this.props.onClick();
+  };
+
+  onThemeClick = event => {
+    const value = event.target.checked;
+    this.setState({
+      themeToggle: value
+    });
+    this.props.onThemeClick();
   };
 
   handleHover = () => {
@@ -49,6 +64,7 @@ class SideDrawer extends Component<Props> {
       this.props.sideDrawerReducer.hoverState || this.state.hover
         ? 'active'
         : '';
+    console.log(`INIT Toggle => ${this.state.themeToggle}`);
 
     return (
       <div id="sidebar" className={activeClass}>
@@ -87,6 +103,19 @@ class SideDrawer extends Component<Props> {
                 routes={this.props.routes}
                 as="div"
               />
+            </div>
+            <div id="theme-toggle">
+              <p className="theme-toggle__text">Toggle Theme:</p>
+              <label className="theme-toggle__label">
+                <input
+                  className="theme-toggle__checkbox"
+                  type="checkbox"
+                  name="themeToggle"
+                  onChange={this.onThemeClick}
+                  checked={this.state.themeToggle}
+                />
+                <span className="theme-toggle__slider"></span>
+              </label>
             </div>
           </Nav>
         </div>

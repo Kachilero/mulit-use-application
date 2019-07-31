@@ -11,12 +11,14 @@ import SideDrawer from '../components/global/Sidedrawer';
 
 interface homeState {}
 interface homeProps {
-  // isOpen: boolean
-  // hoverState: boolean
   sideDrawerReducer: {
     [key: string]: boolean;
   };
+  themeReducer: {
+    [key: string]: boolean;
+  };
   onSideDrawerClick: () => void;
+  onThemeClick: () => void;
 }
 
 class HomeLayout extends Component<homeProps> {
@@ -24,6 +26,7 @@ class HomeLayout extends Component<homeProps> {
   constructor(props: homeProps) {
     super(props);
     this.handleClick = this.handleClick.bind(this);
+    this.handleThemeClick = this.handleThemeClick.bind(this);
   }
 
   // Maps the links to the switch
@@ -44,6 +47,10 @@ class HomeLayout extends Component<homeProps> {
     this.props.onSideDrawerClick();
   };
 
+  handleThemeClick = () => {
+    this.props.onThemeClick();
+  };
+
   componentDidMount(): void {
     // Make sure we're at the top of the page when we navigate between views
     window.scrollTo(0, 0);
@@ -58,8 +65,6 @@ class HomeLayout extends Component<homeProps> {
     window.scrollTo(0, 0);
   }
 
-  // TODO Re-work this so it works like Notion website
-
   render() {
     const mainClass: string = this.props.sideDrawerReducer.isOpen
       ? 'main_main sd-open'
@@ -70,8 +75,8 @@ class HomeLayout extends Component<homeProps> {
           {...this.props}
           routes={homeRoutes}
           headline="Home"
-          // isOpen={this.props.sideDrawerReducer.isOpen}
           onClick={() => this.handleClick()}
+          onThemeClick={() => this.handleThemeClick()}
         />
         <main role="main" id="main-window" className={mainClass}>
           <Switch>{this.getRoutes(homeRoutes)}</Switch>
