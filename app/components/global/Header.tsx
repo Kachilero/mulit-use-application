@@ -21,8 +21,6 @@ import mainRoutes from '../../constants/routes/mainRoutes';
 const userDefaults = require('../../constants/userDefaults.json');
 // Import Header Widgets
 import Timer from './header-widgets/timer/Timer';
-// Testing the theme import
-import { withTheme } from '../HOC/themeProvider/withTheme';
 
 interface State {}
 
@@ -66,8 +64,6 @@ class Header extends Component<Props, State> {
         fixed={userDefaults.default.Navbar.fixed}
       >
         <div
-          //@ts-ignore
-          style={{ backgroundColor: this.props.themeContext.color }}
           id="fa-container__hover"
           onMouseEnter={this.handleMouse}
           onMouseLeave={this.handleMouse}
@@ -102,5 +98,5 @@ class Header extends Component<Props, State> {
     );
   }
 }
-
-export default withTheme(Header);
+//@ts-ignore
+export default Header;

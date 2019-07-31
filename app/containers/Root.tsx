@@ -5,8 +5,6 @@ import { ConnectedRouter } from 'connected-react-router';
 import Routes from '../Routes';
 import { History } from 'history';
 
-import ThemeProvider from '../components/HOC/themeProvider/ThemeProvider';
-
 type Props = {
   store: any;
   history: History<any>;
@@ -20,9 +18,7 @@ export default class Root extends Component<Props> {
     return (
       <Provider store={store}>
         <ConnectedRouter history={history}>
-          <ThemeProvider>
-            <Routes />
-          </ThemeProvider>
+          <Routes />
         </ConnectedRouter>
       </Provider>
     );
