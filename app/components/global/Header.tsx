@@ -22,22 +22,17 @@ const userDefaults = require('../../constants/userDefaults.json');
 // Import Header Widgets
 import Timer from './header-widgets/timer/Timer';
 
-interface State {}
+type State = {};
 
-interface Props {
+type Props = {
   isOpen: boolean;
   hoverState: boolean;
   toggleSideDrawer: () => void;
   sideDrawerHover: () => void;
-}
+};
 
 class Header extends Component<Props, State> {
   state: State;
-  constructor(props: Props) {
-    super(props);
-    this.onCollapse = this.onCollapse.bind(this);
-    this.handleMouse = this.handleMouse.bind(this);
-  }
 
   // Handles the click event
   onCollapse = () => {

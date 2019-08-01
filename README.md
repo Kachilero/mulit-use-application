@@ -10,6 +10,11 @@ I may also use some things from the [React-Admin](https://github.com/marmelab/re
 
 This article was useful when I was going to use an HOC for theming, might come in handy latter. [https://medium.com/@niwaa/simple-and-reusable-react-context-api-example-hoc-e1e50c0390ec](https://medium.com/@niwaa/simple-and-reusable-react-context-api-example-hoc-e1e50c0390ec)
 
+## Useful links
+
+[10 Typescript React Pro Tips](https://medium.com/@martin_hotell/10-typescript-pro-tips-patterns-with-or-without-react-5799488d6680)
+Interesting patterns for React
+
 ## Roadmap
 
 1. **DONE** => Create main window

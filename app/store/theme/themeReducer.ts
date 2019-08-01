@@ -7,12 +7,12 @@ import {
 } from './themeAction';
 
 interface ToggleThemeReducerState {
-  isDark: boolean;
+  isLight: boolean;
 }
 
 // This has to be false so that it is checked on init.
 const ToggleThemeInitState: ToggleThemeReducerState = {
-  isDark: false
+  isLight: false
 };
 
 export default function(
@@ -20,8 +20,7 @@ export default function(
   action: ToggleThemeActionTypes
 ) {
   if (action.type === ToggleThemeActionTypeKeys.TOGGLE_THEME) {
-    console.log(`Theme Clicked`);
-    return !state.isDark;
+    return !state.isLight;
   }
   return state;
 }

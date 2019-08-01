@@ -1,8 +1,7 @@
 /**
  * Side Drawer Component
  */
-import * as React from 'react';
-import { Component } from 'react';
+import React, { Component } from 'react';
 import { Nav } from 'react-bootstrap';
 import SideDrawerNavLinks from './SideDrawerNavLinks';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -11,11 +10,12 @@ import { faChevronLeft, faHome } from '@fortawesome/free-solid-svg-icons';
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 // import { faHome } from '@fortawesome/free-solid-svg-icons';
 
-interface State {
+type State = {
   hover: boolean;
   themeToggle: boolean;
-}
-interface Props {
+};
+
+type Props = {
   routes: any;
   headline: string;
   onClick: () => void;
@@ -26,20 +26,17 @@ interface Props {
   themeReducer: {
     [key: string]: boolean;
   };
-}
+};
+
+const getInitialState = (props: Props): State => {
+  return {
+    hover: false,
+    themeToggle: props.themeReducer.isLight
+  };
+};
 
 class SideDrawer extends Component<Props> {
-  state: State;
-  constructor(props: Props) {
-    super(props);
-    this.onCollapse = this.onCollapse.bind(this);
-    this.onThemeClick = this.onThemeClick.bind(this);
-    this.handleHover = this.handleHover.bind(this);
-    this.state = {
-      hover: false,
-      themeToggle: props.themeReducer.isDark
-    };
-  }
+  readonly state = getInitialState(this.props);
 
   // handles click event
   onCollapse = () => {

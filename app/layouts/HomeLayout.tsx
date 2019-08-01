@@ -23,11 +23,6 @@ interface homeProps {
 
 class HomeLayout extends Component<homeProps> {
   state: homeState;
-  constructor(props: homeProps) {
-    super(props);
-    this.handleClick = this.handleClick.bind(this);
-    this.handleThemeClick = this.handleThemeClick.bind(this);
-  }
 
   // Maps the links to the switch
   getRoutes = passedRoutes => {
