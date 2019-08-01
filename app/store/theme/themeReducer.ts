@@ -20,7 +20,7 @@ export default function(
   action: ToggleThemeActionTypes
 ) {
   if (action.type === ToggleThemeActionTypeKeys.TOGGLE_THEME) {
-    return !state.isLight;
+    return { isLight: !state.isLight };
   }
   return state;
 }

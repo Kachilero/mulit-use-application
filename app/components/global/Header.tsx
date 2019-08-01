@@ -18,7 +18,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsisV } from '@fortawesome/free-solid-svg-icons';
 // Import static values
 import mainRoutes from '../../constants/routes/mainRoutes';
-const userDefaults = require('../../constants/userDefaults.json');
+// const userDefaults = require('../../constants/userDefaults.json');
 // Import Header Widgets
 import Timer from './header-widgets/timer/Timer';
 
@@ -27,6 +27,7 @@ type State = {};
 type Props = {
   isOpen: boolean;
   hoverState: boolean;
+  theme: boolean;
   toggleSideDrawer: () => void;
   sideDrawerHover: () => void;
 };
@@ -45,18 +46,44 @@ class Header extends Component<Props, State> {
     }, 200);
   };
 
+  _userThemeOverrides = themeProp => {
+    if (themeProp) {
+      return {
+        bg: 'light',
+        variant: 'light',
+        fixed: 'top'
+      };
+    }
+    return {
+      bg: 'dark',
+      variant: 'dark',
+      fixed: 'top'
+    };
+  };
+
   // Sets active class on link based on route
   static activeRoute(passedRoute) {
     return window.location.href.indexOf(passedRoute) > -1 ? 'active' : '';
   }
 
   render() {
-    const activeClass = this.props.isOpen ? '' : 'active';
+    const {
+      isOpen,
+      // hoverState,
+      theme
+      // toggleSideDrawer,
+      // sideDrawerHover,
+    } = this.props;
+    const activeClass = isOpen ? '' : 'active';
     return (
       <Navbar
-        bg={userDefaults.default.Navbar.bg}
-        variant={userDefaults.default.Navbar.variant}
-        fixed={userDefaults.default.Navbar.fixed}
+        // TODO figure out how to tell TS that these value ARE FUCKING STRINGS!!!!
+        // @ts-ignore
+        bg={this._userThemeOverrides(theme).bg}
+        // @ts-ignore
+        variant={this._userThemeOverrides(theme).variant}
+        // @ts-ignore
+        fixed={this._userThemeOverrides(theme).fixed}
       >
         <div
           id="fa-container__hover"

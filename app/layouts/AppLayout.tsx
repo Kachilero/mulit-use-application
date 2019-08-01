@@ -10,6 +10,9 @@ export interface AppLayoutProps {
   sideDrawerReducer?: {
     [key: string]: boolean;
   };
+  themeReducer?: {
+    [key: string]: boolean;
+  };
   toggleSideDrawer: () => void;
   sideDrawerHover: () => void;
 }
@@ -19,12 +22,15 @@ class AppLayout extends React.Component<AppLayoutProps> {
     const {
       children,
       sideDrawerReducer,
+      themeReducer,
       toggleSideDrawer,
       sideDrawerHover
     } = this.props;
+
     return (
       <div id="main-wrapper">
         <Header
+          theme={themeReducer.isLight}
           isOpen={sideDrawerReducer.isOpen}
           hoverState={sideDrawerReducer.hoverState}
           toggleSideDrawer={toggleSideDrawer}
