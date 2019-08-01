@@ -26,11 +26,7 @@ import mainRoutes from '../../constants/routes/mainRoutes';
 // Import Header Widgets
 import Timer from './header-widgets/timer/Timer';
 
-type HeaderState = {
-  bg: string;
-  variant: 'light' | 'dark';
-  fixed: 'top' | 'bottom';
-};
+type HeaderState = {};
 
 type HeaderProps = {
   isOpen: boolean;
@@ -40,17 +36,8 @@ type HeaderProps = {
   sideDrawerHover: () => void;
 };
 
-const getInitState = (props: HeaderProps) => {
-  return {
-    bg: 'dark',
-    variant: 'dark' as 'dark',
-    fixed: 'top' as 'top',
-    isLight: props.theme
-  };
-};
-
 class Header extends Component<HeaderProps, HeaderState> {
-  readonly state: HeaderState = getInitState(this.props);
+  readonly state: HeaderState;
 
   // Handles the click event
   onCollapse = () => {
@@ -70,31 +57,11 @@ class Header extends Component<HeaderProps, HeaderState> {
     return window.location.href.indexOf(passedRoute) > -1 ? 'active' : '';
   }
 
-  static getDerivedStateFromProps(props, state) {
-    if (props.theme !== state.theme) {
-      if (props.theme) {
-        return {
-          bg: 'light',
-          variant: 'light' as 'light'
-        };
-      } else {
-        return {
-          bg: 'dark',
-          variant: 'dark' as 'dark'
-        };
-      }
-    }
-  }
-
   render() {
     const { isOpen } = this.props;
     const activeClass = isOpen ? '' : 'active';
     return (
-      <Navbar
-        bg={this.state.bg}
-        variant={this.state.variant}
-        fixed={this.state.fixed}
-      >
+      <Navbar bg="dark" variant="dark" fixed="top">
         <div
           id="fa-container__hover"
           onMouseEnter={this.handleMouse}

@@ -23,7 +23,8 @@ Interesting patterns for React
 4. Create "Default" apps for the header menu
    - **DONE** Let's start with a timer widget that goes up or down
 5. **Setting Overlay** - Add a permanent 'settings' link in the bottom of the side drawer where user defined settings will go
-6. **Theme System** - way to toggle between preset themes, ie. light and dark
+6. **Theme System** **ABANDONING FOR NOW!!!** - way to toggle between preset themes, ie. light and dark
+   - This has turned into a real pain in the ass, so I'm going to need to rethink it.
    - I'm gonna try copying `react-theme-provider`
 7. **Widget System** - I'm not sure how I'm gonna do this, but I need a way to load widgets into the main window
 8. **Layout System** - Need some way for the user to easely modify the layout.

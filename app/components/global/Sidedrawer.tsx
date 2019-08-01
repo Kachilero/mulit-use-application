@@ -12,7 +12,6 @@ import { faChevronLeft, faHome } from '@fortawesome/free-solid-svg-icons';
 
 type State = {
   hover: boolean;
-  themeToggle: boolean;
 };
 
 type Props = {
@@ -23,16 +22,12 @@ type Props = {
   sideDrawerReducer: {
     [key: string]: boolean;
   };
-  themeReducer: {
-    [key: string]: boolean;
-  };
   sideDrawerHover: () => void;
 };
 
 const getInitialState = (props: Props): State => {
   return {
-    hover: false,
-    themeToggle: props.themeReducer.isLight
+    hover: false
   };
 };
 
@@ -104,19 +99,6 @@ class SideDrawer extends Component<Props> {
                 routes={this.props.routes}
                 as="div"
               />
-            </div>
-            <div id="theme-toggle">
-              <p className="theme-toggle__text">Toggle Theme:</p>
-              <label className="theme-toggle__label">
-                <input
-                  className="theme-toggle__checkbox"
-                  type="checkbox"
-                  name="themeToggle"
-                  onChange={this.onThemeClick}
-                  checked={this.state.themeToggle}
-                />
-                <span className="theme-toggle__slider"></span>
-              </label>
             </div>
           </Nav>
         </div>
