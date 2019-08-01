@@ -1,14 +1,19 @@
 /**
  * Header component to be re-used on every page
  *
- * @function fCollapse = Library that handles memoization, but only returns the last value.
- *  In the function we pass both state.isSideDrawerOpen && props.isOpen
- *  We then change the local state to mirror the props and return
- *  the appropriate class for the ellipsis icon.
- *  @link https://github.com/alexreardon/memoize-one
+ * This would be the VIEW
  *
  * @function onCollapse = returns a function to the callback, so we can trigger
  *  the toggling of the side drawer.
+ *
+ * @function handleMouse = if this.props.hoverState is false waits 200ms then
+ *  returns a function to the callback to trigger the side drawer
+ *
+ * @function activeRoute = takes a route and checks it against the current page
+ *  if they match, it sets it as the currently active route
+ *
+ * @getDerivedStateFromProps = CURRENTLY ONLY FOR THEME
+ *  changes the NavBar variables - depends on props.theme
  * */
 import * as React from 'react';
 import { Component } from 'react';
@@ -125,5 +130,5 @@ class Header extends Component<HeaderProps, HeaderState> {
     );
   }
 }
-//@ts-ignore
+
 export default Header;

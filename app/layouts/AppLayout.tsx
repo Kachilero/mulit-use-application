@@ -5,7 +5,7 @@ import * as React from 'react';
 
 import Header from '../components/global/Header';
 
-export interface AppLayoutProps {
+export type AppLayoutProps = {
   children;
   sideDrawerReducer?: {
     [key: string]: boolean;
@@ -15,7 +15,7 @@ export interface AppLayoutProps {
   };
   toggleSideDrawer: () => void;
   sideDrawerHover: () => void;
-}
+};
 
 class AppLayout extends React.Component<AppLayoutProps> {
   render() {
