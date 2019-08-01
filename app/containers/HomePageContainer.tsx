@@ -6,7 +6,10 @@
  * */
 import { connect } from 'react-redux';
 import HomeLayout from '../layouts/HomeLayout';
-import { toggleSideDrawer } from '../store/sideDrawer/sideDrawer.actions';
+import {
+  sideDrawerHover,
+  toggleSideDrawer
+} from '../store/sideDrawer/sideDrawer.actions';
 import toggleTheme from '../store/theme/themeAction';
 import { Dispatch } from 'redux';
 
@@ -23,6 +26,9 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
     },
     onThemeClick: () => {
       dispatch(toggleTheme());
+    },
+    sideDrawerHover: () => {
+      dispatch(sideDrawerHover());
     }
   };
 };

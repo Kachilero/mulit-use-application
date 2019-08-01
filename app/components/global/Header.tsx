@@ -18,13 +18,16 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsisV } from '@fortawesome/free-solid-svg-icons';
 // Import static values
 import mainRoutes from '../../constants/routes/mainRoutes';
-// const userDefaults = require('../../constants/userDefaults.json');
 // Import Header Widgets
 import Timer from './header-widgets/timer/Timer';
 
-type State = {};
+type HeaderState = {
+  bg: string;
+  variant: 'light' | 'dark';
+  fixed: 'top' | 'bottom';
+};
 
-type Props = {
+type HeaderProps = {
   isOpen: boolean;
   hoverState: boolean;
   theme: boolean;
@@ -32,8 +35,17 @@ type Props = {
   sideDrawerHover: () => void;
 };
 
-class Header extends Component<Props, State> {
-  state: State;
+const getInitState = (props: HeaderProps) => {
+  return {
+    bg: 'dark',
+    variant: 'dark' as 'dark',
+    fixed: 'top' as 'top',
+    isLight: props.theme
+  };
+};
+
+class Header extends Component<HeaderProps, HeaderState> {
+  readonly state: HeaderState = getInitState(this.props);
 
   // Handles the click event
   onCollapse = () => {
@@ -41,24 +53,11 @@ class Header extends Component<Props, State> {
   };
 
   handleMouse = () => {
-    setTimeout(() => {
-      this.props.sideDrawerHover();
-    }, 200);
-  };
-
-  _userThemeOverrides = themeProp => {
-    if (themeProp) {
-      return {
-        bg: 'light',
-        variant: 'light',
-        fixed: 'top'
-      };
+    if (!this.props.hoverState) {
+      setTimeout(() => {
+        this.props.sideDrawerHover();
+      }, 200);
     }
-    return {
-      bg: 'dark',
-      variant: 'dark',
-      fixed: 'top'
-    };
   };
 
   // Sets active class on link based on route
@@ -66,24 +65,30 @@ class Header extends Component<Props, State> {
     return window.location.href.indexOf(passedRoute) > -1 ? 'active' : '';
   }
 
+  static getDerivedStateFromProps(props, state) {
+    if (props.theme !== state.theme) {
+      if (props.theme) {
+        return {
+          bg: 'light',
+          variant: 'light' as 'light'
+        };
+      } else {
+        return {
+          bg: 'dark',
+          variant: 'dark' as 'dark'
+        };
+      }
+    }
+  }
+
   render() {
-    const {
-      isOpen,
-      // hoverState,
-      theme
-      // toggleSideDrawer,
-      // sideDrawerHover,
-    } = this.props;
+    const { isOpen } = this.props;
     const activeClass = isOpen ? '' : 'active';
     return (
       <Navbar
-        // TODO figure out how to tell TS that these value ARE FUCKING STRINGS!!!!
-        // @ts-ignore
-        bg={this._userThemeOverrides(theme).bg}
-        // @ts-ignore
-        variant={this._userThemeOverrides(theme).variant}
-        // @ts-ignore
-        fixed={this._userThemeOverrides(theme).fixed}
+        bg={this.state.bg}
+        variant={this.state.variant}
+        fixed={this.state.fixed}
       >
         <div
           id="fa-container__hover"

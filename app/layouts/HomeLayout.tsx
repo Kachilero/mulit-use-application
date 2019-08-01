@@ -19,6 +19,7 @@ interface homeProps {
   };
   onSideDrawerClick: () => void;
   onThemeClick: () => void;
+  sideDrawerHover: () => void;
 }
 
 class HomeLayout extends Component<homeProps> {

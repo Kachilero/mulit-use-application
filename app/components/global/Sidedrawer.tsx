@@ -26,6 +26,7 @@ type Props = {
   themeReducer: {
     [key: string]: boolean;
   };
+  sideDrawerHover: () => void;
 };
 
 const getInitialState = (props: Props): State => {
@@ -52,22 +53,25 @@ class SideDrawer extends Component<Props> {
   };
 
   handleHover = () => {
-    this.setState({ hover: !this.state.hover });
+    this.props.sideDrawerHover();
   };
+
+  static getDerivedStateFromProps(props, state) {
+    if (props.sideDrawerReducer.hoverState !== state.hover) {
+      return { hover: props.sideDrawerReducer.hoverState };
+    }
+    return null;
+  }
 
   render() {
     const activeClass = this.props.sideDrawerReducer.isOpen ? 'active' : '';
-    const hoverClass =
-      this.props.sideDrawerReducer.hoverState || this.state.hover
-        ? 'active'
-        : '';
-    console.log(`INIT Toggle => ${this.state.themeToggle}`);
+    const hoverClass = this.state.hover ? 'active' : '';
 
     return (
       <div id="sidebar" className={activeClass}>
         <div id="inmovable-object">
           <Nav
-            onMouseEnter={this.handleHover}
+            // onMouseEnter={this.handleHover}
             onMouseLeave={this.handleHover}
             id="sidebar__menu"
             className={`sidebar ${activeClass} ${hoverClass}`}
