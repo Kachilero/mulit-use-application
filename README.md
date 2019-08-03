@@ -22,6 +22,8 @@ Interesting patterns for React
 3. **DONE** => Create a default view for `main-window` which loads links to documentation and the inspiration pages above as well as this README.
 4. Create "Default" apps for the header menu
    - **DONE** Let's start with a timer widget that goes up or down
+   - Terminal
+   - Weather
 5. **Setting Overlay** - Add a permanent 'settings' link in the bottom of the side drawer where user defined settings will go
 6. **Theme System** **ABANDONING FOR NOW!!!** - way to toggle between preset themes, ie. light and dark
    - This has turned into a real pain in the ass, so I'm going to need to rethink it.
@@ -75,3 +77,8 @@ This is a breakdown of the file structure
 - `app/containers/Root.js` => Seems to handle `store` and `history`
 - `app/container/App.js` => This seems to be the body of the ap
 - `app/component/<NAME_FROM_Route.js>` => whichever component was passed as a prop in `Routes.js` is rendered here.
+
+### Links to Repos
+
+- [X-Term](https://github.com/xtermjs/xterm.js/) A terminal for the web
+  - [React-XTerm](https://github.com/farfromrefug/react-xterm) A react implementation of XTerm that I'm using as inspiration for my own terminal
