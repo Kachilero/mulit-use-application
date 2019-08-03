@@ -25,6 +25,7 @@ import { faEllipsisV } from '@fortawesome/free-solid-svg-icons';
 import mainRoutes from '../../constants/routes/mainRoutes';
 // Import Header Widgets
 import Timer from './header-widgets/timer/Timer';
+import TerminalController from './header-widgets/terminal/terminalController';
 
 type HeaderState = {};
 
@@ -92,6 +93,16 @@ class Header extends Component<HeaderProps, HeaderState> {
             })}
           </NavDropdown>
           <Timer />
+          <div
+            style={{
+              width: '200px',
+              height: '200px',
+              position: 'absolute',
+              top: '0'
+            }}
+          >
+            <TerminalController />
+          </div>
         </Navbar.Collapse>
       </Navbar>
     );

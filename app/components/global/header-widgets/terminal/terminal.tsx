@@ -81,14 +81,15 @@ class XTerminal extends React.Component<IXtermProps, IXtermState> {
       nextProps.hasOwnProperty('value') &&
       nextProps.value !== this.props.value
     ) {
+      console.log(`Should TERMINAL UPDATE TRUE`);
       if (this.xterm) {
         this.xterm.clear();
         setTimeout(() => {
           this.xterm.write(nextProps.value);
         }, 0);
       }
-      return false;
     }
+    return false;
   }
 
   getTerminal() {
