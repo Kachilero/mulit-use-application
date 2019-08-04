@@ -76,15 +76,10 @@ class TerminalController extends React.Component<
           </Button>
         </Pipe>
         {this.state.isTerminalOpen && (
-          <div
-            className="terminal__wrapper"
-            style={{
-              position: 'absolute',
-              top: '57px',
-              left: '150px',
-              overflow: 'scroll'
-            }}
-          >
+          <div className="terminal__wrapper">
+            <Button className="close-terminal" variant="info">
+              X
+            </Button>
             <XTerminal
               ref="xterm"
               onFocusChange={this.onFocusChange}
