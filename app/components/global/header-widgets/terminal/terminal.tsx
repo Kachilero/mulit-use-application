@@ -3,6 +3,7 @@
  * */
 import * as React from 'react';
 import { Terminal } from 'xterm';
+
 const classNames = require('classnames');
 
 export interface IXtermProps extends React.DOMAttributes<{}> {
@@ -25,7 +26,7 @@ export interface IXtermState {
 
 const getInitState = (props: IXtermProps): IXtermState => {
   return {
-    isFocused: false
+    isFocused: true
   };
 };
 
@@ -34,7 +35,7 @@ class XTerminal extends React.Component<IXtermProps, IXtermState> {
   container: HTMLDivElement;
   readonly state = getInitState(this.props);
 
-  // May remove this as it
+  // May remove this as this seems extra
   applyAddon(addon) {
     Terminal.applyAddon(addon);
   }
@@ -60,7 +61,7 @@ class XTerminal extends React.Component<IXtermProps, IXtermState> {
       this.xterm.on('data', this.onInput);
     }
     if (this.props.value) {
-      this.xterm.write(this.props.value);
+      this.xterm.writeln(this.props.value);
     }
   } // .componentDidMount
 

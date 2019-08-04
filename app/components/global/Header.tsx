@@ -93,16 +93,7 @@ class Header extends Component<HeaderProps, HeaderState> {
             })}
           </NavDropdown>
           <Timer />
-          <div
-            style={{
-              width: '200px',
-              height: '200px',
-              position: 'absolute',
-              top: '0'
-            }}
-          >
-            <TerminalController />
-          </div>
+          <TerminalController />
         </Navbar.Collapse>
       </Navbar>
     );
