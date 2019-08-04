@@ -3,6 +3,8 @@
  * */
 import * as React from 'react';
 import { Terminal } from 'xterm';
+import * as pty from 'node-pty';
+import * as os from 'os';
 
 const classNames = require('classnames');
 
@@ -33,6 +35,7 @@ const getInitState = (props: IXtermProps): IXtermState => {
 class XTerminal extends React.Component<IXtermProps, IXtermState> {
   xterm: Terminal;
   container: HTMLDivElement;
+  ptyProc;
   readonly state = getInitState(this.props);
 
   // May remove this as this seems extra
@@ -40,17 +43,37 @@ class XTerminal extends React.Component<IXtermProps, IXtermState> {
     Terminal.applyAddon(addon);
   }
 
+  // All the work to build the terminal gets done here
   componentDidMount(): void {
+    // first we create a node-pty instance
+    const shell = process.env[os.platform() === 'win32' ? 'COMSPEC' : 'SHELL'];
+    this.ptyProc = pty.spawn(shell, [], {
+      name: 'React Terminal',
+      cols: 80,
+      rows: 30,
+      cwd: process.cwd(),
+      env: process.env
+    });
+    // Create an XTerm instance with any passed options
+    this.xterm = new Terminal(this.props.options);
+    // If we passed props from the parent, we load them here
     if (this.props.addons) {
       this.props.addons.forEach(s => {
         const addon = require(`xterm/dist/addons/${s}/${s}.js`);
-        Terminal.applyAddon(addon);
+        this.applyAddon(addon);
       });
     }
-    this.xterm = new Terminal(this.props.options);
+    // we open the container
     this.xterm.open(this.container);
+    // I think this applies the 'fit' addon to anything in the terminal
+    (this.xterm as any).fit();
+    // Now we bind all of the handle functions
     this.xterm.on('focus', this.focusChanged.bind(this, true));
     this.xterm.on('blur', this.focusChanged.bind(this, false));
+    // NOTE: we need to just pass data back and forth or it'll print twice
+    this.xterm.on('data', this.xtermData.bind(this));
+    this.ptyProc.on('data', this.ptyData.bind(this));
+    // If we get these from the parent we deal with them here
     if (this.props.onContextMenu) {
       this.xterm.element.addEventListener(
         'contextmenu',
@@ -66,13 +89,15 @@ class XTerminal extends React.Component<IXtermProps, IXtermState> {
   } // .componentDidMount
 
   componentWillUnmount(): void {
+    // make sure we have a terminal, then kill it and the pty process
     if (this.xterm) {
       this.xterm.destroy();
       this.xterm = null;
+      this.ptyProc.kill();
     }
   }
 
-  // May or may not need this
+  // Currently only updates if the parent sends a new "value"
   shouldComponentUpdate(
     nextProps: Readonly<IXtermProps>,
     nextState: Readonly<IXtermState>,
@@ -93,6 +118,12 @@ class XTerminal extends React.Component<IXtermProps, IXtermState> {
     return false;
   }
 
+  xtermData(data) {
+    this.ptyProc.write(data);
+  }
+  ptyData(data) {
+    this.xterm.write(data);
+  }
   getTerminal() {
     return this.xterm;
   }
