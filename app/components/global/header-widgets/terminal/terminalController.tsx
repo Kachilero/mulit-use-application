@@ -56,6 +56,12 @@ class TerminalController extends React.Component<
     });
   };
 
+  handleCloseBtn = () => {
+    this.setState({
+      isTerminalOpen: false
+    });
+  };
+
   refs: IXtermRefs;
 
   render():
@@ -77,9 +83,11 @@ class TerminalController extends React.Component<
         </Pipe>
         {this.state.isTerminalOpen && (
           <div className="terminal__wrapper">
-            <Button className="close-terminal" variant="info">
-              X
-            </Button>
+            <Button
+              className="close-terminal"
+              variant="info"
+              onClick={this.handleCloseBtn}
+            />
             <XTerminal
               ref="xterm"
               onFocusChange={this.onFocusChange}
