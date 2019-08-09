@@ -48,7 +48,7 @@ class XTerminal extends React.Component<IXtermProps, IXtermState> {
     // first we create a node-pty instance
     const shell = process.env[os.platform() === 'win32' ? 'COMSPEC' : 'SHELL'];
     this.ptyProc = pty.spawn(shell, [], {
-      name: 'React Terminal',
+      name: 'xterm',
       cols: 80,
       rows: 30,
       cwd: process.cwd(),
