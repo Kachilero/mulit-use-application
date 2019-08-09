@@ -1,6 +1,6 @@
-# Mulit-use Application V2
+# Typescript React Electron Boilerplate
 
-A second - hopefully better - version of the App, using `TypeScript`.
+This will be a "base" for any TS/React/Electron Apps that I might wanna make.
 
 This project uses [Electron React Builerplate](https://github.com/electron-react-boilerplate/electron-react-boilerplate) as a starter, usind the `typescript` variant as I don't like `flow`.
 
@@ -8,12 +8,10 @@ This project also gets inspiration from a [Creative Tim](https://www.creative-ti
 
 I may also use some things from the [React-Admin](https://github.com/marmelab/react-admin) project in the future.
 
-This article was useful when I was going to use an HOC for theming, might come in handy latter. [https://medium.com/@niwaa/simple-and-reusable-react-context-api-example-hoc-e1e50c0390ec](https://medium.com/@niwaa/simple-and-reusable-react-context-api-example-hoc-e1e50c0390ec)
-
 ## Useful links
 
-[10 Typescript React Pro Tips](https://medium.com/@martin_hotell/10-typescript-pro-tips-patterns-with-or-without-react-5799488d6680)
-Interesting patterns for React
+[10 Typescript React Pro Tips](https://medium.com/@martin_hotell/10-typescript-pro-tips-patterns-with-or-without-react-5799488d6680) - Interesting patterns for React
+[Theming HOC Article](https://medium.com/@niwaa/simple-and-reusable-react-context-api-example-hoc-e1e50c0390ec) - This article was useful when I was going to use an HOC for theming, might come in handy latter.
 
 ## Roadmap
 
