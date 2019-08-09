@@ -5,6 +5,7 @@
  * */
 import * as React from 'react';
 import { XTerminal } from './terminal';
+import { ITerminalOptions } from 'xterm';
 import Pipe from '../../../utility/pipe';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTerminal } from '@fortawesome/free-solid-svg-icons';
@@ -17,13 +18,15 @@ interface IXtermRefs {
 
 type TerminalControllerState = {
   isTerminalOpen: boolean;
+  options: ITerminalOptions;
 };
 
 type TerminalControllerProps = {};
 
 const getInitState = (props: TerminalControllerProps) => {
   return {
-    isTerminalOpen: false
+    isTerminalOpen: false,
+    options: null
   };
 };
 

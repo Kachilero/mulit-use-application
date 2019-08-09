@@ -3,6 +3,7 @@
  * */
 import * as React from 'react';
 import { Terminal } from 'xterm';
+import { debounce } from '../../../../utils/utils';
 import * as pty from 'node-pty';
 import * as os from 'os';
 
@@ -70,6 +71,10 @@ class XTerminal extends React.Component<IXtermProps, IXtermState> {
     // Now we bind all of the handle functions
     this.xterm.on('focus', this.focusChanged.bind(this, true));
     this.xterm.on('blur', this.focusChanged.bind(this, false));
+    this.xterm.on('resize', this.resize.bind(this));
+    window.onresize = () => {
+      this.fitDebounce();
+    };
     // NOTE: we need to just pass data back and forth or it'll print twice
     this.xterm.on('data', this.xtermData.bind(this));
     this.ptyProc.on('data', this.ptyData.bind(this));
@@ -77,7 +82,7 @@ class XTerminal extends React.Component<IXtermProps, IXtermState> {
     if (this.props.onContextMenu) {
       this.xterm.element.addEventListener(
         'contextmenu',
-        this.onContexMenu.bind(this)
+        this.onContextMenu.bind(this)
       );
     }
     if (this.props.onInput) {
@@ -145,6 +150,13 @@ class XTerminal extends React.Component<IXtermProps, IXtermState> {
   onInput = data => {
     this.props.onInput && this.props.onInput(data);
   };
+  fitDebounce = debounce(
+    () => {
+      (this.xterm as any).fit();
+    },
+    17,
+    false
+  );
   resize(cols: number, rows: number) {
     this.xterm && this.xterm.resize(Math.round(cols), Math.round(rows));
   }
@@ -154,7 +166,7 @@ class XTerminal extends React.Component<IXtermProps, IXtermState> {
   refresh() {
     this.xterm && this.xterm.refresh(0, this.xterm.rows - 1);
   }
-  onContexMenu(e) {
+  onContextMenu(e) {
     this.props.onContextMenu && this.props.onContextMenu(e);
   }
 
