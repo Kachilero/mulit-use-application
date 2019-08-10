@@ -14,5 +14,5 @@
     "esModuleInterop": true,
     "lib": ["es2015", "dom"]
   },
-  "exclude": ["node_modules", "**/node_modules/*"]
+  "exclude": ["node_modules", "**/node_modules/*", "test"]
 }

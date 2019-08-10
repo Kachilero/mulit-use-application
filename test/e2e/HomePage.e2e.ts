@@ -20,11 +20,11 @@ const assertNoConsoleErrors = async t => {
 fixture`Home Page`.page('../../app/app.html').afterEach(assertNoConsoleErrors);
 
 test('e2e', async t => {
-  await t.expect(getPageTitle()).eql('Hello Electron React!');
+  await t.expect(getPageTitle()).eql('Electron React Typescript Boilerplate');
 });
 
 test('should open window', async t => {
-  await t.expect(getPageTitle()).eql('Hello Electron React!');
+  await t.expect(getPageTitle()).eql('Electron React Typescript Boilerplate');
 });
 
 test(
@@ -34,24 +34,24 @@ test(
 
 test('should to Counter with click "to Counter" link', async t => {
   await t
-    .click('[data-tid=container] > a')
+    .click('a[href="#/counter/counter"]')
     .expect(getCounterText())
     .eql('0');
 });
 
-test('should navgiate to /counter', async t => {
+test('should navigate to /counter', async t => {
   await waitForReact();
   await t
     .click(
       ReactSelector('Link').withProps({
-        to: '/counter'
+        to: '#/counter/counter'
       })
     )
     .expect(getPageUrl())
-    .contains('/counter');
+    .contains('#/counter/counter');
 });
 
-fixture`Counter Tests`
+/*fixture`Counter Tests`
   .page('../../app/app.html')
   .beforeEach(clickToCounterLink)
   .afterEach(assertNoConsoleErrors);
@@ -99,4 +99,4 @@ test('should back to home if back button clicked', async t => {
     .click('[data-tid="backButton"] > a')
     .expect(Selector('[data-tid="container"]').visible)
     .ok();
-});
+});*/
