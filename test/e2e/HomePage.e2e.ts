@@ -33,7 +33,9 @@ test(
 );
 
 test('should to Counter with click "to Counter" link', async t => {
+  await waitForReact();
   await t
+    .click('#header-nav-dropdown')
     .click('a[href="#/counter/counter"]')
     .expect(getCounterText())
     .eql('0');
@@ -43,7 +45,7 @@ test('should navigate to /counter', async t => {
   await waitForReact();
   await t
     .click(
-      ReactSelector('Link').withProps({
+      ReactSelector('NavDropdown.Item').withProps({
         to: '#/counter/counter'
       })
     )
