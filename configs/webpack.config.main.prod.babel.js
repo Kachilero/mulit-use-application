@@ -30,12 +30,12 @@ export default merge.smart(baseConfig, {
     minimizer: process.env.E2E_BUILD
       ? []
       : [
-          new TerserPlugin({
-            parallel: true,
-            sourceMap: true,
-            cache: true
-          })
-        ]
+        new TerserPlugin({
+          parallel: true,
+          sourceMap: true,
+          cache: true
+        })
+      ]
   },
 
   plugins: [
