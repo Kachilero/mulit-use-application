@@ -4,7 +4,13 @@
     "sourceType": "module",
     "allowImportExportEverywhere": true
   },
-  "extends": ["airbnb", "prettier", "prettier/react"],
+  "extends": [
+    "airbnb",
+    "prettier",
+    "prettier/react",
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended"
+  ],
   "env": {
     "browser": true,
     "node": true
@@ -44,7 +50,7 @@
     ],
     "react/prefer-stateless-function": "off"
   },
-  "plugins": ["import", "promise", "compat", "react"],
+  "plugins": ["import", "promise", "compat", "react", "@typescript-eslint"],
   "settings": {
     "import/resolver": {
       "webpack": {
