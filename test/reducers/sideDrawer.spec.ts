@@ -3,6 +3,7 @@ import { SideDrawerActionTypeKeys } from '../../app/store/sideDrawer/sideDrawer.
 
 describe('Side Drawer Reducer', () => {
   it('should return the initial state', () => {
+    //@ts-ignore
     expect(reducer(undefined, {})).toEqual({
       isOpen: true,
       hoverState: false

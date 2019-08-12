@@ -16,7 +16,7 @@
     "types": ["react", "jest", "node"],
     "outDir": "app/dist"
   },
-  "exclude": ["node_modules", "**/node_modules/*", "test"]
+  "exclude": ["node_modules", "**/node_modules/*", "test/e2e"]
 }
 
 /*

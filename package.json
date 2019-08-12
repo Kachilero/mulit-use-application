@@ -40,7 +40,7 @@
       "git add"
     ],
     "*.{ts,tsx}": [
-      "prettier/@typescript-eslint --ignore-path .eslintignore --single-quote --write",
+      "prettier --ignore-path .eslintignore --single-quote --write --verbose",
       "git add"
     ],
     "{*.json,.{babelrc,eslintrc,prettierrc,stylelintrc}}": [
