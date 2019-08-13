@@ -14,6 +14,16 @@ const asyncButton = buttonsSelector.nth(3);
 const getCounterText = () => counterSelector().innerText;
 const assertNoConsoleErrors = async t => {
   const { error } = await t.getBrowserConsoleMessages();
+  // I only want ACTUAL errors
+  if (error) {
+    error.map((currVal, key) => {
+      if (currVal.indexOf('error') !== -1) {
+        return;
+      } else {
+        error.splice(key, 1);
+      }
+    });
+  }
   await t.expect(error).eql([]);
 };
 
@@ -23,6 +33,7 @@ test('e2e', async t => {
   await t.expect(getPageTitle()).eql('Electron React Typescript Boilerplate');
 });
 
+/*
 test('should open window', async t => {
   await t.expect(getPageTitle()).eql('Electron React Typescript Boilerplate');
 });
@@ -52,6 +63,7 @@ test('should navigate to /counter', async t => {
     .expect(getPageUrl())
     .contains('#/counter/counter');
 });
+*/
 
 /*fixture`Counter Tests`
   .page('../../app/app.html')

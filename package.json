@@ -1,6 +1,6 @@
 {
-  "name": "erb-typescript-example",
-  "productName": "ElectronReact",
+  "name": "electron-typescript-react-boilerplate",
+  "productName": "ElectronTypescriptBoilerplate",
   "version": "0.17.1",
   "description": "Electron application boilerplate based on React, React Router, Webpack, React Hot Loader for rapid application development",
   "scripts": {
@@ -30,6 +30,7 @@
     "test": "cross-env NODE_ENV=test BABEL_DISABLE_CACHE=1 jest",
     "test-all": "npm run lint && npm run build && npm run test && npm run build-e2e && npm run test-e2e",
     "test-e2e": "node -r @babel/register ./internals/scripts/CheckBuiltsExist.js && cross-env NODE_ENV=test testcafe --skip-js-errors electron:./ ./test/e2e/HomePage.e2e.ts",
+    "test-e2e-debug": "testcafe $NODE_DEBUG_OPTION electron:./ ./test/e2e/HomePage.e2e.ts",
     "test-e2e-live": "node -r @babel/register ./internals/scripts/CheckBuiltsExist.js && cross-env NODE_ENV=test testcafe-live --skip-js-errors electron:./ ./test/e2e/HomePage.e2e.ts",
     "test-watch": "npm run test --watch"
   },
