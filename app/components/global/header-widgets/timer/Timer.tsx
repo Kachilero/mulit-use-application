@@ -12,38 +12,54 @@
  * @type timer number
  * @type value string
  * @type showMenu boolean
+ * @type timerDirection string
+ * @type timerIsPaused boolean
  * @type timerIsRunning boolean
+ * @type properTime: boolean
  * @type numberMask (rawValue: string) -> string[] private
  * @type mSecondsRemaining number private
  * @type timerTarget number private
  * @type intervalHandler NodeJS.Timer private
  * For above we need to use the 'global.setInterval' to get the correct setInterval type see
  * @link http://evanshortiss.com/development/nodejs/typescript/2016/11/16/timers-in-typescript.html
+ * @type numberInput HTMLInputElement
  *
- * @function handleToggle(isOpen: boolean, event: {}, metadata: {})
+ * @function handleToggle(isOpen: boolean, event: React.SyntheticEvent<Dropdown>, metadata: any): void
  *  overrides the default dropdown behaviour when clicking
  *  on the input element
- * @function changeHandler(val: string)
+ * @function changeHandler(val: React.ChangeEvent<HTMLInputElement): void
  *  removes any non-digit characters and sets the timer state
- * @function tick(direction: string)
+ * @function tick(direction: string): void
  *  calls either countDown or countUp
  *  depending on the direction value, then converts the mSecondsRemaining to
  *  a string and sets the values for each part of the timer state
- * @function startTimer(direction: string
+ * @function startTimer(direction: string): void
  *  First checks if there is a valid timer, then converts it to a string and
  *  sets the state. If 'direction' is up, it sets timerTarget and zero's out
  *  the mSecondsRemaining variable. Then we set the state of showMenu and
  *  timerIsRunning so we can handle those changes in other areas and finally
  *  calls the intervalHandler function with tick()
- * @function tick(passedTimer: number)
- *  Converts numeric timer value to string and returns it's parts
- * @function countDown
+ * @function cutTime(time: number): TimeObject
+ *  takes the time and returns an object with the time parts
+ *  @return Object: TimeObject
+ * @convertToProperTime(passedTime: number): number
+ *  takes the timer that the user inputs and converts it to properly formatted
+ *  time -> ie minutes and seconds do not exceed 60
+ *  @return passingTime: number
+ * @function sixties(timeNumber: TimeObject): TimeObject
+ *  Takes a time object and makes sure seconds and minutes are 60
+ *  @return TimeObject
+ * @function handleTimeConversion(passedTime: number): StringTimeObject
+ *  Takes a numeric time value and converts it to an object with
+ *  strings for the time parts
+ *  @return StringTimeObject
+ * @function countDown: void
  *  Subtracts 1 from mSecondsRemaining and
  *  handles the stop condition for the setInterval of intervalHandler
- * @function countUp
+ * @function countUp: void
  *  Adds 2 to mSecondsRemaining and
  *  handles the stop condition for the setInterval of intervalHandler
- * @function resetTimer
+ * @function resetTimer: void
  *  Handles resetting ( or zeroing out ) all of the state variables and
  *  makes sure the setInterval is terminated.
  */
@@ -91,7 +107,7 @@ class Timer extends React.Component<timerProps, timerState> {
   private mSecondsRemaining: number;
   private timerTarget: number;
   private intervalHandler: NodeJS.Timer;
-  private numberInput;
+  private numberInput: HTMLInputElement;
 
   constructor(props: timerProps) {
     super(props);
@@ -137,7 +153,6 @@ class Timer extends React.Component<timerProps, timerState> {
   changeHandler(val: React.ChangeEvent<HTMLInputElement>): void {
     let stringVal = val.target.value;
     stringVal = stringVal.replace(/\D+/g, '');
-    // val = val.target.value.replace(/\D+/g, '');
     if (stringVal.length > 6) {
       stringVal = stringVal.substring(0, 6);
     }
@@ -333,7 +348,10 @@ class Timer extends React.Component<timerProps, timerState> {
     clearInterval(this.intervalHandler);
     // Since the input passes through masked input, we need to call
     // numberInput.inputElement.value to reset the value
-    this.numberInput.inputElement.value = '';
+    console.log(`Number Input`);
+    console.log(this.numberInput);
+    this.numberInput.value = '';
+    (document.getElementById('masked-input') as HTMLInputElement).value = '';
     this.setState({
       sec: '00',
       min: '00',
@@ -369,6 +387,7 @@ class Timer extends React.Component<timerProps, timerState> {
               <MaskedInput
                 autoFocus
                 mask={this.numberMask}
+                id="masked-input"
                 className="masked-input"
                 placeholder="HH:MM:SS"
                 onChange={this.changeHandler}
