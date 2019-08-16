@@ -61,6 +61,11 @@ import {
   faUndo
 } from '@fortawesome/free-solid-svg-icons';
 
+interface TimeObject {
+  sec: number;
+  min: number;
+  hour: number;
+}
 interface timerState {
   sec: string;
   min: string;
@@ -71,6 +76,7 @@ interface timerState {
   timerDirection: string;
   timerIsPaused: boolean;
   timerIsRunning: boolean;
+  properTime: boolean;
 }
 interface timerProps {}
 
@@ -93,7 +99,8 @@ class Timer extends React.Component<timerProps, timerState> {
       showMenu: false,
       timerDirection: '',
       timerIsPaused: false,
-      timerIsRunning: false
+      timerIsRunning: false,
+      properTime: false
     };
     this.changeHandler = this.changeHandler.bind(this);
     this.resetTimer = this.resetTimer.bind(this);
@@ -126,7 +133,7 @@ class Timer extends React.Component<timerProps, timerState> {
     this.setState({ timer: val });
   }
   // Handles the timer
-  tick(direction) {
+  tick(direction: string) {
     // going up or down
     if (direction === 'down') {
       this.countDown();
@@ -143,19 +150,19 @@ class Timer extends React.Component<timerProps, timerState> {
   // Starts timer
   startTimer(direction) {
     // get the timer
-    const timer = this.state.timer;
-    // Set timer direction
-    this.setState({ timerDirection: direction });
+    let timer = this.state.timer;
     // If no timer set, return
     if (timer === 0) return;
+    // convert to proper time, but only the first time
+    if (!this.state.properTime) {
+      const tempProperTime = this.convertToProperTime(timer);
+      timer = tempProperTime;
+      this.setState({
+        timer: tempProperTime
+      });
+    }
     // Convert timer to string
     const stringTime = this.handleTimeConversion(timer);
-    // Now we set the timer in the header
-    this.setState({
-      sec: stringTime.sec,
-      min: stringTime.min,
-      hour: stringTime.hour
-    });
     // Reverse direction for a count up
     if (direction === 'up' && this.timerTarget === 0) {
       this.timerTarget = this.mSecondsRemaining;
@@ -163,51 +170,88 @@ class Timer extends React.Component<timerProps, timerState> {
     }
     // Close the dropdown, and disable the buttons
     this.setState({
+      sec: stringTime.sec,
+      min: stringTime.min,
+      hour: stringTime.hour,
+      timerDirection: direction,
       showMenu: false,
-      timerIsRunning: true
+      timerIsRunning: true,
+      properTime: true
     });
     // Finally we call the tick function
     this.intervalHandler = global.setInterval(() => this.tick(direction), 1000);
   }
-  // converts numbers to strings
-  handleTimeConversion(passedTime) {
-    const timer = passedTime;
-    // timer parts
-    let timerSec: number, timerMin: number, timerHour: number;
-    // timer strings
-    let tSecString: string, tMinString: string, tHourString: string;
-    // split it up so we can make sure it follows time constraints.
-    // Since they're originally Numbers, I need to convert them to strings to cut them up
-    timerSec = Number(timer.toString().substring(timer.toString().length - 2));
-    let minString: string = timer
-      .toString()
-      .substring(timer.toString().length - 4);
-    timerMin = Number(
-      minString.replace(
-        timer.toString().substring(timer.toString().length - 2),
-        ''
-      )
+  // cut Time into parts - returns Number Object
+  cutTime(time) {
+    let timeSec: number, timeMin: number, timeHour: number;
+    let minString: string;
+    const timeStringLength = time.toString().length;
+    timeSec = Number(time.toString().substring(timeStringLength - 2));
+    minString = time.toString().substring(timeStringLength - 4);
+    timeMin = Number(
+      minString.replace(time.toString().substring(timeStringLength - 2), '')
     );
-    timerHour = Number(
-      timer
+    timeHour = Number(
+      time
         .toString()
-        .replace(timer.toString().substring(timer.toString().length - 4), '')
+        .replace(time.toString().substring(timeStringLength - 4), '')
     );
-    // If more than 60 seconds we add them to minutes
-    if (timerSec > 60) {
-      timerSec = timerSec % 60;
-      timerMin++;
-    }
-    // If more than 60 minutes we add them to hours
-    if (timerMin > 60) {
-      timerMin = timerMin % 60;
-      timerHour++;
-    }
+    // Now we return the parts
+    return {
+      sec: timeSec,
+      min: timeMin,
+      hour: timeHour
+    };
+  }
+  // Handles having values larger than 60 in timer
+  // Sets mSecondsRemaining
+  convertToProperTime(passedTime) {
+    let timer = this.cutTime(passedTime);
+    timer = this.sixties(timer);
+    let timerSec = timer.sec;
+    let timerMin = timer.min;
+    let timerHour = timer.hour;
+
     // Now we make timer equal the new amount in seconds
     const tempHour = timerHour * 60 * 60 * 1000;
     const tempMin = timerMin * 60 * 1000;
     const tempSec = timerSec * 1000;
-    this.mSecondsRemaining = Math.floor((tempHour + tempMin + tempSec) / 1000);
+    const passingTime = Math.floor((tempHour + tempMin + tempSec) / 1000);
+    this.mSecondsRemaining = passingTime;
+    return passingTime;
+  }
+  // Adjust numeric time to be rounded to 60's
+  sixties(timeNumber: TimeObject) {
+    let sec = timeNumber.sec;
+    let min = timeNumber.min;
+    let hour = timeNumber.hour;
+
+    // If more than 60 seconds we add them to minutes
+    if (sec > 60) {
+      sec = sec % 60;
+      min++;
+    }
+    // If more than 60 minutes we add them to hours
+    if (min > 60) {
+      min = min % 60;
+      hour++;
+    }
+    // return an adjusted Object
+    return {
+      sec: sec,
+      min: min,
+      hour: hour
+    };
+  }
+  // converts numbers to strings
+  handleTimeConversion(passedTime) {
+    // lets not mutate the passedTime
+    let tTime = passedTime - Math.floor(passedTime / 3600) * 3600;
+    const timerMin = Math.floor(tTime / 60);
+    const timerSec = tTime - timerMin * 60;
+    const timerHour = Math.floor(passedTime / 3600);
+    // timer strings
+    let tSecString: string, tMinString: string, tHourString: string;
     // First we'll make sure our parts look nice and are strings
     tSecString =
       timerSec < 10 ? '0' + timerSec.toString() : timerSec.toString();
@@ -226,7 +270,10 @@ class Timer extends React.Component<timerProps, timerState> {
     this.mSecondsRemaining = this.mSecondsRemaining - 1;
     if (this.mSecondsRemaining === 0) {
       clearInterval(this.intervalHandler);
-      this.setState({ timerIsRunning: false });
+      this.setState({
+        timerIsRunning: false,
+        properTime: false
+      });
       this.beep('end');
     }
   }
@@ -236,7 +283,10 @@ class Timer extends React.Component<timerProps, timerState> {
     if (this.mSecondsRemaining === this.timerTarget) {
       clearInterval(this.intervalHandler);
       this.timerTarget = 0;
-      this.setState({ timerIsRunning: false });
+      this.setState({
+        timerIsRunning: false,
+        properTime: false
+      });
       this.beep('end');
     }
   }
@@ -279,7 +329,8 @@ class Timer extends React.Component<timerProps, timerState> {
       hour: '00',
       timer: 0,
       value: '',
-      timerIsRunning: false
+      timerIsRunning: false,
+      properTime: false
     });
   }
 

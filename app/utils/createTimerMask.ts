@@ -15,11 +15,7 @@
  *  @link http://stackoverflow.com/a/10899795/604296
  * @function numberMask(rawValue: string)
  *  This is the main function
- *  If the value is empty we simply return an empty string
- *  If the value is less than the numberGroupLimit value plus 1, we return
- *  the value after passing it through convertToMask
- *  Otherwise, we split the rawValue into chunks, strip any non-digit characters,
- *  pass it through convertToMask and return the resulting string.
+ *  We strip the rawValue then add masking before returning it.
  * */
 
 const emptyString: string = '';
