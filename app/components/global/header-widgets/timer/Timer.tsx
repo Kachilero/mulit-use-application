@@ -13,7 +13,7 @@
  * @type value string
  * @type showMenu boolean
  * @type timerIsRunning boolean
- * @type numberMask (raweValeu: string) -> string[] private
+ * @type numberMask (rawValue: string) -> string[] private
  * @type mSecondsRemaining number private
  * @type timerTarget number private
  * @type intervalHandler NodeJS.Timer private
@@ -48,8 +48,6 @@
  *  makes sure the setInterval is terminated.
  */
 import * as React from 'react';
-// import Electron from 'electron';
-// import shell = Electron.shell;
 import { Button, ButtonToolbar, Dropdown } from 'react-bootstrap';
 import MaskedInput from 'react-text-mask';
 import createTimerMask from '../../../../utils/createTimerMask';
@@ -66,6 +64,13 @@ interface TimeObject {
   min: number;
   hour: number;
 }
+
+interface StringTimeObject {
+  sec: string;
+  min: string;
+  hour: string;
+}
+
 interface timerState {
   sec: string;
   min: string;
@@ -118,22 +123,28 @@ class Timer extends React.Component<timerProps, timerState> {
     clearInterval(this.intervalHandler);
   }
   // Override the default menu behaviour so it doesn't close when the input is clicked
-  handleToggle(isOpen, event, metadata) {
+  handleToggle(
+    isOpen: boolean,
+    event: React.SyntheticEvent<Dropdown>,
+    metadata: any
+  ): void {
     if (isOpen || metadata.source !== 'select') {
       this.setState({ showMenu: isOpen });
     }
     event.persist;
   }
   // Sets timer value
-  changeHandler(val) {
-    val = val.target.value.replace(/\D+/g, '');
-    if (val.length > 6) {
-      val = val.substring(0, 6);
+  changeHandler(val: React.ChangeEvent<HTMLInputElement>): void {
+    let stringVal = val.target.value;
+    stringVal = stringVal.replace(/\D+/g, '');
+    // val = val.target.value.replace(/\D+/g, '');
+    if (stringVal.length > 6) {
+      stringVal = stringVal.substring(0, 6);
     }
-    this.setState({ timer: val });
+    this.setState({ timer: Number(stringVal) });
   }
   // Handles the timer
-  tick(direction: string) {
+  tick(direction: string): void {
     // going up or down
     if (direction === 'down') {
       this.countDown();
@@ -148,7 +159,7 @@ class Timer extends React.Component<timerProps, timerState> {
     });
   }
   // Starts timer
-  startTimer(direction) {
+  startTimer(direction: string): void {
     // get the timer
     let timer = this.state.timer;
     // If no timer set, return
@@ -182,7 +193,7 @@ class Timer extends React.Component<timerProps, timerState> {
     this.intervalHandler = global.setInterval(() => this.tick(direction), 1000);
   }
   // cut Time into parts - returns Number Object
-  cutTime(time) {
+  cutTime(time: number): TimeObject {
     let timeSec: number, timeMin: number, timeHour: number;
     let minString: string;
     const timeStringLength = time.toString().length;
@@ -205,7 +216,7 @@ class Timer extends React.Component<timerProps, timerState> {
   }
   // Handles having values larger than 60 in timer
   // Sets mSecondsRemaining
-  convertToProperTime(passedTime) {
+  convertToProperTime(passedTime: number): number {
     let timer = this.cutTime(passedTime);
     timer = this.sixties(timer);
     let timerSec = timer.sec;
@@ -221,7 +232,7 @@ class Timer extends React.Component<timerProps, timerState> {
     return passingTime;
   }
   // Adjust numeric time to be rounded to 60's
-  sixties(timeNumber: TimeObject) {
+  sixties(timeNumber: TimeObject): TimeObject {
     let sec = timeNumber.sec;
     let min = timeNumber.min;
     let hour = timeNumber.hour;
@@ -244,7 +255,7 @@ class Timer extends React.Component<timerProps, timerState> {
     };
   }
   // converts numbers to strings
-  handleTimeConversion(passedTime) {
+  handleTimeConversion(passedTime: number): StringTimeObject {
     // lets not mutate the passedTime
     let tTime = passedTime - Math.floor(passedTime / 3600) * 3600;
     const timerMin = Math.floor(tTime / 60);
@@ -266,7 +277,7 @@ class Timer extends React.Component<timerProps, timerState> {
     };
   }
   // handles counting and stop condition
-  countDown() {
+  countDown(): void {
     this.mSecondsRemaining = this.mSecondsRemaining - 1;
     if (this.mSecondsRemaining === 0) {
       clearInterval(this.intervalHandler);
@@ -278,7 +289,7 @@ class Timer extends React.Component<timerProps, timerState> {
     }
   }
   // handles counting and stop condition
-  countUp() {
+  countUp(): void {
     this.mSecondsRemaining = this.mSecondsRemaining + 1;
     if (this.mSecondsRemaining === this.timerTarget) {
       clearInterval(this.intervalHandler);
@@ -291,7 +302,7 @@ class Timer extends React.Component<timerProps, timerState> {
     }
   }
   // pause the timer
-  pauseTimer() {
+  pauseTimer(): void {
     if (!this.state.timerIsPaused) {
       clearInterval(this.intervalHandler);
       this.setState({
@@ -305,7 +316,7 @@ class Timer extends React.Component<timerProps, timerState> {
     this.beep('pause');
   }
   // BEEP BEEP b*tch
-  beep(when) {
+  beep(when: string): void {
     // shell.beep();
     const endSrc = '../app/constants/sounds/double_bell.mp3';
     const pauseSrc = '../app/constants/sounds/pop.mp3';
@@ -318,7 +329,7 @@ class Timer extends React.Component<timerProps, timerState> {
     audio.play();
   }
   // Reset all the things
-  resetTimer() {
+  resetTimer(): void {
     clearInterval(this.intervalHandler);
     // Since the input passes through masked input, we need to call
     // numberInput.inputElement.value to reset the value
