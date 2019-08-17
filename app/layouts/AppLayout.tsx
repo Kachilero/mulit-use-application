@@ -1,5 +1,6 @@
 /**
- * This will handle the main app layout so we can pass things to the store and back
+ * Main entry that handles the header and the store
+ *
  * */
 import * as React from 'react';
 
