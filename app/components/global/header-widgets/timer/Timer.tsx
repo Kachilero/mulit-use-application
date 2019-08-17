@@ -160,9 +160,9 @@ class Timer extends React.Component<timerProps, timerState> {
   changeHandler(val: React.ChangeEvent<HTMLInputElement>): void {
     let stringVal = val.target.value;
     stringVal = stringVal.replace(/\D+/g, '');
-    if (stringVal.length > 6) {
-      stringVal = stringVal.substring(0, 6);
-    }
+    // if (stringVal.length > 6) {
+    //   stringVal = stringVal.substring(0, 6);
+    // }
     this.setState({ timer: Number(stringVal) });
   }
   // Handles the timer
