@@ -388,19 +388,29 @@ class Timer extends React.Component<timerProps, timerState> {
 
           <Dropdown.Menu>
             <Dropdown.Header>Timer</Dropdown.Header>
-            <MaskedInput
-              mask={this.numberMask}
-              id="masked-input"
-              className="masked-input"
-              placeholder="HH:MM:SS"
-              onChange={this.changeHandler}
-              onKeyPress={event => {
-                if (event.key === 'Enter') {
-                  this.startTimer('down');
-                }
-              }}
-              ref={this.numberInput}
-            />
+            <div id="timer-input-group">
+              <MaskedInput
+                mask={this.numberMask}
+                id="masked-input"
+                className="masked-input"
+                placeholder="HH:MM:SS"
+                onChange={this.changeHandler}
+                onKeyPress={event => {
+                  if (event.key === 'Enter') {
+                    this.startTimer('down');
+                  }
+                }}
+                ref={this.numberInput}
+              />
+              <Button
+                id="stopwatch-start"
+                variant="outline-primary"
+                onClick={() => this.startTimer('down')}
+                disabled={timerIsRunning}
+              >
+                <FontAwesomeIcon icon={faStopwatch} />
+              </Button>
+            </div>
             <Dropdown.Item>
               <ButtonToolbar>
                 <Button
@@ -409,13 +419,6 @@ class Timer extends React.Component<timerProps, timerState> {
                   disabled={timerIsRunning}
                 >
                   Up
-                </Button>
-                <Button
-                  variant="outline-info"
-                  onClick={() => this.startTimer('down')}
-                  disabled={timerIsRunning}
-                >
-                  Down
                 </Button>
                 <Button
                   variant="outline-danger"

@@ -20,12 +20,33 @@
     .dropdown-menu {
       min-width: 16rem;
       max-width: 16rem;
+
+      .dropdown-header {
+        text-align: center;
+      }
     }
 
-    .masked-input {
-      text-align: center;
-      font-size: 2rem;
-      width: 100%;
+    #timer-input-group {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 8px;
+
+      .masked-input {
+        text-align: center;
+        font-size: 2rem;
+        width: 75%;
+        border: none;
+        margin: 10px 0;
+
+        &:focus {
+          outline: none;
+        }
+      }
+
+      #stopwatch-start {
+        font-size: 1.5rem;
+      }
     }
 
     .btn-toolbar {
