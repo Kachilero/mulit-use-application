@@ -142,12 +142,19 @@ class Timer extends React.Component<timerProps, timerState> {
   handleToggle(
     isOpen: boolean,
     event: React.SyntheticEvent<Dropdown>,
-    metadata: any
+    metadata: { source: 'select' | 'click' | 'rootClose' | 'keydown' }
   ): void {
     if (isOpen || metadata.source !== 'select') {
       this.setState({ showMenu: isOpen });
     }
     event.persist;
+    /**
+     * This is fragging hacky, but I have to set a time out to wait
+     * for the rudy element to display before it can be focused
+     * */
+    setTimeout(() => {
+      document.getElementById('masked-input').focus();
+    }, 20);
   }
   // Sets timer value
   changeHandler(val: React.ChangeEvent<HTMLInputElement>): void {
@@ -348,9 +355,7 @@ class Timer extends React.Component<timerProps, timerState> {
     clearInterval(this.intervalHandler);
     // Since the input passes through masked input, we need to call
     // numberInput.inputElement.value to reset the value
-    console.log(`Number Input`);
-    console.log(this.numberInput);
-    this.numberInput.value = '';
+    // this.numberInput.value = '';
     (document.getElementById('masked-input') as HTMLInputElement).value = '';
     this.setState({
       sec: '00',
@@ -383,17 +388,19 @@ class Timer extends React.Component<timerProps, timerState> {
 
           <Dropdown.Menu>
             <Dropdown.Header>Timer</Dropdown.Header>
-            <Dropdown.Item>
-              <MaskedInput
-                autoFocus
-                mask={this.numberMask}
-                id="masked-input"
-                className="masked-input"
-                placeholder="HH:MM:SS"
-                onChange={this.changeHandler}
-                ref={el => (this.numberInput = el)}
-              />
-            </Dropdown.Item>
+            <MaskedInput
+              mask={this.numberMask}
+              id="masked-input"
+              className="masked-input"
+              placeholder="HH:MM:SS"
+              onChange={this.changeHandler}
+              onKeyPress={event => {
+                if (event.key === 'Enter') {
+                  this.startTimer('down');
+                }
+              }}
+              ref={this.numberInput}
+            />
             <Dropdown.Item>
               <ButtonToolbar>
                 <Button
