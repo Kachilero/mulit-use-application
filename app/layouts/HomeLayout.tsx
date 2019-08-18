@@ -1,6 +1,6 @@
 /**
- * Home Page Layout
- * This is the entry layout for the app
+ * This is a basic INIT layout
+ * NOTE: The header is handled by AppLayout
  */
 import * as React from 'react';
 import { Component } from 'react';

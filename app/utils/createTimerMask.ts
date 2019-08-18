@@ -15,11 +15,7 @@
  *  @link http://stackoverflow.com/a/10899795/604296
  * @function numberMask(rawValue: string)
  *  This is the main function
- *  If the value is empty we simply return an empty string
- *  If the value is less than the numberGroupLimit value plus 1, we return
- *  the value after passing it through convertToMask
- *  Otherwise, we split the rawValue into chunks, strip any non-digit characters,
- *  pass it through convertToMask and return the resulting string.
+ *  We strip the rawValue then add masking before returning it.
  * */
 
 const emptyString: string = '';
@@ -34,16 +30,11 @@ export default function createTimerMask({
   // const numberSeparatorSymbolLength = numberSeparator && numberSeparator.length || 0;
 
   function numberMask(rawValue: string = emptyString) {
-    let integer, fraction, mask;
+    let integer, mask;
     const indices = [];
-    const rawValueLength = rawValue.length;
     // Handle an empty input
     if (rawValue === emptyString) {
       return [emptyString];
-    }
-    // If it's smaller than the limit, we return just an array
-    if (rawValueLength < numberGroupLimit + 1) {
-      return convertToMask(rawValue);
     }
     // Check to see if there are any separators
     // and how many there are
@@ -54,23 +45,38 @@ export default function createTimerMask({
     }
     // Strip it
     integer = rawValue.replace(nonDigitsRegExp, emptyString);
-    // limit it to 6 characters
-    if (integer.length > 6) {
+    // check the length after it's been stripped
+    const integerLength = integer.length;
+    // Add placeholders that are added to the value
+    if (integerLength < 6) {
+      switch (integerLength) {
+        case 1:
+          integer = 'HH:MM:S' + integer;
+          break;
+        case 2:
+          integer = 'HH:MM:' + integer;
+          break;
+        case 3:
+          integer = 'HH:M' + integer;
+          break;
+        case 4:
+          integer = 'HH:' + integer;
+          break;
+        case 5:
+          integer = 'H' + integer;
+          break;
+        default:
+          console.log(`Default switch`);
+          break;
+      }
+    } else {
+      // this limits it to 6 characters
+      // TODO: handle more than 6 characters better
       integer = integer.substring(0, 6);
     }
     // add separators
-    if (indices.length > 2) {
-      // first we separate the beginning digits
-      fraction = integer.substring(integer.length - 6);
-      // then we remove them from the string
-      integer = integer.replace(fraction, emptyString);
-      // add the separators
-      fraction = addNumberSeparator(fraction, numberSeparator);
-      // glue it back together
-      integer = integer + fraction;
-    } else {
-      integer = addNumberSeparator(integer, numberSeparator);
-    }
+    integer = addNumberSeparator(integer, numberSeparator);
+
     // Convert it
     mask = convertToMask(integer);
     // Return it

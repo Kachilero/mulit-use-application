@@ -1,10 +1,22 @@
 {
-  "parser": "babel-eslint",
+  //  "parser": "babel-eslint",
+  "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "sourceType": "module",
+    "ecmaVersion": 2018,
+    "ecmaFeatures": {
+      "jsx": true
+    },
     "allowImportExportEverywhere": true
   },
-  "extends": ["airbnb", "prettier", "prettier/react"],
+  "extends": [
+    "airbnb",
+    "prettier",
+    "prettier/@typescript-eslint",
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:@typescript-eslint/recommended"
+  ],
   "env": {
     "browser": true,
     "node": true
@@ -42,9 +54,11 @@
       "error",
       { "extensions": [".js", ".jsx"] }
     ],
-    "react/prefer-stateless-function": "off"
+    "react/prefer-stateless-function": "off",
+    "indent": "off",
+    "@typescript-eslint/indent": ["error", 2]
   },
-  "plugins": ["import", "promise", "compat", "react"],
+  "plugins": ["import", "promise", "compat", "react", "@typescript-eslint"],
   "settings": {
     "import/resolver": {
       "webpack": {
