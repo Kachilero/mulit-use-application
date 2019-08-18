@@ -1,4 +1,4 @@
-// import '@types/jest';
+import '@types/jest';
 import {
   toggleSideDrawer,
   sideDrawerHover,
