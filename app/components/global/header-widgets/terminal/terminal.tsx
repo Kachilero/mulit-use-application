@@ -96,6 +96,7 @@ class XTerminal extends React.Component<IXtermProps, IXtermState> {
   } // .componentDidMount
 
   componentWillUnmount(): void {
+    console.log(`Kill XTerm`);
     // make sure we have a terminal, then kill it and the pty process
     if (this.xterm) {
       this.xterm.destroy();
@@ -202,11 +203,7 @@ class XTerminal extends React.Component<IXtermProps, IXtermState> {
     );
 
     return (
-      <div
-        style={{ border: '2px solid white' }}
-        ref={ref => (this.container = ref)}
-        className={terminalClassName}
-      />
+      <div ref={ref => (this.container = ref)} className={terminalClassName} />
     );
   }
 }

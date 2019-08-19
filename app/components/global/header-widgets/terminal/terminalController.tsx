@@ -43,10 +43,6 @@ class TerminalController extends React.Component<
   TerminalControllerState
 > {
   readonly state = getInitState(this.props);
-  // ???
-  componentWillUnmount(): void {
-    this.refs.mainDeviceComponent.componentWillUnmount();
-  }
 
   onFocusChange = focused => {
     if (focused)
@@ -62,18 +58,33 @@ class TerminalController extends React.Component<
     this.setState({
       isTerminalOpen: !this.state.isTerminalOpen
     });
+    console.log(`Open Terminal = ${this.state.isTerminalOpen}`);
   };
 
   handleCloseBtn = () => {
     this.setState({
       isTerminalOpen: false
     });
+    console.log(`Button State = ${this.state.isTerminalOpen}`);
   };
 
   handleResizeStop = (e, direction, ref, delta, position) => {
+    // Sometimes width/height are not numbers
+    let resizeWidth, resizeHeight;
+    if (
+      typeof ref.style.width !== 'number' ||
+      typeof ref.style.height !== 'number'
+    ) {
+      resizeWidth = Number(ref.style.width.replace(/\D+/, ''));
+      resizeHeight = Number(ref.style.height.replace(/\D+/, ''));
+    } else {
+      resizeWidth = ref.style.width.replace(/\D+/, '');
+      resizeHeight = ref.style.height.replace(/\D+/, '');
+    }
+    // Now we set state
     this.setState({
-      width: ref.style.width.replace(/\D+/, ''),
-      height: ref.style.height.replace(/\D+/, '')
+      width: resizeWidth,
+      height: resizeHeight
     });
   };
 
@@ -96,13 +107,14 @@ class TerminalController extends React.Component<
             <FontAwesomeIcon icon={faTerminal} />
           </Button>
         </Pipe>
+        {console.log(`Component Open = ${this.state.isTerminalOpen}`)}
         {this.state.isTerminalOpen && (
           <Rnd
             default={{
               x: -300,
-              y: 100,
+              y: 50,
               width: this.state.width,
-              height: this.state.width
+              height: this.state.height
             }}
             onResizeStop={(e, direction, ref, delta, position) =>
               this.handleResizeStop(e, direction, ref, delta, position)

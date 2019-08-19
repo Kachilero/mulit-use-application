@@ -5,11 +5,6 @@
   .terminal__wrapper {
     background-color: lighten($react-dark, 20);
     border-radius: 5px;
-    // Gonna try RND
-    //position: absolute;
-    //overflow: hidden;
-    //top: 57px;
-    //left: 150px;
     padding: 8px;
     padding-top: 50px;
 
@@ -27,6 +22,12 @@
         top: 1px;
         left: 7px;
       }
+    }
+
+    .ReactXTerm {
+      border-radius: 3px;
+      background: linear-gradient(to bottom, $gray-600, $gray-400);
+      padding: 3px;
     }
   }
 }
