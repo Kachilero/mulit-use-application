@@ -3,6 +3,7 @@
  * */
 import * as React from 'react';
 import { Terminal } from 'xterm';
+import * as fit from 'xterm/lib/addons/fit/fit';
 import { debounce } from '../../../../utils/utils';
 import * as pty from 'node-pty';
 import * as os from 'os';
@@ -21,6 +22,8 @@ export interface IXtermProps extends React.DOMAttributes<{}> {
   value?: string;
   classNames?: string;
   style?: React.CSSProperties;
+  rows?: number;
+  columns?: number;
 }
 
 export interface IXtermState {
@@ -46,35 +49,34 @@ class XTerminal extends React.Component<IXtermProps, IXtermState> {
 
   // All the work to build the terminal gets done here
   componentDidMount(): void {
-    // first we create a node-pty instance
-    const shell = process.env[os.platform() === 'win32' ? 'COMSPEC' : 'SHELL'];
-    this.ptyProc = pty.spawn(shell, [], {
-      name: 'xterm',
-      cols: 80,
-      rows: 30,
-      cwd: process.cwd(),
-      env: process.env
-    });
+    // Apply the fit addon to the terminal
+    Terminal.applyAddon(fit);
     // Create an XTerm instance with any passed options
     this.xterm = new Terminal(this.props.options);
     // If we passed props from the parent, we load them here
     if (this.props.addons) {
       this.props.addons.forEach(s => {
-        const addon = require(`xterm/dist/addons/${s}/${s}.js`);
+        const addon = require(`xterm/lib/addons/${s}/${s}.js`);
         this.applyAddon(addon);
       });
     }
     // we open the container
     this.xterm.open(this.container);
+    // Now we create a node-pty instance
+    const shell = process.env[os.platform() === 'win32' ? 'COMSPEC' : 'SHELL'];
+    this.ptyProc = pty.spawn(shell, [], {
+      name: 'xterm',
+      cols: this.xterm.cols,
+      rows: this.props.rows,
+      cwd: process.cwd(),
+      env: process.env
+    });
     // I think this applies the 'fit' addon to anything in the terminal
     (this.xterm as any).fit();
     // Now we bind all of the handle functions
     this.xterm.on('focus', this.focusChanged.bind(this, true));
     this.xterm.on('blur', this.focusChanged.bind(this, false));
     this.xterm.on('resize', this.resize.bind(this));
-    window.onresize = () => {
-      this.fitDebounce();
-    };
     // NOTE: we need to just pass data back and forth or it'll print twice
     this.xterm.on('data', this.xtermData.bind(this));
     this.ptyProc.on('data', this.ptyData.bind(this));
@@ -108,17 +110,28 @@ class XTerminal extends React.Component<IXtermProps, IXtermState> {
     nextState: Readonly<IXtermState>,
     nextContext: any
   ): boolean {
+    // Updated on value change
     if (
       nextProps.hasOwnProperty('value') &&
       nextProps.value !== this.props.value
     ) {
-      console.log(`Should TERMINAL UPDATE TRUE`);
       if (this.xterm) {
         this.xterm.clear();
         setTimeout(() => {
           this.xterm.write(nextProps.value);
         }, 0);
       }
+    }
+    // Update on row change
+    if (
+      (nextProps.hasOwnProperty('rows') &&
+        nextProps.rows !== this.props.rows) ||
+      (nextProps.hasOwnProperty('columns') &&
+        nextProps.columns !== this.props.columns)
+    ) {
+      const rows = Number(nextProps.rows.toString().replace(/\D+/, ''));
+      const cols = Number(nextProps.columns.toString().replace(/\D+/, ''));
+      this.resize(cols, rows);
     }
     return false;
   }
@@ -158,7 +171,8 @@ class XTerminal extends React.Component<IXtermProps, IXtermState> {
     false
   );
   resize(cols: number, rows: number) {
-    this.xterm && this.xterm.resize(Math.round(cols), Math.round(rows));
+    this.fitDebounce();
+    this.ptyProc.resize(Math.max(cols), Math.max(rows));
   }
   setOption(key: string, value: boolean) {
     this.xterm && this.xterm.setOption(key, value);
@@ -188,7 +202,11 @@ class XTerminal extends React.Component<IXtermProps, IXtermState> {
     );
 
     return (
-      <div ref={ref => (this.container = ref)} className={terminalClassName} />
+      <div
+        style={{ border: '2px solid white' }}
+        ref={ref => (this.container = ref)}
+        className={terminalClassName}
+      />
     );
   }
 }
