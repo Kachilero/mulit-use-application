@@ -10,6 +10,7 @@ import About from '../../views/home/About';
 import Home from '../../views/home/Home';
 import ReactMarkdown from '../../views/home/ReactMarkdown';
 import ElectronReactMarkdown from '../../views/home/ElectronReactMarkdown';
+import ParentReadMe from '../../views/home/parentReadMe';
 
 export const homeRoutes: LayoutRoutes[] = [
   {
@@ -23,6 +24,13 @@ export const homeRoutes: LayoutRoutes[] = [
     path: '/about',
     name: 'About',
     component: About,
+    layout: '/home',
+    icon: ''
+  },
+  {
+    path: '/typescript-electron',
+    name: 'Typescript Electron',
+    component: ParentReadMe,
     layout: '/home',
     icon: ''
   },

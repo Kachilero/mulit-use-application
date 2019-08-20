@@ -1,4 +1,4 @@
-# README!!!
+# Typescript React Electron Boilerplate
 
 This will be a "base" for any TS/React/Electron Apps that I might wanna make.
 
