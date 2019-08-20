@@ -1,7 +1,7 @@
 {
   "name": "multi-use-application",
   "productName": "MultiUseApplication",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "Application that can be used for multiple things, based on Electron, React and Typescript",
   "engines": {
     "node": "^10.16.3",
