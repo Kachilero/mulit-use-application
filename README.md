@@ -1,84 +1,52 @@
-# README!!!
+# Multi-use Application
 
-This will be a "base" for any TS/React/Electron Apps that I might wanna make.
+This application can (or will, since it's not done yet) be used as the base for multiple other
+applications that can be ran from the same entry point.
 
-This project uses [Electron React Builerplate](https://github.com/electron-react-boilerplate/electron-react-boilerplate) as a starter, usind the `typescript` variant as I don't like `flow`.
+### Goals for the project
 
-This project also gets inspiration from a [Creative Tim](https://www.creative-tim.com) [template](https://www.creative-tim.com/product/light-bootstrap-dashboard-react).
+- Leverage [Electron](https://electronjs.org/) to create a portable, cross-platform application with a single code base to simplify development
+- Use [React](https://reactjs.org/) to create modular pieces of the UI and application to speed up adding new functionality
+- Create a plugin system so that the base application can be extended easily
+- Use modern web technologies to create an application that can be used even when off-line
 
-I may also use some things from the [React-Admin](https://github.com/marmelab/react-admin) project in the future.
+### Inspiration/Motivation
 
-## Useful links
+Inspired by applications such as
 
-[10 Typescript React Pro Tips](https://medium.com/@martin_hotell/10-typescript-pro-tips-patterns-with-or-without-react-5799488d6680) - Interesting patterns for React
-[Theming HOC Article](https://medium.com/@niwaa/simple-and-reusable-react-context-api-example-hoc-e1e50c0390ec) - This article was useful when I was going to use an HOC for theming, might come in handy latter.
+- [Freeter](https://freeter.io/)
+- [Wavebox](https://wavebox.io/)
+- [Notion](https://www.notion.so/)
+- [Tag Spaces](https://www.tagspaces.org/)
 
-## Roadmap
+and other similar applications that provide "dashboards" of sorts for various tasks, I wanted to
+build something similar that I could use to load in personalized 'pages' for various tasks that I
+engage in.
 
-1. **DONE** => Create main window
-2. **DONE** => Create sidebar
-3. **DONE** => Create a default view for `main-window` which loads links to documentation and the inspiration pages above as well as this README.
-4. **Update core project** there are several NPM vulnerabilities warnings that I'm gonna take care off
-5. **Add Tests** I removed the original tests because Jest was throwing errors. I need to add them back in and write my own
-6. Create "Default" apps for the header menu
-   - **DONE** Let's start with a timer widget that goes up or down
-   - Terminal
-   - Weather
-7. **Setting Overlay** - Add a permanent 'settings' link in the bottom of the side drawer where user defined settings will go
-8. **Theme System** **ABANDONING FOR NOW!!!** - way to toggle between preset themes, ie. light and dark
-   - This has turned into a real pain in the ass, so I'm going to need to rethink it.
-   - I'm gonna try copying `react-theme-provider`
-9. **Widget System** - I'm not sure how I'm gonna do this, but I need a way to load widgets into the main window
-10. **Layout System** - Need some way for the user to easely modify the layout.
-11. Create a way to switch projects, which will change what's in the sidebar and the main window.
-12. Need to adjust the way the side bar builds the menus so that I can switch to an accordion or something else when I want
-13. Have a way for the side drawer to collapse down, and the main window to take up the space.
+From **Freeter** I took the inspiration of being able to create 'project' spaces wherein I could
+group any functions, programs, files and directories that would be pertinent to one project.
 
-## Notes about this build
+From **Wavebox** I took the inspiration to be able to load an external website tool
+as an embedded 'page'.
 
-### Structure
+From **Notion** I took the inspiration for most of the layout
 
-The following is a rough representation of how the App is structured - not the file structure - that's next.
+From **Tag Spaces** I took the inspiration of being able to organize and tag
+local files and directories to ease in being able to find things.
 
-```
-__LAYOUT { each layout would be a 'project' }
-  |__VIEW { each view is a layout inside a project which is accessible by the side bar menu }
-    |__COMPONENTS { components are the individual pieces of information in each view }
-```
+I wanted to create an open source project that would take these ideas and make them available
+for others to expand on. And in the process show off a bit of my coding knowledge :)
 
-This is a breakdown of the file structure
+### Approach
 
-- app { development app files }
+Since one of my main goals was to be able to use this on all of the different operating systems
+that I must normally switch back and forth from (ie. Linux, MAC and Windows) I settled on using Electron as the
+base for the project. Since Electron is based on Chromium and NodeJS it meshes well with my philosophy that
+a lot of modern and future applications will integrate the traditional desktop with a web connected interface and backend.
 
-  - components
-    - global { these are used for the basic presentation of the app }
-  - constants { for non-changing variables, originally routes and defaults but is probably changing }
-  - containers { originally these were the encompasing components, but I have changed it to be layouts. See note }
-  - dist { compiled app }
-  - layouts { These layouts define each project and what components are displayed }
-  - store { Redux store files }
-    - NAMED_FOLDERS { each of these holds the actions, reducers and type definitions needed by its named component }
-  - styles { SCSS style folders and files }
+Instead of 'reinventing the wheel' I chose instead to start with the [Electron React Boilerplate](https://github.com/electron-react-boilerplate/electron-react-boilerplate)
+as the starting point for the application. However I chose to use the [Typescript](http://www.typescriptlang.org/) variant
+instead of the normal Javascript one for various reasons including:
 
-    - globals { styling that is applied globally }
-
-      - bootstrap { import needed bootstrap styles here }
-
-### Notes
-
-- One thing that is only briefly mentioned in the Redux [docs](https://redux.js.org/basics/usage-with-react) is that
-  - **Presentational Components** ONLY change data by invoking callbacks
-  - **Container Components** USE REDUX
-
-### File load order
-
-- `app/index.js` => the main entry to the app. _NOTE_ Global styles are loaded here
-- `app/Routes.js` => loads the router for the app. Each route takes a `path` and a `component` prop. These are passed to `app/containers/App.js` and handled as child fragment elements.
-- `app/containers/Root.js` => Seems to handle `store` and `history`
-- `app/container/App.js` => This seems to be the body of the ap
-- `app/component/<NAME_FROM_Route.js>` => whichever component was passed as a prop in `Routes.js` is rendered here.
-
-### Links to Repos
-
-- [X-Term](https://github.com/xtermjs/xterm.js/) A terminal for the web
-  - [React-XTerm](https://github.com/farfromrefug/react-xterm) A react implementation of XTerm that I'm using as inspiration for my own terminal
+- Since my first introduction to programing was with strongly typed languages, I have a soft spot for them
+- While Javascript's looseness gives it great flexibility to create and display content, it also creates situations when complexity increases wherein it becomes increasingly difficult to track down simple bugs
