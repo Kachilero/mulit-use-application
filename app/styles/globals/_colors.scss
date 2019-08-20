@@ -2,3 +2,21 @@
 
 // Custom
 $react-dark: #282c34;
+// Theme
+$dark-theme-lightest: #93a2bf;
+$dark-theme-light: #626c80;
+$dark-theme-base: $react-dark;
+$dark-theme-dark: #313640;
+$dark-theme-darkest: #272b33;
+
+// SASS material
+@import '~sass-material-colors';
+
+$primary: $dark-theme-base;
+$secondary: $dark-theme-light;
+$success: material-color('green', '500');
+$info: material-color('cyan', '500');
+$warning: material-color('yellow', '500');
+$danger: material-color('red', '500');
+$light: #534bae;
+$dark: $dark-theme-darkest;

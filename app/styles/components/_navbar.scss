@@ -8,3 +8,8 @@
 .nav-link.active {
   background-color: lighten($react-dark, 10);
 }
+
+.navbar-dark.bg-dark {
+  background-color: $dark-theme-dark !important;
+  border-bottom: 1px solid $dark-theme-lightest;
+}

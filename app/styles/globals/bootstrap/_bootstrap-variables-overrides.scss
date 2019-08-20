@@ -99,5 +99,9 @@ $theme-colors: map-merge(
 //
 // Settings for the `<body>` element.
 
-$body-bg: $react-dark;
+//$body-bg: $react-dark;
+$body-bg: $dark-theme-light;
 $body-color: $gray-100;
+
+// Links
+$link-color: $dark-theme-lightest;
