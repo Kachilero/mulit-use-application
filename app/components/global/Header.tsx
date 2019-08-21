@@ -62,7 +62,7 @@ class Header extends Component<HeaderProps, HeaderState> {
     const { isOpen } = this.props;
     const activeClass = isOpen ? '' : 'active';
     return (
-      <Navbar bg="dark" variant="dark" fixed="top">
+      <Navbar bg="dark" variant="dark" fixed="top" expand="md">
         <div
           id="fa-container__hover"
           onMouseEnter={this.handleMouse}

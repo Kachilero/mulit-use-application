@@ -7,24 +7,59 @@ We need to import variable overrides BEFORE we include any bootstrap styles, see
 // Variable overrides
 @import 'bootstrap-variables-overrides';
 
-// Required
+// Base
 @import '~bootstrap/scss/functions';
 @import '~bootstrap/scss/variables';
 @import '~bootstrap/scss/mixins';
+@import '~bootstrap/scss/reboot';
+
+// Helpers
 @import '~bootstrap/scss/utilities';
 @import '~bootstrap/scss/transitions';
+@import '~bootstrap/scss/vendor/rfs';
 
-// Optional
-@import '~bootstrap/scss/reboot';
-@import '~bootstrap/scss/type';
-@import '~bootstrap/scss/images';
-@import '~bootstrap/scss/code';
-@import '~bootstrap/scss/grid';
+// Parts
+// Comment out what you don't need
+@import '~bootstrap/scss/alert';
+@import '~bootstrap/scss/badge';
+@import '~bootstrap/scss/breadcrumb';
+@import '~bootstrap/scss/button-group';
 @import '~bootstrap/scss/buttons';
-
-@import '~bootstrap/scss/dropdown';
 @import '~bootstrap/scss/card';
-
-// Navs
+//@import "~bootstrap/scss/carousel";
+@import '~bootstrap/scss/close';
+@import '~bootstrap/scss/code';
+@import '~bootstrap/scss/custom-forms';
+@import '~bootstrap/scss/dropdown';
+@import '~bootstrap/scss/forms';
+@import '~bootstrap/scss/grid';
+@import '~bootstrap/scss/images';
+@import '~bootstrap/scss/input-group';
+//@import "~bootstrap/scss/jumbotron";
+@import '~bootstrap/scss/list-group';
+@import '~bootstrap/scss/media';
+@import '~bootstrap/scss/modal';
 @import '~bootstrap/scss/nav';
 @import '~bootstrap/scss/navbar';
+@import '~bootstrap/scss/pagination';
+@import '~bootstrap/scss/popover';
+@import '~bootstrap/scss/print';
+@import '~bootstrap/scss/progress';
+@import '~bootstrap/scss/root';
+@import '~bootstrap/scss/spinners';
+@import '~bootstrap/scss/tables';
+@import '~bootstrap/scss/toasts';
+@import '~bootstrap/scss/tooltip';
+@import '~bootstrap/scss/type';
+
+// From ~bootstrap/scss/bootstrap-grid.scss
+html {
+  box-sizing: border-box;
+  -ms-overflow-style: scrollbar;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
