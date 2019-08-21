@@ -9,6 +9,8 @@ import { homeRoutes } from '../constants/routes/homeRoutes';
 import { Route, Switch } from 'react-router-dom';
 import SideDrawer from '../components/global/Sidedrawer';
 
+const classNames = require('classnames');
+
 interface homeState {}
 interface homeProps {
   sideDrawerReducer: {
@@ -62,9 +64,10 @@ class HomeLayout extends Component<homeProps> {
   }
 
   render() {
-    const mainClass: string = this.props.sideDrawerReducer.isOpen
-      ? 'main_main sd-open'
-      : 'main_main';
+    const mainClass = classNames(
+      'main_main',
+      this.props.sideDrawerReducer.isOpen ? 'sd-open' : null
+    );
     return (
       <div id="main-child-wrapper">
         <SideDrawer
