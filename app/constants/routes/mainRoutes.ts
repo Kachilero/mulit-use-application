@@ -20,7 +20,7 @@ const mainRoutes: LayoutRoutes[] = [
     path: '/about',
     name: 'About',
     component: AboutPage,
-    layout: '/about',
+    layout: '/home',
     icon: ''
   },
   {
