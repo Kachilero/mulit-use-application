@@ -1,5 +1,5 @@
 /**
- * Main entry that handles the header and the store
+ * Main entry that handles the header, the store and adding body classes
  *
  * */
 import * as React from 'react';
@@ -11,6 +11,7 @@ type AppLayoutState = {
     width: number;
     height: number;
   };
+  containerClass: string;
 };
 export type AppLayoutProps = {
   children;
@@ -26,17 +27,18 @@ export type AppLayoutProps = {
 
 const getInitState = (props: AppLayoutProps): AppLayoutState => {
   return {
-    dimensions: null
+    dimensions: null,
+    containerClass: ''
   };
 };
-
-const classNames = require('classnames');
 
 class AppLayout extends React.Component<AppLayoutProps> {
   readonly state = getInitState(this.props);
   private container: any;
 
   componentDidMount(): void {
+    window.addEventListener('resize', this.addMobileClass.bind(this));
+    this.addMobileClass();
     this.setState({
       dimensions: {
         width: this.container.offsetWidth,
@@ -45,14 +47,33 @@ class AppLayout extends React.Component<AppLayoutProps> {
     });
   }
 
+  shouldComponentUpdate(
+    nextProps: Readonly<AppLayoutProps>,
+    nextState: Readonly<{}>,
+    nextContext: any
+  ): boolean {
+    if (nextState !== this.state) {
+      return true;
+    }
+  }
+
+  addMobileClass() {
+    let width = this.container.offsetWidth;
+    let mobileClassName = '';
+    if (width > 768) {
+      mobileClassName = 'desktop';
+    } else if (width > 576) {
+      mobileClassName = 'tablet';
+    } else {
+      mobileClassName = 'mobile';
+    }
+    this.setState({
+      containerClass: mobileClassName
+    });
+  }
+
   renderContent() {
-    const mobileClass = classNames(
-      this.state.dimensions.width > 767
-        ? 'desktop'
-        : this.state.dimensions.width < 600
-        ? 'mobile'
-        : 'tablet'
-    );
+    const mobileClass = this.state.containerClass;
     const {
       children,
       sideDrawerReducer,
@@ -81,10 +102,6 @@ class AppLayout extends React.Component<AppLayoutProps> {
     return (
       <div ref={el => (this.container = el)}>
         {dimensions && this.renderContent()}
-        {dimensions &&
-          console.log(
-            `Dimensions => W:${dimensions.width} H: ${dimensions.height}`
-          )}
       </div>
     );
   }

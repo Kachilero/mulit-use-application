@@ -95,6 +95,15 @@ $theme-colors: map-merge(
   $theme-colors
 );
 
+// Reduced md by 1px because the iPad is 768px wide
+$grid-breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 767px,
+  lg: 992px,
+  xl: 1200px
+);
+
 // Body
 //
 // Settings for the `<body>` element.
