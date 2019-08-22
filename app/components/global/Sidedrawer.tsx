@@ -12,13 +12,17 @@ import { faChevronLeft, faHome } from '@fortawesome/free-solid-svg-icons';
 
 type State = {
   hover: boolean;
+  iAmOpen: boolean;
 };
 
 type Props = {
-  routes: any;
+  globalReducer?: {
+    isMobile: boolean;
+  };
   headline: string;
   onClick: () => void;
   onThemeClick: () => void;
+  routes: any;
   sideDrawerReducer: {
     [key: string]: boolean;
   };
@@ -27,7 +31,8 @@ type Props = {
 
 const getInitialState = (props: Props): State => {
   return {
-    hover: false
+    hover: false,
+    iAmOpen: props.sideDrawerReducer.isOpen
   };
 };
 
@@ -48,19 +53,30 @@ class SideDrawer extends Component<Props> {
   };
 
   handleHover = () => {
-    this.props.sideDrawerHover();
+    !this.props.globalReducer.isMobile ? this.props.sideDrawerHover() : '';
   };
 
   static getDerivedStateFromProps(props, state) {
     if (props.sideDrawerReducer.hoverState !== state.hover) {
       return { hover: props.sideDrawerReducer.hoverState };
     }
+    if (props.sideDrawerReducer.isOpen !== state.iAmOpen) {
+      return { iAmOpen: props.sideDrawerReducer.isOpen };
+    }
     return null;
   }
 
   render() {
-    const activeClass = this.props.sideDrawerReducer.isOpen ? 'active' : '';
-    const hoverClass = this.state.hover ? 'active' : '';
+    const activeClass = this.state.iAmOpen
+      ? 'active'
+      : this.state.hover
+      ? 'active'
+      : '';
+    const hoverClass = this.state.hover
+      ? 'hover'
+      : this.props.globalReducer.isMobile
+      ? 'hover'
+      : '';
 
     return (
       <div id="sidebar" className={activeClass}>
@@ -69,7 +85,7 @@ class SideDrawer extends Component<Props> {
             // onMouseEnter={this.handleHover}
             onMouseLeave={this.handleHover}
             id="sidebar__menu"
-            className={`sidebar ${activeClass} ${hoverClass}`}
+            className={`sidebar ${activeClass}`}
           >
             <div className="sidebar-header">
               <FontAwesomeIcon
@@ -81,13 +97,13 @@ class SideDrawer extends Component<Props> {
               </div>
               <a
                 href="#"
-                className="sidebar-header__link"
+                className={`sidebar-header__link ${hoverClass}`}
                 onClick={e => {
                   e.preventDefault();
                   this.onCollapse();
                 }}
               >
-                <div className="fa-container__sidebar-header__chevron-left">
+                <div className={`fa-container__sidebar-header__chevron-left`}>
                   <FontAwesomeIcon icon={faChevronLeft} />
                 </div>
               </a>

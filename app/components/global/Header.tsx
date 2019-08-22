@@ -30,8 +30,9 @@ import TerminalController from './header-widgets/terminal/terminalController';
 type HeaderState = {};
 
 type HeaderProps = {
-  isOpen: boolean;
   hoverState: boolean;
+  isMobile: boolean;
+  isOpen: boolean;
   theme: boolean;
   toggleSideDrawer: () => void;
   sideDrawerHover: () => void;
@@ -46,7 +47,7 @@ class Header extends Component<HeaderProps, HeaderState> {
   };
 
   handleMouse = () => {
-    if (!this.props.hoverState) {
+    if (!this.props.hoverState && !this.props.isMobile) {
       setTimeout(() => {
         this.props.sideDrawerHover();
       }, 200);
@@ -62,7 +63,7 @@ class Header extends Component<HeaderProps, HeaderState> {
     const { isOpen } = this.props;
     const activeClass = isOpen ? '' : 'active';
     return (
-      <Navbar bg="dark" variant="dark" fixed="top">
+      <Navbar bg="dark" variant="dark" fixed="top" expand="md">
         <div
           id="fa-container__hover"
           onMouseEnter={this.handleMouse}

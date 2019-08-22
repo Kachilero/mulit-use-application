@@ -4,14 +4,15 @@ import {
   sideDrawerHover,
   toggleSideDrawer
 } from '../store/sideDrawer/sideDrawer.actions';
+import { isMobileToggle } from '../store/global/globalActions';
 import { Dispatch } from 'redux';
 
-export interface AppState {
-  sideDrawerToggle: boolean;
-}
+export interface AppState {}
 
 function mapStateToProps(state: AppState) {
-  return state;
+  return {
+    ...state
+  };
 }
 
 const mapDispatchToProps = (dispatch: Dispatch) => {
@@ -21,6 +22,9 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
     },
     sideDrawerHover: () => {
       dispatch(sideDrawerHover());
+    },
+    isMobileToggle: () => {
+      dispatch(isMobileToggle());
     }
   };
 };
