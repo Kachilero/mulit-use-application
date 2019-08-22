@@ -15,14 +15,19 @@ type AppLayoutState = {
 };
 export type AppLayoutProps = {
   children;
+  globalReducer?: {
+    isMobile: boolean;
+  };
+  isMobileToggle: () => void;
+  sideDrawerHover: () => void;
   sideDrawerReducer?: {
-    [key: string]: boolean;
+    isOpen: boolean;
+    hoverState: boolean;
   };
   themeReducer?: {
-    [key: string]: boolean;
+    isLight: boolean;
   };
   toggleSideDrawer: () => void;
-  sideDrawerHover: () => void;
 };
 
 const getInitState = (props: AppLayoutProps): AppLayoutState => {
@@ -39,7 +44,27 @@ class AppLayout extends React.Component<AppLayoutProps> {
   componentDidMount(): void {
     window.addEventListener('resize', this.addMobileClass.bind(this));
     this.addMobileClass();
+  }
+
+  addMobileClass() {
+    let isOpen = this.props.sideDrawerReducer.isOpen;
+    let isMobile = this.props.globalReducer.isMobile;
+    let width = this.container.offsetWidth;
+    let mobileClassName = '';
+    if (width > 768) {
+      mobileClassName = 'desktop';
+      if (!isOpen) this.props.toggleSideDrawer();
+    } else if (width > 576) {
+      mobileClassName = 'tablet';
+      if (isOpen) this.props.toggleSideDrawer();
+      if (!isMobile) this.props.isMobileToggle();
+    } else {
+      mobileClassName = 'mobile';
+      if (isOpen) this.props.toggleSideDrawer();
+      if (!isMobile) this.props.isMobileToggle();
+    }
     this.setState({
+      containerClass: mobileClassName,
       dimensions: {
         width: this.container.offsetWidth,
         height: this.container.offsetHeight
@@ -47,47 +72,24 @@ class AppLayout extends React.Component<AppLayoutProps> {
     });
   }
 
-  shouldComponentUpdate(
-    nextProps: Readonly<AppLayoutProps>,
-    nextState: Readonly<{}>,
-    nextContext: any
-  ): boolean {
-    if (nextState !== this.state) {
-      return true;
-    }
-  }
-
-  addMobileClass() {
-    let width = this.container.offsetWidth;
-    let mobileClassName = '';
-    if (width > 768) {
-      mobileClassName = 'desktop';
-    } else if (width > 576) {
-      mobileClassName = 'tablet';
-    } else {
-      mobileClassName = 'mobile';
-    }
-    this.setState({
-      containerClass: mobileClassName
-    });
-  }
-
   renderContent() {
     const mobileClass = this.state.containerClass;
     const {
       children,
+      globalReducer,
+      sideDrawerHover,
       sideDrawerReducer,
       themeReducer,
-      toggleSideDrawer,
-      sideDrawerHover
+      toggleSideDrawer
     } = this.props;
 
     return (
       <div id="main-wrapper" className={mobileClass}>
         <Header
-          theme={themeReducer.isLight}
-          isOpen={sideDrawerReducer.isOpen}
           hoverState={sideDrawerReducer.hoverState}
+          isOpen={sideDrawerReducer.isOpen}
+          isMobile={globalReducer.isMobile}
+          theme={themeReducer.isLight}
           toggleSideDrawer={toggleSideDrawer}
           sideDrawerHover={sideDrawerHover}
         />

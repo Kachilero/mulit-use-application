@@ -58,14 +58,12 @@ class TerminalController extends React.Component<
     this.setState({
       isTerminalOpen: !this.state.isTerminalOpen
     });
-    console.log(`Open Terminal = ${this.state.isTerminalOpen}`);
   };
 
   handleCloseBtn = () => {
     this.setState({
       isTerminalOpen: false
     });
-    console.log(`Button State = ${this.state.isTerminalOpen}`);
   };
 
   handleResizeStop = (e, direction, ref, delta, position) => {
@@ -107,7 +105,6 @@ class TerminalController extends React.Component<
             <FontAwesomeIcon icon={faTerminal} />
           </Button>
         </Pipe>
-        {console.log(`Component Open = ${this.state.isTerminalOpen}`)}
         {this.state.isTerminalOpen && (
           <Rnd
             default={{

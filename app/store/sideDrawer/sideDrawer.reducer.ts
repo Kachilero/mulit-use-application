@@ -24,6 +24,7 @@ export default function(
         hoverState: state.hoverState
       };
     case SideDrawerActionTypeKeys.SD_HOVER_STATE:
+      console.log(`SD_HOVER_STATE`);
       return {
         isOpen: state.isOpen,
         hoverState: !state.hoverState
