@@ -289,7 +289,7 @@
     "hoist-non-react-statics": "^3.3.0",
     "jquery": "^3.4.1",
     "memoize-one": "^5.0.5",
-    "moment": "^2.24.0",
+    "moment": "^2.29.2",
     "node-pty": "^0.8.1",
     "react": "^16.7.0",
     "react-bootstrap": "^1.0.0-beta.9",
